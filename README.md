@@ -48,6 +48,7 @@ zone = 0
 ```
 
 所有都配置完成，在根目录下运行<code>bee run</code>
+
 效果图，展示地址：<http://deepzz.com>
 ![show](http://7xokm2.com1.z0.glb.clouddn.com/img/blog.png)
 
