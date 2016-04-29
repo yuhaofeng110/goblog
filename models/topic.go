@@ -105,14 +105,15 @@ func (m *TopicMgr) loadTopics() {
 		}
 		topic.PCategory = category
 		m.GroupByCategory[topic.CategoryID] = append(m.GroupByCategory[topic.CategoryID], topic)
+		var newTagIDs []string
 		for i, id := range topic.TagIDs {
 			if tag := Blogger.GetTagByID(id); tag != nil {
 				topic.PTags = append(topic.PTags, tag)
 				m.GroupByTag[id] = append(m.GroupByTag[id], topic)
-			} else {
-				topic.TagIDs = append(topic.TagIDs[:i], topic.TagIDs[i+1:]...)
+				newTagIDs = append(newTagIDs, id)
 			}
 		}
+		topic.TagIDs = newTagIDs
 		m.DoTopicUpdate(topic)
 		m.Topics[topic.ID] = topic
 		m.IDs = append(m.IDs, topic.ID)
@@ -374,6 +375,7 @@ func (m *TopicMgr) DelTopic(id int32) error {
 		}
 		m.DeleteTopics = append(m.DeleteTopics, topic)
 		delete(m.Topics, id)
+		db.Update(DB, C_TOPIC, bson.M{"id": id}, topic)
 		return nil
 	}
 	return fmt.Errorf("Topic id=%d not found in cache.", id)
