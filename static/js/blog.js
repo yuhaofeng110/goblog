@@ -7,29 +7,22 @@ var config = {
     SUCCESS: "success",
     ALERT: "alert"
 }
-// marked.setOptions({
-//     renderer: new marked.Renderer(),
-//     gfm: true,
-//     tables: true,
-//     breaks: false,
-//     pedantic: false,
-//     sanitize: true,
-//     smartLists: true,
-//     smartypants: false,
-//     //highlight:function(code){
-//     //    return hljs.highlightAuto(code).value;
-//     //}
-// });
-// ------------------------------------- 功能函数 ----------------------------------------
-function timer(){
-    var now = (new Date()).valueOf();
-    if (now - conf.MODIFY_TIME > 600 && now - conf.MODIFY_TIME < 1101){
-        $("#highlight-content").html(marked($("#edit-area").val()));
-        // $('pre code').each(function(i, block) {
-        //     hljs.highlightBlock(block);
-        // });
+// ------------------------------------- 入口 ----------------------------------------
+$(function(){
+    var pathname = location.pathname;
+    if (pathname.indexOf('admin') == -1){
+        var $pre = $('#highlight-content').find('pre > code').parent();
+        $pre.addClass("prettyprint");
+        prettyPrint();
     }
-}
+});
+// ------------------------------------- 功能函数 ----------------------------------------
+// function timer(){
+//     var now = (new Date()).valueOf();
+//     if (now - conf.MODIFY_TIME > 600 && now - conf.MODIFY_TIME < 1101){
+//         $("#highlight-content").html(marked($("#edit-area").val()));
+//     }
+// }
 
 // ------------------------------------- 数组操作 ----------------------------------------
 Array.prototype.indexOf = function(val) {
@@ -123,7 +116,7 @@ $(".anchor-link").click(function(){
         
         return out;
     };
-    window.onresize=function(){
+    window.onresize = function(){
         if (window.innerWidth){
             winWidth = window.innerWidth;
         }else if ((document.body) && (document.body.clientWidth)){

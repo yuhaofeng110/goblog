@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
@@ -23,8 +23,8 @@
   <!-- docs -->
   <!-- <link rel="stylesheet" href="/static/css/docs.min.css"> -->
   <!-- highlight theme -->
-  <!-- <link rel="stylesheet" href="http://7xokm2.com1.z0.glb.clouddn.com/css/style/railscasts.css"> -->
   <link rel="stylesheet" href="http://7xokm2.com1.z0.glb.clouddn.com/css/user-content.min.css">
+  <link rel="stylesheet" href="http://7xokm2.com1.z0.glb.clouddn.com/css/prettify.css">
   <link rel="stylesheet" href="/static/css/blog.css">
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,9 +32,6 @@
   <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <style type="text/css">
-    
-  </style>
 </head>
 <body>
 <!--[if lt IE 9]>
@@ -42,17 +39,8 @@
 </div>
 <![endif]-->
 <script src="http://7xokm2.com1.z0.glb.clouddn.com/js/jquery-1.11.3.min.js"></script>
-<script src="http://7xokm2.com1.z0.glb.clouddn.com/js/marked.min.js"></script>
-<!-- <script src="http://7xokm2.com1.z0.glb.clouddn.com/js/highlight.pack.js"></script> -->
-<!--loading-->
-<!-- <div class="preloader">
-  <div id="status">
-    <p class="center-text">Loading the content...
-    <em>Loading depends on your connection speed!</em>
-  </p></div>
-</div> -->
-<!--loading end-->
-
+<!-- highlight -->
+<script src="http://7xokm2.com1.z0.glb.clouddn.com/js/prettify.js"></script>
 <!-- content start -->
 <div class="left-bar">
   <div class="top-section">
@@ -69,7 +57,6 @@
     </span>
   </div><!-- /input-group -->
   <ul class="nav nav-stacked" id="nav-category">
-    <!-- <li><a href="/cat/framework">程序框架</a></li> -->
     {{range .Categories}}
       {{if eq $.Choose .ID}}
         <li class="active"><a href="{{.Extra}}" target="_self" title="{{.Title}}">{{.Text}}</a></li>

@@ -93,9 +93,6 @@ function translate(){
     var now = (new Date()).valueOf();
     if (now - conf.MODIFY_TIME > 600 && (now - conf.MODIFY_TIME) < 1601){
         $("#editor-view").html(marked($("#editor-area").val()));
-        $('pre code').each(function(i, block) {
-            hljs.highlightBlock(block);
-        });
     }
 }
 // 转换编辑模式
