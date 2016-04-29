@@ -11,9 +11,9 @@ var config = {
 $(function(){
     var pathname = location.pathname;
     if (pathname.indexOf('admin') == -1){
-        var $pre = $('.markdown-body').find('pre > code').parent();
-        $pre.addClass("prettyprint");
-        prettyPrint();
+        $('.markdown-body > pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
     }
 });
 // ------------------------------------- 功能函数 ----------------------------------------
