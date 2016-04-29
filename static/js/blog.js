@@ -11,7 +11,7 @@ var config = {
 $(function(){
     var pathname = location.pathname;
     if (pathname.indexOf('admin') == -1){
-        var $pre = $('#highlight-content').find('pre > code').parent();
+        var $pre = $('.markdown-body').find('pre > code').parent();
         $pre.addClass("prettyprint");
         prettyPrint();
     }
@@ -39,7 +39,7 @@ Array.prototype.remove = function(val) {
 };
 
 // ------------------------------------- 目录 ----------------------------------------
-$("#highlight-content").find("h2,h3,h4,h5,h6").each(function(i,item){
+$(".markdown-body").find("h2,h3,h4,h5,h6").each(function(i,item){
     var tag = $(item).get(0).localName;
     $(item).attr("id","wow"+i);
     $("#AnchorContent").append('<li><a class="new'+tag+' anchor-link" onclick="return false;" href="#" link="#wow'+i+'">'+(i+1)+" · "+$(this).text()+'</a></li>');

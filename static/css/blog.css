@@ -542,7 +542,7 @@ b, strong {
     text-decoration: none;
 }
 
-#highlight-content{
+.markdown-body{
   font-size: 14px;
 }
 /*后台table*/
