@@ -30,7 +30,7 @@ func init() {
 	// admin
 	beego.InsertFilter("/admin/*", beego.BeforeRouter, background.FilterUser)
 	beego.Router("/admin/user", &background.UserController{})
-	beego.Router("/admin/data", &background.DataAnalyseController{})
+	beego.Router("/admin/data", &background.DataBaseController{})
 	beego.Router("/admin/topics", &background.TopicsController{})
 	beego.Router("/admin/category", &background.CategoryController{})
 	beego.Router("/admin/message", &background.MessageController{})
