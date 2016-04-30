@@ -10,8 +10,8 @@ var config = {
 // ------------------------------------- 入口 ----------------------------------------
 $(function(){
     var pathname = location.pathname;
-    hljs.configure({languages: []});
     if (pathname.indexOf('admin') == -1){
+        hljs.configure({languages: []});
         $('.markdown-body > pre code').each(function(i, block) {
             hljs.highlightBlock(block);
         });

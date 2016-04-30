@@ -106,7 +106,7 @@ func (m *TopicMgr) loadTopics() {
 		topic.PCategory = category
 		m.GroupByCategory[topic.CategoryID] = append(m.GroupByCategory[topic.CategoryID], topic)
 		var newTagIDs []string
-		for i, id := range topic.TagIDs {
+		for _, id := range topic.TagIDs {
 			if tag := Blogger.GetTagByID(id); tag != nil {
 				topic.PTags = append(topic.PTags, tag)
 				m.GroupByTag[id] = append(m.GroupByTag[id], topic)
