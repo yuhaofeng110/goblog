@@ -1,4 +1,5 @@
 .DS_Store
-*/.DS_Store
+*.DS_Store
+conf/app.conf
 goblog
 goblog.exe
