@@ -134,7 +134,7 @@ func (this *TopicsController) saveTopic(resp *helper.Response) {
 			resp.Err = helper.Error{Level: helper.WARNING, Msg: "错误|修改文章ID解析失败。"}
 			return
 		}
-		if t := models.TMgr.GetTopic(int32(id)); err != nil || t == nil {
+		if t := models.TMgr.GetTopic(int32(id)); t == nil {
 			resp.Status = RS.RS_failed
 			resp.Err = helper.Error{Level: helper.WARNING, Msg: "错误|系统查找不到该文章ID。"}
 			return

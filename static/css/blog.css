@@ -550,7 +550,13 @@ b, strong {
   border: 1px solid #eee;
   border-radius: 4px;
   margin-left: 10px;
-  clear: both;
+}
+
+.col-background{
+  border: 1px solid #eee;
+  border-radius: 4px;
+  height: 240px;
+  margin: 0 0 10px 0;
 }
 /*editor 添加文章*/
 @media (min-width:768px){

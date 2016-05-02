@@ -27,7 +27,7 @@ func (this *CategoryController) ListTopic() {
 		name = category.Text
 	}
 	this.Data["Name"] = name
-	this.Data["URL"] = fmt.Sprintf("%s/cat/%s", this.domain, category.ID)
+	this.Data["URL"] = fmt.Sprintf("cat/%s", category.ID)
 	this.Data["Domain"] = this.domain
 	pageStr := this.Ctx.Input.Param(":page")
 	page := 1

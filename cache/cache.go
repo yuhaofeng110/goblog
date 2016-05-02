@@ -11,7 +11,7 @@ import (
 
 type cache struct {
 	BackgroundLeftBar  map[string]string
-	BackgroundLeftBars []*admin.Leftbar
+	BackgroundLeftBars []*manage.Leftbar
 }
 
 var Cache = NewCache()

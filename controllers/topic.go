@@ -51,6 +51,7 @@ func (this *TopicController) Topic() {
 		this.Data["IsFalse"] = true
 		return
 	}
+	topic.PV++
 	this.Data["IsFalse"] = false
 	this.Data["Title"] = topic.Title + " - " + models.Blogger.BlogName
 	this.Data["Topic"] = topic

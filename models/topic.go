@@ -43,6 +43,7 @@ type Topic struct {
 	TagIDs     []string
 	Content    string
 	NeedDelete time.Time // 开始删除时间,超过48小时永久删除
+	PV         int       // 浏览数
 
 	Preview   string    `bson:"-"`
 	PCategory *Category `bson:"-"`
@@ -64,7 +65,7 @@ func NewTopic() *Topic {
 	return &Topic{ID: NextVal(), CreateTime: time.Now(), EditTime: time.Now(), Author: Blogger.UserName}
 }
 func NextVal() int32 {
-	return db.NextVal(C_TOPIC_ID)
+	return db.NextVal(DB, C_TOPIC_ID)
 }
 
 type INT32 []int32
@@ -140,7 +141,7 @@ func (m *TopicMgr) DoTopicUpdate(topic *Topic) {
 
 func (m *TopicMgr) UpdateTopics() int {
 	for _, topic := range m.Topics {
-		err := db.Update(DB, C_TOPIC, bson.M{"id": topic.ID}, topic)
+		err := db.Update(DB, C_TOPIC, bson.M{"id": topic.ID}, bson.M{"$set": bson.M{"pv": topic.PV}})
 		if err != nil {
 			log.Error(err)
 			return RS.RS_update_failed

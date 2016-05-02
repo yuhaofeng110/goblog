@@ -49,5 +49,5 @@ func init() {
 
 func flushdata() {
 	UMgr.UpdateUsers()
-	// TMgr.UpdateTopics()
+	TMgr.UpdateTopics()
 }

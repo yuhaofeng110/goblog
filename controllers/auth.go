@@ -13,6 +13,8 @@ type AuthController struct {
 func (this *AuthController) Get() {
 	if logout := this.GetString("logout"); logout == "now" {
 		this.DelSession(sessionname)
+	} else if val, ok := this.GetSession(sessionname).(string); ok && val != "" {
+		this.Redirect("/admin/data", 302)
 	}
 	this.TplName = "login.html"
 	this.Data["Name"] = models.Blogger.BlogName

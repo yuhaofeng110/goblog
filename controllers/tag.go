@@ -25,6 +25,7 @@ func (this *TagController) ListTopic() {
 	this.Data["Name"] = "无效TAG"
 	if tag != nil {
 		this.Data["Name"] = tag.ID
+		this.Data["URL"] = fmt.Sprintf("tag/%s", tag.ID)
 		page := 1
 		tagName := this.Ctx.Input.Param(":tag")
 		pageStr := this.Ctx.Input.Param(":page")
