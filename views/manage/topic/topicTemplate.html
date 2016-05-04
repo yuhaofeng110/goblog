@@ -81,12 +81,10 @@
           <div class="btn-group chooseTag">
             <button type="button" id="choose-tag" class="btn btn-sm btn-success" aria-haspopup="true" aria-expanded="false">选择TAG <span class="caret"></span>
             </button>
-            <div class="dropdown-menu" id="dropdown-tag" style="width:240px;">
+            <div class="dropdown-menu" id="dropdown-tag" style="width:210px;">
               <div class="input-group input-group-sm" style="margin-bottom:2px;">
                 <input type="text" class="form-control" id='tag-content' placeholder="Add a tag">
-                <span class="input-group-btn">
-                    <button class="btn btn-default btn-sm" id='add-tag' type="button">Add</button>
-                </span>
+                <button class="btn btn-info btn-sm" id='add-tag' type="button">Add</button>
               </div><!-- /input-group -->
               {{str2html .TagStyle}}
             </div>

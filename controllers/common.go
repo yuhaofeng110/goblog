@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"strings"
 	"time"
 
 	"github.com/astaxie/beego"

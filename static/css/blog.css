@@ -579,11 +579,14 @@ b, strong {
 }
 .chooseTag .dropdown-menu span, #newTag span{
   cursor: pointer;
-
+  display: inline-block;
 }
 #newTag{
   position: absolute;
   left: 15px;
+}
+#add-tag{
+  width: 100%;
 }
 .removeTag{
   font-size:14px;
