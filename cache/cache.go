@@ -6,12 +6,12 @@ import (
 	"os"
 
 	"github.com/deepzz0/go-common/log"
-	"github.com/deepzz0/goblog/models/manage"
+	"github.com/deepzz0/goblog/models"
 )
 
 type cache struct {
 	BackgroundLeftBar  map[string]string
-	BackgroundLeftBars []*manage.Leftbar
+	BackgroundLeftBars []*models.Leftbar
 }
 
 var Cache = NewCache()

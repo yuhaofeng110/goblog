@@ -15,13 +15,12 @@ const (
 	C_USER     = "user"    // collections表
 	C_TOPIC    = "topic"
 	C_TOPIC_ID = "topic_id" // 文章ID计数
+	C_VIEWER   = "viewer"   // 浏览记录
 )
 
 var Blogger *User
 
 func init() {
-	monitor.HookOnExit("flushdata", flushdata)
-	go monitor.Startup()
 	// 以下三句保证调用顺序
 	UMgr.loadUsers()
 	Blogger = UMgr.Get("deepzz")
@@ -45,6 +44,12 @@ func init() {
 		Blogger = UMgr.Get("deepzz")
 	}
 	TMgr.loadTopics()
+
+	monitor.HookOnExit("flushdata", flushdata)
+	go monitor.Startup()
+	go ViewM.Saver()
+	go scheduleTopic()
+	go scheduleUser()
 }
 
 func flushdata() {

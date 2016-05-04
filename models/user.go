@@ -40,7 +40,7 @@ type User struct {
 	HeadIcon  string // 头像
 	/* 博客信息 */
 	Tags       map[string]*Tag // 标签
-	Categories SortCategory    // 分类 id-->count
+	Categories SortCategory    // 分类
 	Socials    SortSocial      // social
 	Blogrolls  SortBlogroll    // 友情链接
 }
@@ -53,10 +53,6 @@ type UserMgr struct {
 func NewUM() *UserMgr { return &UserMgr{Users: make(map[string]*User)} }
 
 var UMgr = NewUM()
-
-func init() {
-	go scheduleUser()
-}
 
 func scheduleUser() {
 	tk := time.NewTicker(time.Hour)
