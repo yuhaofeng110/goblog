@@ -101,7 +101,7 @@ func (this *CategoryController) doDeleteTag(resp *helper.Response) {
 		resp.Err = helper.Error{Level: helper.WARNING, Msg: "哦噢。。。|参数错误。"}
 		return
 	}
-	if code := models.Blogger.DelBlogrollByID(id); code != RS.RS_success {
+	if code := models.Blogger.DelTagByID(id); code != RS.RS_success {
 		resp.Status = code
 		resp.Err = helper.Error{Level: helper.WARNING, Msg: "抱歉|系统没有找到该标签。"}
 		return
