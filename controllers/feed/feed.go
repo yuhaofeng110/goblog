@@ -20,15 +20,15 @@ func init() {
 }
 
 func Feed(ctx *context.Context) {
-	http.ServeFile(ctx.ResponseWriter, ctx.Request, feedFile)
+	http.ServeFile(ctx.ResponseWriter, ctx.Request, models.FeedFile)
 }
 
 func SiteMap(ctx *context.Context) {
-	http.ServeFile(ctx.ResponseWriter, ctx.Request, siteFile)
+	http.ServeFile(ctx.ResponseWriter, ctx.Request, models.SiteFile)
 }
 
 func Robots(ctx *context.Context) {
-	http.ServeFile(ctx.ResponseWriter, ctx.Request, robotsFile)
+	http.ServeFile(ctx.ResponseWriter, ctx.Request, models.RobotsFile)
 }
 
 func scheduler() {
@@ -44,11 +44,6 @@ func scheduler() {
 const (
 	version = "0.0.1"
 	year    = "2016"
-
-	templateFile = "./static/feedTemplate.xml"
-	feedFile     = "./static/feed.xml"
-	siteFile     = "./static/sitemap.xml"
-	robotsFile   = "./static/robots.txt"
 )
 
 type Topic struct {
@@ -63,7 +58,7 @@ type Topic struct {
 var buildDate time.Time
 
 func doFeed() {
-	temp, err := template.ParseFiles(templateFile)
+	temp, err := template.ParseFiles(models.TemplateFile)
 	if err != nil {
 		log.Error(err)
 		return
@@ -96,14 +91,14 @@ func doFeed() {
 	params["Author"] = "deepzz"
 	params["Topics"] = Topics
 
-	_, err = os.Stat(feedFile)
+	_, err = os.Stat(models.FeedFile)
 	if err != nil && !strings.Contains(err.Error(), "no such file") {
 		log.Error(err)
 		return
 	} else {
-		os.Remove(feedFile)
+		os.Remove(models.FeedFile)
 	}
-	f, err := os.Create(feedFile)
+	f, err := os.Create(models.FeedFile)
 	if err != nil {
 		log.Error(err)
 		return

@@ -5,9 +5,11 @@ package RS
 //
 
 var descDict = map[int]string{
-	RS_failed       : "操作失败",
-	RS_success      : "操作成功",
-	RS_params_error : "参数错误",
+	RS_failed        : "操作失败",
+	RS_success       : "操作成功",
+	RS_params_error  : "参数错误",
+	RS_duplicate_add : "重复添加",
+	RS_not_found     : "不存在",
 	RS_user_exist       : "账号已存在",
 	RS_user_inexistence : "账号不存在",
 	RS_activate_failed  : "激活失败",

@@ -8,6 +8,7 @@ import (
 
 	"github.com/deepzz0/go-common/log"
 	db "github.com/deepzz0/go-common/mongo"
+	"gopkg.in/mgo.v2/bson"
 )
 
 type Leftbar struct {
@@ -17,6 +18,7 @@ type Leftbar struct {
 	Text  string // 显示名称
 }
 
+/////////////////////////////////////////////////////////////////////////
 const (
 	BingBot      = "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
 	BaiduSpider  = "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"
@@ -98,5 +100,52 @@ func (m *ViewerManage) Saver() {
 		case <-t.C:
 			m.Flush()
 		}
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////
+type Verification struct {
+	Name       string // pk
+	Content    string
+	CreateTime time.Time
+}
+
+func NewVerify() *Verification {
+	return &Verification{CreateTime: time.Now()}
+}
+
+var ManageConf = LoadConf()
+
+type Config struct {
+	Name       string
+	SiteVerify map[string]*Verification
+}
+
+func LoadConf() *Config {
+	conf := &Config{Name: "config", SiteVerify: make(map[string]*Verification)}
+	err := db.FindOne(DB, C_CONFIG, bson.M{"name": "config"}, conf)
+	if err != nil {
+		log.Error(err)
+	}
+	return conf
+}
+
+func (conf *Config) GetVerification(name string) *Verification {
+	return conf.SiteVerify[name]
+}
+
+func (conf *Config) AddVerification(verify *Verification) {
+	conf.SiteVerify[verify.Name] = verify
+}
+
+func (conf *Config) DelVerification(name string) {
+	conf.SiteVerify[name] = nil
+	delete(conf.SiteVerify, name)
+}
+
+func (conf *Config) UpdateConf() {
+	err := db.Update(DB, C_CONFIG, bson.M{"name": "config"}, conf)
+	if err != nil {
+		log.Error(err)
 	}
 }

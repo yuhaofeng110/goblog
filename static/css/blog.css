@@ -550,6 +550,8 @@ b, strong {
   border: 1px solid #eee;
   border-radius: 4px;
   margin-left: 10px;
+  margin-bottom: 30px;
+  padding: 5px;
 }
 
 .col-background{
@@ -557,6 +559,10 @@ b, strong {
   border-radius: 4px;
   height: 240px;
   margin: 0 0 10px 0;
+}
+
+.right{
+  float: right;
 }
 /*editor 添加文章*/
 @media (min-width:768px){

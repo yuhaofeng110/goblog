@@ -19,6 +19,7 @@ func (this *HomeController) Get() {
 	this.Data["Description"] = fmt.Sprintf("%s,个人博客,%s,golang爱好者,服务器架构,高并发.", models.Blogger.UserName, models.Blogger.Introduce)
 	this.Data["Keywords"] = fmt.Sprintf("%s,%s,首页,blog", models.Blogger.Introduce, models.Blogger.UserName)
 	this.Leftbar("homepage")
+	this.Verification()
 	this.Home()
 }
 func (this *HomeController) Home() {

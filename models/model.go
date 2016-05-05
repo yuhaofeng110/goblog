@@ -16,6 +16,14 @@ const (
 	C_TOPIC    = "topic"
 	C_TOPIC_ID = "topic_id" // 文章ID计数
 	C_VIEWER   = "viewer"   // 浏览记录
+	C_CONFIG   = "config"   // 配置
+)
+
+const (
+	TemplateFile = "./static/feedTemplate.xml"
+	FeedFile     = "./static/feed.xml"
+	SiteFile     = "./static/sitemap.xml"
+	RobotsFile   = "./static/robots.txt"
 )
 
 var Blogger *User
@@ -55,4 +63,5 @@ func init() {
 func flushdata() {
 	UMgr.UpdateUsers()
 	TMgr.UpdateTopics()
+	ManageConf.UpdateConf()
 }

@@ -8,6 +8,9 @@
   <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
   <meta name="author" content="{{.BlogName}}">
   <link rel="dns-prefetch" href="http://7xokm2.com1.z0.glb.clouddn.com" />
+  {{range .Verification}}
+  <meta name="{{.Name}}" content="{{.Content}}">
+  {{end}}
   <meta name="keywords" content="{{.Keywords}}"/>
   <meta name="description" content="{{.Description}}">
   <link rel="icon" href="/favicon.ico">

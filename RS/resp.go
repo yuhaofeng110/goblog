@@ -1,9 +1,11 @@
 package RS
 
 const (
-	RS_failed       = -1 // 操作失败
-	RS_success      = 1  // 操作成功
-	RS_params_error = 2  // 参数错误
+	RS_failed        = -1 // 操作失败
+	RS_success       = 1  // 操作成功
+	RS_params_error  = 2  // 参数错误
+	RS_duplicate_add = 3  // 重复添加
+	RS_not_found     = 4  // 不存在
 
 	RS_user_exist       = 100 // 账号已存在
 	RS_user_inexistence = 101 // 账号不存在

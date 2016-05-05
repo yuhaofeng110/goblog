@@ -34,6 +34,10 @@ func (this *Common) Leftbar(cat string) {
 	this.Data["CopyTime"] = time.Now().Year()
 }
 
+func (this *Common) Verification() {
+	this.Data["Verification"] = models.ManageConf.SiteVerify
+}
+
 type listOfTopic struct {
 	ID        int32
 	Title     string
