@@ -15,7 +15,7 @@ type HomeController struct {
 func (this *HomeController) Get() {
 	this.Layout = "homelayout.html"
 	this.TplName = "homeTemplate.html"
-	this.Data["Title"] = fmt.Sprintf("%s - %s", models.Blogger.Introduce, models.Blogger.BlogName)
+	this.Data["Title"] = fmt.Sprintf("%s - %s的博客", models.Blogger.Introduce, models.Blogger.BlogName)
 	this.Data["Description"] = fmt.Sprintf("%s,个人博客,%s,golang爱好者,服务器架构,高并发.", models.Blogger.UserName, models.Blogger.Introduce)
 	this.Data["Keywords"] = fmt.Sprintf("%s,%s,首页,blog", models.Blogger.Introduce, models.Blogger.UserName)
 	this.Leftbar("homepage")

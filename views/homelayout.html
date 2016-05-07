@@ -13,9 +13,9 @@
   {{end}}
   <meta name="keywords" content="{{.Keywords}}"/>
   <meta name="description" content="{{.Description}}">
-  <title>{{.Title}}的博客</title>
+  <title>{{.Title}}</title>
   <!-- rss -->
-  <link rel="alternate" type="application/rss+xml" title="RSS 2.0 - 最近文章" href="{{.Domain}}/feed" />
+  <link rel="alternate" type="application/rss+xml" title="RSS 2.0 - Recent articles" href="{{.Domain}}/feed" />
   <!-- Bootstrap -->
   <link rel="stylesheet" href="http://7xokm2.com1.z0.glb.clouddn.com/css/bootstrap.min.css">
   <!-- sns font -->
@@ -76,13 +76,15 @@
     </ul>
   </div>
   <p class="site-copyright">© Copyright 2016 - {{.CopyTime}} <a href="{{.Domain}}" title="Deepzz">{{.BlogName}}</a></p>
+  <div style="text-align: center;">
+    <a href="{{.Domain}}/feed" title="订阅我" target="_blank"><img src="/static/img/rss.png"></a>
+    <a href="https://portal.qiniu.com/signup?code=3lqod49c309ci" title="静态文件存储由七牛云存储提供" target="_blank"><img src="/static/img/qiniu.png"></a>
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" title="Creative Commons Attribution-NonCommercial 4.0 International License,知识共享署名-非商业性使用 4.0 国际许可协议进行许可，转载请注明作者及原网址."><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a>
+  </div>
 </div>
 <div class="right-content">
   <div class="container-fluid bs-docs-container" id="content">
     {{.LayoutContent}}
-    <div style="text-align: center;"><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
-      <p>本网站全部内容采用知识共享署名-非商业性使用 4.0 国际许可协议进行许可，转载请注明作者及原网址。</p>
-    </div>
   </div>
 </div>
 <!-- content end -->
