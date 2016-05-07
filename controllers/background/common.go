@@ -25,6 +25,8 @@ func (this *Common) Prepare() {
 	if beego.BConfig.RunMode == beego.DEV {
 		this.domain = this.domain + ":" + beego.AppConfig.String("httpport")
 	}
+
+	this.Layout = "manage/adminlayout.html"
 }
 func (this *Common) LeftBar(index string) {
 	this.Data["Choose"] = index

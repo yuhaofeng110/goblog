@@ -13,7 +13,6 @@ type TagController struct {
 }
 
 func (this *TagController) Get() {
-	this.Layout = "homelayout.html"
 	this.TplName = "groupTemplate.html"
 	this.Leftbar("")
 	this.ListTopic()

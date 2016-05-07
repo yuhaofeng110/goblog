@@ -12,6 +12,7 @@ import (
 type cache struct {
 	BackgroundLeftBar  map[string]string
 	BackgroundLeftBars []*models.Leftbar
+	BuildVersion       string
 }
 
 var Cache = NewCache()
@@ -22,10 +23,12 @@ func NewCache() *cache {
 
 func init() {
 	doReadBackLeftBarConfig()
+	doReadBuildVersionConfig()
 }
 
+var path, _ = os.Getwd()
+
 func doReadBackLeftBarConfig() {
-	path, _ := os.Getwd()
 	f, err := os.Open(path + "/conf/backleft.conf")
 	if err != nil {
 		log.Fatal(err)
@@ -43,4 +46,16 @@ func doReadBackLeftBarConfig() {
 			Cache.BackgroundLeftBar[v.ID] = v.ID
 		}
 	}
+}
+
+func doReadBuildVersionConfig() {
+	f, err := os.Open(path + "/version")
+	if err != nil {
+		log.Fatal(err)
+	}
+	b, err := ioutil.ReadAll(f)
+	if err != nil {
+		log.Fatal(err)
+	}
+	Cache.BuildVersion = string(b)
 }

@@ -16,7 +16,6 @@ type TopicsController struct {
 }
 
 func (this *TopicsController) Get() {
-	this.Layout = "manage/adminlayout.html"
 	this.TplName = "manage/topic/topicTemplate.html"
 	this.Data["Title"] = "博文管理 - " + models.Blogger.BlogName
 	this.LeftBar("topics")

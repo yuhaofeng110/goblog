@@ -9,7 +9,6 @@ type MessageController struct {
 }
 
 func (this *MessageController) Get() {
-	this.Layout = "manage/adminlayout.html"
 	this.TplName = "manage/message.html"
 	this.Data["Title"] = "留言管理 - " + models.Blogger.BlogName
 	this.LeftBar("message")

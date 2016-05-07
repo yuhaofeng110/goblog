@@ -15,7 +15,6 @@ type SocialController struct {
 }
 
 func (this *SocialController) Get() {
-	this.Layout = "manage/adminlayout.html"
 	this.TplName = "manage/social/socialTemplate.html"
 	this.Data["Title"] = "社交工具 - " + models.Blogger.BlogName
 	this.LeftBar("social")

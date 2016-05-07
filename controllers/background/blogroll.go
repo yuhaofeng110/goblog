@@ -15,7 +15,6 @@ type BlogrollController struct {
 }
 
 func (this *BlogrollController) Get() {
-	this.Layout = "manage/adminlayout.html"
 	this.TplName = "manage/blogroll/blogrollTemplate.html"
 	this.Data["Title"] = "友情链接 - " + models.Blogger.BlogName
 	this.LeftBar("blogroll")

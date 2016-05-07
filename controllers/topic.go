@@ -19,7 +19,6 @@ type TopicController struct {
 }
 
 func (this *TopicController) Get() {
-	this.Layout = "homelayout.html"
 	this.TplName = "topicTemplate.html"
 	this.Leftbar("")
 	this.Topic()

@@ -11,13 +11,6 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-type Leftbar struct {
-	ID    string // 内部ID
-	Title string // 说明
-	Extra string // 链接
-	Text  string // 显示名称
-}
-
 /////////////////////////////////////////////////////////////////////////
 const (
 	BingBot      = "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)"
@@ -102,6 +95,16 @@ func (m *ViewerManage) Saver() {
 		}
 	}
 }
+
+///////////////////////////////////////////////////////////////////////////
+type Leftbar struct {
+	ID    string // 内部ID
+	Title string // 说明
+	Extra string // 链接
+	Text  string // 显示名称
+}
+
+///////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////
 type Verification struct {

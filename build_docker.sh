@@ -1,6 +1,6 @@
 #!/bin/bash
-
 echo "go build ..."
+sh ./version.sh
 CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build && \
 mkdir tmp && \
 # cp -a $GAMEDATA/config/json  tmp/

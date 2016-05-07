@@ -16,7 +16,6 @@ type CategoryController struct {
 }
 
 func (this *CategoryController) Get() {
-	this.Layout = "manage/adminlayout.html"
 	this.TplName = "manage/category/categoryTemplate.html"
 	this.Data["Title"] = "分类管理 - " + models.Blogger.BlogName
 	this.LeftBar("category")

@@ -9,7 +9,6 @@ type DataBaseController struct {
 }
 
 func (this *DataBaseController) Get() {
-	this.Layout = "manage/adminlayout.html"
 	this.TplName = "manage/database/databaseTemplate.html"
 	this.Data["Title"] = "基础数据 - " + models.Blogger.BlogName
 	this.LeftBar("data")

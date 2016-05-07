@@ -12,7 +12,6 @@ type SearchController struct {
 }
 
 func (this *SearchController) Get() {
-	this.Layout = "homelayout.html"
 	this.TplName = "groupTemplate.html"
 	this.Leftbar("")
 	this.ListTopic()

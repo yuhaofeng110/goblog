@@ -13,7 +13,6 @@ type CategoryController struct {
 }
 
 func (this *CategoryController) Get() {
-	this.Layout = "homelayout.html"
 	this.TplName = "groupTemplate.html"
 	this.ListTopic()
 }
