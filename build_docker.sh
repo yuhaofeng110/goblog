@@ -9,6 +9,7 @@ cp -a conf tmp/conf && \
 cp -a static tmp/static && \
 cp Dockerfile tmp/ && \
 cp goblog tmp/ && \
+cp version tmp/ && \
 cd tmp && \
 
 # docker -H tcp://127.0.0.1:2375 build -t gameserver .

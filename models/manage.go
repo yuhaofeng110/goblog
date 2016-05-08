@@ -1,13 +1,14 @@
 package models
 
 import (
-	"net/http"
+	// "net/http"
 	// "regexp"
 	// "strings"
 	"time"
 
 	"github.com/deepzz0/go-common/log"
 	db "github.com/deepzz0/go-common/mongo"
+	// "github.com/deepzz0/go-common/useragent"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -32,69 +33,61 @@ const (
 	macox    = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.86 Safari/537.36"
 )
 
-type Viewer struct {
-	RequestURI string    // 请求url
-	RemoteAddr string    // 访问者ip
-	Referer    string    // 访问来源
-	SessionId  string    // session
-	DeviceID   string    // 设备型号
-	System     string    // 操作系统
-	Version    string    // 系统版本
-	Browser    string    // 浏览器
-	Time       time.Time // 时间
-}
+// type Viewer struct {
 
-func NewViewer(request *http.Request, sessionid string) *Viewer {
-	// header := request.Header
-	// userAgent := header.Get("User-Agent")
+// }
 
-	// reg, err := regexp.Compile(``)
+// func NewViewer(request *http.Request, sessionid string) *Viewer {
+// 	// header := request.Header
+// 	// userAgent := header.Get("User-Agent")
 
-	// v := &Viewer{RequestURI: header.Get("RequestURI"), RemoteAddr: header.Get("RemoteAddr"), Referer: header.Get("Referer"), SessionId: sessionid, Time: time.Now()}
-	return nil
-}
+// 	// reg, err := regexp.Compile(``)
 
-type ViewerManage struct {
-	SidToTime map[string]time.Time
-	Ch        chan *Viewer
-}
+// 	// v := &Viewer{RequestURI: header.Get("RequestURI"), RemoteAddr: header.Get("RemoteAddr"), Referer: header.Get("Referer"), SessionId: sessionid, Time: time.Now()}
+// 	return nil
+// }
 
-var ViewM = NewViewM()
+// type ViewerManage struct {
+// 	SidToTime map[string]time.Time
+// 	Ch        chan *Viewer
+// }
 
-func NewViewM() *ViewerManage {
-	return &ViewerManage{SidToTime: make(map[string]time.Time)}
-}
+// var ViewM = NewViewM()
 
-func (m *ViewerManage) Update(sid string) {
-	m.SidToTime[sid] = time.Now()
-}
+// func NewViewM() *ViewerManage {
+// 	return &ViewerManage{SidToTime: make(map[string]time.Time)}
+// }
 
-func (m *ViewerManage) Get(sid string) time.Time {
-	return m.SidToTime[sid]
-}
+// func (m *ViewerManage) Update(sid string) {
+// 	m.SidToTime[sid] = time.Now()
+// }
 
-func (m *ViewerManage) Flush() {
-	for k, v := range m.SidToTime {
-		if v.Add(30 * time.Minute).Before(time.Now()) {
-			delete(m.SidToTime, k)
-		}
-	}
-}
+// func (m *ViewerManage) Get(sid string) time.Time {
+// 	return m.SidToTime[sid]
+// }
 
-func (m *ViewerManage) Saver() {
-	t := time.NewTicker(time.Minute)
-	for {
-		select {
-		case viewer := <-m.Ch:
-			err := db.Insert(DB, C_VIEWER, viewer)
-			if err != nil {
-				log.Error(err)
-			}
-		case <-t.C:
-			m.Flush()
-		}
-	}
-}
+// func (m *ViewerManage) Flush() {
+// 	for k, v := range m.SidToTime {
+// 		if v.Add(30 * time.Minute).Before(time.Now()) {
+// 			delete(m.SidToTime, k)
+// 		}
+// 	}
+// }
+
+// func (m *ViewerManage) Saver() {
+// 	t := time.NewTicker(time.Minute)
+// 	for {
+// 		select {
+// 		case viewer := <-m.Ch:
+// 			err := db.Insert(DB, C_VIEWER, viewer)
+// 			if err != nil {
+// 				log.Error(err)
+// 			}
+// 		case <-t.C:
+// 			m.Flush()
+// 		}
+// 	}
+// }
 
 ///////////////////////////////////////////////////////////////////////////
 type Leftbar struct {
@@ -105,6 +98,15 @@ type Leftbar struct {
 }
 
 ///////////////////////////////////////////////////////////////////////////
+// type Request struct {
+// 	Referer    string              // 请求来源
+// 	URL        string              // 访问页面
+//  Major	   string			   // 主版本
+// 	RemoteAddr string              // 请求IP
+// 	SessionID  string              // 请求session
+// 	UserAgent  useragent.UserAgent //
+// 	Time       time.Time           // 请求时间
+// }
 
 ///////////////////////////////////////////////////////////////////////////
 type Verification struct {

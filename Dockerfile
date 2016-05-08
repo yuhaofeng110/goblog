@@ -8,6 +8,7 @@ ADD views /goblog/views
 ADD conf /goblog/conf
 ADD static /goblog/static
 ADD goblog /goblog/goblog
+ADD version /goblog/version
 RUN ["cp","/usr/share/zoneinfo/Asia/Shanghai","/etc/localtime"]
 
 EXPOSE 80

@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego"
-	"github.com/deepzz0/go-common/log"
+	// "github.com/deepzz0/go-common/log"
 	"github.com/deepzz0/goblog/cache"
 	"github.com/deepzz0/goblog/models"
 )
@@ -18,7 +18,6 @@ type Common struct {
 }
 
 func (this *Common) Prepare() {
-	log.Debug(*this.Ctx.Request)
 	this.url = this.Ctx.Request.URL.String()
 	this.domain = beego.AppConfig.String("mydomain")
 	if beego.BConfig.RunMode == beego.DEV {
@@ -39,7 +38,6 @@ func (this *Common) Leftbar(cat string) {
 }
 
 func (this *Common) Build() {
-	log.Debug(cache.Cache.BuildVersion)
 	this.Data["Build"] = cache.Cache.BuildVersion
 }
 

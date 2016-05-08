@@ -1,13 +1,14 @@
 package controllers
 
 import (
+	"github.com/astaxie/beego"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"
 )
 
 type AuthController struct {
-	Common
+	beego.Controller
 }
 
 func (this *AuthController) Get() {
@@ -18,7 +19,7 @@ func (this *AuthController) Get() {
 	}
 	this.TplName = "login.html"
 	this.Data["Name"] = models.Blogger.BlogName
-	this.Data["URL"] = this.domain
+	this.Data["URL"] = beego.AppConfig.String("mydomain")
 }
 
 func (this *AuthController) Post() {

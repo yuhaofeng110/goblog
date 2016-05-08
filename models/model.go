@@ -55,7 +55,7 @@ func init() {
 
 	monitor.HookOnExit("flushdata", flushdata)
 	go monitor.Startup()
-	go ViewM.Saver()
+	// go ViewM.Saver()
 	go scheduleTopic()
 	go scheduleUser()
 }
