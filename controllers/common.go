@@ -25,6 +25,7 @@ func (this *Common) Prepare() {
 	}
 	this.Layout = "homelayout.html"
 	this.Build()
+	this.DoRequest()
 }
 func (this *Common) Leftbar(cat string) {
 	this.Data["Picture"] = models.Blogger.HeadIcon
@@ -43,6 +44,11 @@ func (this *Common) Build() {
 
 func (this *Common) Verification() {
 	this.Data["Verification"] = models.ManageConf.SiteVerify
+}
+
+func (this *Common) DoRequest() {
+	requst := models.NewRequest(this.Ctx.Request)
+	models.RequestM.Ch <- requst
 }
 
 type listOfTopic struct {

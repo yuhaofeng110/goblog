@@ -16,7 +16,6 @@ var conf = {
 
 $(function () {
     $("#editor-area").on("keydown",function (e) { // metaKey->command
-        console.log(e.keyCode);
         conf.MODIFY_TIME = (new Date()).valueOf();
         switch (e.keyCode){
             case 9: { // tab

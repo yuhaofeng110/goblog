@@ -1,31 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset
-    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">	
-<url>
-<loc>http://deepzz.com</loc>
-<priority>1.00</priority>
-<lastmod>2016-04-27</lastmod>
-<changefreq>weekly</changefreq>
-</url>
-<url>
-<loc>http://deepzz.com/2016/04/26/10.html</loc>
-<priority>0.5</priority>
-<lastmod>2016-04-27</lastmod>
-<changefreq>weekly</changefreq>
-</url>
-<url>
-<loc>http://deepzz.com/2016/04/24/8.html</loc>
-<priority>0.5</priority>
-<lastmod>2016-04-27</lastmod>
-<changefreq>weekly</changefreq>
-</url>
-<url>
-<loc>http://deepzz.com/2016/04/24/9.html</loc>
-<priority>0.5</priority>
-<lastmod>2016-04-27</lastmod>
-<changefreq>weekly</changefreq>
-</url>
-</urlset>
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+>
+
+<channel>
+  <title>Deepzz 的个人博客</title>
+  <atom:link href="http://localhost/feed" rel="self" type="application/rss+xml" />
+  <link>http://localhost</link>
+  <description>Golang爱好者，专注于游戏服务器开发，轻架构，高并发</description>
+  <language>zh-CN</language>
+  <pubDate>Thu, 12 May 2016 11:54:14 +0800</pubDate>
+  <lastBuildDate>Thu, 12 May 2016 11:54:14 +0800</lastBuildDate>
+  <sy:updatePeriod>hourly</sy:updatePeriod>
+  <sy:updateFrequency>1</sy:updateFrequency>
+  <copyright>2016 deepzz.com. All rights reserved.</copyright>
+  <generator>http://localhost/feed?0.0.1</generator>
+  <ttl>1440</ttl>
+  
+  
+  <item>
+    <title>sdfas</title>
+    <link>http://localhost/2016/05/11/2.html</link>
+    <comments>http://localhost/2016/05/11/2.html#comments</comments>
+    <pubDate>Wed, 11 May 2016 18:32:35 +0800</pubDate>
+    <dc:creator><![CDATA[deepzz]]></dc:creator>
+    <category><![CDATA[default]]></category>
+	  <guid isPermaLink="false">http://localhost/2016/05/11/2.html</guid>
+    <description><![CDATA[<p>dfasdfasdf</p>
+]]>
+    </description>
+  </item>
+  
+</channel>
+
+</rss>

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"os"
+	"time"
 
 	// "github.com/deepzz0/go-common/log"
 	"github.com/deepzz0/go-common/monitor"
@@ -15,7 +16,7 @@ const (
 	C_USER     = "user"    // collections表
 	C_TOPIC    = "topic"
 	C_TOPIC_ID = "topic_id" // 文章ID计数
-	C_VIEWER   = "viewer"   // 浏览记录
+	C_REQUEST  = "request"  // 浏览记录
 	C_CONFIG   = "config"   // 配置
 )
 
@@ -55,9 +56,25 @@ func init() {
 
 	monitor.HookOnExit("flushdata", flushdata)
 	go monitor.Startup()
-	// go ViewM.Saver()
+	go RequestM.Saver()
 	go scheduleTopic()
 	go scheduleUser()
+	go NewDay()
+}
+
+// 新的一天
+func NewDay() {
+	t := time.NewTicker(time.Minute)
+	Today := time.Now()
+	for {
+		select {
+		case <-t.C:
+			if time.Now().Day() != Today.Day() {
+				Today = time.Now()
+				ManageData.LoadData()
+			}
+		}
+	}
 }
 
 func flushdata() {

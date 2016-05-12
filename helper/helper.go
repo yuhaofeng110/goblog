@@ -15,8 +15,6 @@ import (
 	"github.com/deepzz0/goblog/RS"
 )
 
-// var Mydomain = "http://deepzz.com"
-
 const (
 	Layout_y_m_d      = "2006/01/02"
 	Layout_y_m_d2     = "2006年01月02日"
@@ -54,6 +52,7 @@ func (resp *Response) Tips(level string, rs int) {
 func (resp *Response) WriteJson(w http.ResponseWriter) {
 	b, err := json.Marshal(resp)
 	if err != nil {
+		fmt.Println("helper.go line:55", err)
 		w.Write([]byte(`{Status:-1,Err:Error{Level:"alert",Msg:"code=-1|序列化失败！"}}`))
 	} else {
 		w.Write(b)
