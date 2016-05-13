@@ -148,7 +148,7 @@ function get(method, url, data, async)
             resp = response;
         })
     });
-    console.log(resp);
+    // console.log(resp);
     if (resp.Status==301){
         pushMessage('primary', '对不起|你暂为登录。');
     }

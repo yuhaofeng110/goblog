@@ -6,9 +6,10 @@ import (
 	"os"
 	"time"
 
-	// "github.com/deepzz0/go-common/log"
+	"github.com/deepzz0/go-common/log"
 	"github.com/deepzz0/go-common/monitor"
 	"github.com/deepzz0/goblog/RS"
+	"github.com/wangtuanjie/ip17mon"
 )
 
 const (
@@ -30,11 +31,14 @@ const (
 var Blogger *User
 
 func init() {
+	path, _ := os.Getwd()
+	if err := ip17mon.Init(path + "/conf/17monipdb.dat"); err != nil {
+		log.Fatal(err)
+	}
 	// 以下三句保证调用顺序
 	UMgr.loadUsers()
 	Blogger = UMgr.Get("deepzz")
 	if Blogger == nil { // 从配置初始化用户
-		path, _ := os.Getwd()
 		f, err := os.Open(path + "/conf/backup/user.json")
 		if err != nil {
 			panic(err)
@@ -53,7 +57,7 @@ func init() {
 		Blogger = UMgr.Get("deepzz")
 	}
 	TMgr.loadTopics()
-
+	ManageData.LoadData()
 	monitor.HookOnExit("flushdata", flushdata)
 	go monitor.Startup()
 	go RequestM.Saver()

@@ -10,6 +10,7 @@ import (
 	db "github.com/deepzz0/go-common/mongo"
 	tm "github.com/deepzz0/go-common/time"
 	"github.com/deepzz0/go-common/useragent"
+	"github.com/wangtuanjie/ip17mon"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -60,7 +61,7 @@ func NewRequestM() *RequestManage {
 }
 
 func (m *RequestManage) Saver() {
-	t := time.NewTicker(time.Minute)
+	t := time.NewTicker(time.Minute * 10)
 	for {
 		select {
 		case request := <-m.Ch:
@@ -91,13 +92,18 @@ type BaseData struct {
 	TimePV    map[string][]int
 	EngineTop map[string]int
 	PageTop   map[string]int
-	Area      [][]int
+	China     map[string]*Area
+	World     map[string]*Area
 	Latest    []*Request
+}
+
+type Area struct {
+	Name  string `json:"name"`
+	Value int    `json:"value"`
 }
 
 func NewBaseData() *BaseData {
 	bd := &BaseData{PV: make(map[string]int), UV: make(map[string]int), IP: make(map[string]int), TimePV: make(map[string][]int)}
-	bd.LoadData()
 	return bd
 }
 
@@ -143,6 +149,29 @@ func (b *BaseData) loadData(typ string) {
 	if err != nil {
 		log.Error(err)
 	}
+	b.China = make(map[string]*Area)
+	b.World = make(map[string]*Area)
+	for _, v := range ips {
+		info, err := ip17mon.Find(v)
+		if err != nil {
+			log.Error(err)
+			continue
+		}
+		if info.Country == "中国" {
+			if city := b.China[info.City]; city == nil {
+				b.China[info.City] = &Area{Name: info.Region, Value: 1}
+			} else {
+				city.Value++
+			}
+		} else {
+			if country := b.World[info.Country]; country == nil {
+				b.World[info.Country] = &Area{Name: info.Country, Value: 1}
+			} else {
+				country.Value++
+			}
+		}
+	}
+
 	b.IP[typ] = len(ips)
 	var ts []*Request
 	err = c.Find(bson.M{"time": bson.M{"$gte": Begin, "$lt": End}}).Select(bson.M{"time": 1}).All(&ts)

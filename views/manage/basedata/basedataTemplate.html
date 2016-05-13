@@ -21,10 +21,7 @@
   </div>
 </div>
 <div class="col-xs-12 col-sm-12 col-background" id="PV" style="min-height: 270px;"></div>
-<div class="col-xs-12 col-sm-6 col-background" id="page" style="height: 270px;"></div>
-<div class="col-xs-12 col-sm-6 col-background" id="engine" style="height: 270px;"></div>
-<!-- <div class="col-xs-12 col-sm-6 col-background" id="mapworld" style="height: 270px;"></div> -->
-<div class="col-xs-12 col-sm-6 col-background" id="mapchina" style="height: 270px;"></div>
+<div class="col-xs-12 col-sm-12 col-background" id="mapchina" style="height: 600px;"></div>
 <div class="col-xs-12 col-sm-12">
   <table class="table">
     <caption>来源链接</caption>
@@ -41,14 +38,12 @@
   </table>
 </div>
 <!-- 引入 ECharts 文件 -->
-<script src="/static/js/echarts.min.js"></script>
-<script src="/static/map/china.js"></script>
+<script src="http://7xokm2.com1.z0.glb.clouddn.com/js/chart/echarts.min.js"></script>
+<script src="http://7xokm2.com1.z0.glb.clouddn.com//js/map/china.js"></script>
 <script type="text/javascript">
   $(function(){
     window.onresize = function () {
     PV.resize(); //使第一个图表适应
-    page.resize();
-    engine.resize();
     mapchina.resize();
   }
 });
@@ -115,8 +110,8 @@
 
   var mapOption = {
     title : {
-        text: 'iphone销量',
-        subtext: '纯属虚构',
+        text: '访客分布',
+        subtext: '中国区域',
         x:'center'
     },
     tooltip : {
@@ -125,7 +120,7 @@
     legend: {
         orient: 'vertical',
         x:'left',
-        data:['iphone3','iphone4','iphone5']
+        data:['访客城市']
     },
     dataRange: {
         min: 0,
@@ -155,114 +150,23 @@
         }
     },
     series : [
-        {
-            name: 'iphone3',
-            type: 'map',
-            mapType: 'china',
+        { 
+            type:'map',
+            name:'访客城市',
+            mapType:'china',
             roam: false,
             itemStyle:{
                 normal:{label:{show:true}},
                 emphasis:{label:{show:true}}
-            },
-            data:[
-                {name: '北京',value: Math.round(Math.random()*1000)},
-                {name: '天津',value: Math.round(Math.random()*1000)},
-                {name: '上海',value: Math.round(Math.random()*1000)},
-                {name: '重庆',value: Math.round(Math.random()*1000)},
-                {name: '河北',value: Math.round(Math.random()*1000)},
-                {name: '河南',value: Math.round(Math.random()*1000)},
-                {name: '云南',value: Math.round(Math.random()*1000)},
-                {name: '辽宁',value: Math.round(Math.random()*1000)},
-                {name: '黑龙江',value: Math.round(Math.random()*1000)},
-                {name: '湖南',value: Math.round(Math.random()*1000)},
-                {name: '安徽',value: Math.round(Math.random()*1000)},
-                {name: '山东',value: Math.round(Math.random()*1000)},
-                {name: '新疆',value: Math.round(Math.random()*1000)},
-                {name: '江苏',value: Math.round(Math.random()*1000)},
-                {name: '浙江',value: Math.round(Math.random()*1000)},
-                {name: '江西',value: Math.round(Math.random()*1000)},
-                {name: '湖北',value: Math.round(Math.random()*1000)},
-                {name: '广西',value: Math.round(Math.random()*1000)},
-                {name: '甘肃',value: Math.round(Math.random()*1000)},
-                {name: '山西',value: Math.round(Math.random()*1000)},
-                {name: '内蒙古',value: Math.round(Math.random()*1000)},
-                {name: '陕西',value: Math.round(Math.random()*1000)},
-                {name: '吉林',value: Math.round(Math.random()*1000)},
-                {name: '福建',value: Math.round(Math.random()*1000)},
-                {name: '贵州',value: Math.round(Math.random()*1000)},
-                {name: '广东',value: Math.round(Math.random()*1000)},
-                {name: '青海',value: Math.round(Math.random()*1000)},
-                {name: '西藏',value: Math.round(Math.random()*1000)},
-                {name: '四川',value: Math.round(Math.random()*1000)},
-                {name: '宁夏',value: Math.round(Math.random()*1000)},
-                {name: '海南',value: Math.round(Math.random()*1000)},
-                {name: '台湾',value: Math.round(Math.random()*1000)},
-                {name: '香港',value: Math.round(Math.random()*1000)},
-                {name: '澳门',value: Math.round(Math.random()*1000)}
-            ]
-        },
-        {
-            name: 'iphone4',
-            type: 'map',
-            mapType: 'china',
-            itemStyle:{
-                normal:{label:{show:true}},
-                emphasis:{label:{show:true}}
-            },
-            data:[
-                {name: '北京',value: Math.round(Math.random()*1000)},
-                {name: '天津',value: Math.round(Math.random()*1000)},
-                {name: '上海',value: Math.round(Math.random()*1000)},
-                {name: '重庆',value: Math.round(Math.random()*1000)},
-                {name: '河北',value: Math.round(Math.random()*1000)},
-                {name: '安徽',value: Math.round(Math.random()*1000)},
-                {name: '新疆',value: Math.round(Math.random()*1000)},
-                {name: '浙江',value: Math.round(Math.random()*1000)},
-                {name: '江西',value: Math.round(Math.random()*1000)},
-                {name: '山西',value: Math.round(Math.random()*1000)},
-                {name: '内蒙古',value: Math.round(Math.random()*1000)},
-                {name: '吉林',value: Math.round(Math.random()*1000)},
-                {name: '福建',value: Math.round(Math.random()*1000)},
-                {name: '广东',value: Math.round(Math.random()*1000)},
-                {name: '西藏',value: Math.round(Math.random()*1000)},
-                {name: '四川',value: Math.round(Math.random()*1000)},
-                {name: '宁夏',value: Math.round(Math.random()*1000)},
-                {name: '香港',value: Math.round(Math.random()*1000)},
-                {name: '澳门',value: Math.round(Math.random()*1000)}
-            ]
-        },
-        {
-            name: 'iphone5',
-            type: 'map',
-            mapType: 'china',
-            itemStyle:{
-                normal:{label:{show:true}},
-                emphasis:{label:{show:true}}
-            },
-            data:[
-                {name: '北京',value: Math.round(Math.random()*1000)},
-                {name: '天津',value: Math.round(Math.random()*1000)},
-                {name: '上海',value: Math.round(Math.random()*1000)},
-                {name: '广东',value: Math.round(Math.random()*1000)},
-                {name: '台湾',value: Math.round(Math.random()*1000)},
-                {name: '香港',value: Math.round(Math.random()*1000)},
-                {name: '澳门',value: Math.round(Math.random()*1000)}
-            ]
+            }
         }
     ]
 };
-                    
 // 基于准备好的dom，初始化echarts实例
 var PV = echarts.init(document.getElementById('PV'));
-var page = echarts.init(document.getElementById('page'));
-var engine = echarts.init(document.getElementById('engine'));
-// var mapworld = echarts.init(document.getElementById('mapworld'));
 var mapchina = echarts.init(document.getElementById('mapchina'));
 
 PV.setOption(baseoption);
-page.setOption(baseoption);
-engine.setOption(baseoption);
-// mapworld.setOption(mapOption);
 mapchina.setOption(mapOption);
 
 function hourFormat(num) {
@@ -293,10 +197,19 @@ $.post('/admin/data', {'flag':'base'}).done(function (data) {
   $('#yestodayUV').text(resp.Data.UV['yesterday']);
 
   PV.setOption({title:{text:"日点击趋势"},legend:{data:['今日PV','昨日PV']},xAxis:{data:xdataHours,axisLabel:{interval:5,rotate: 20,margin: 15}},series:[{name:'今日PV',type:'line',data:resp.Data.TimePV['today']},{name:'昨日PV',type:'line',data:resp.Data.TimePV['yesterday']}]});
-  page.setOption({title:{text:"页面排行TOP5"},xAxis:{data:xdataHours},series:[]});
-  engine.setOption({title:{text:"搜索引擎TOP5"},xAxis:{data:xdataHours},series:[]});
-  // mapworld.setOption({title:{text:"访客地域"},xAxis:{data:xdataHours},series:[]});
-  // mapchina.setOption({title:{text:"访客地域"},xAxis:{data:xdataHours},series:[]});
+
+  var china = new Array();
+  for (var key in resp.Data.China){
+    if (key != "N/A"){
+      china.push(resp.Data.China[key]);
+    }
+  }
+  var world = new Array();
+  for (var key in resp.Data.World){
+    world.push(resp.Data.World[key]);
+  }
+  // mapworld.setOption({title:{text:"访客中国地域"},legend:{data:['点击分布']},series:[{name:'点击分布'}]});
+  mapchina.setOption({series:[{data:china}]});
   var html = '';
   if (resp.Data.Latest != null){
     for (var i = 0; i < resp.Data.Latest.length; i++){
@@ -307,17 +220,11 @@ $.post('/admin/data', {'flag':'base'}).done(function (data) {
 });
 function showLoading(){
   PV.showLoading();
-  page.showLoading();
-  engine.showLoading();
-  // mapworld.showLoading();
   mapchina.showLoading();
 }
 
 function hideLoading(){
   PV.hideLoading();
-  page.hideLoading();
-  engine.hideLoading();
-  // mapworld.hideLoading();
   mapchina.hideLoading();
 }
 </script>
