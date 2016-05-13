@@ -3,6 +3,7 @@ package models
 import (
 	"net/http"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/deepzz0/go-common/log"
@@ -59,7 +60,7 @@ func NewRequestM() *RequestManage {
 }
 
 func (m *RequestManage) Saver() {
-	t := time.NewTicker(time.Minute * 1)
+	t := time.NewTicker(time.Minute)
 	for {
 		select {
 		case request := <-m.Ch:
@@ -67,9 +68,9 @@ func (m *RequestManage) Saver() {
 			if err != nil {
 				log.Error(err)
 			}
+
 		case <-t.C:
-			ManageData.LoadData()
-			ManageData.LoadLatestRequst(1)
+			ManageData.loadData(TODAY)
 		}
 	}
 }
@@ -83,6 +84,7 @@ const (
 var ManageData = NewBaseData()
 
 type BaseData struct {
+	lock      sync.RWMutex
 	PV        map[string]int
 	UV        map[string]int
 	IP        map[string]int
@@ -94,91 +96,68 @@ type BaseData struct {
 }
 
 func NewBaseData() *BaseData {
-	bd := &BaseData{}
+	bd := &BaseData{PV: make(map[string]int), UV: make(map[string]int), IP: make(map[string]int), TimePV: make(map[string][]int)}
 	bd.LoadData()
-	bd.LoadLatestRequst(1)
 	return bd
-}
-
-func (b *BaseData) LoadData() {
-	b.PV = make(map[string]int)
-	b.UV = make(map[string]int)
-	b.IP = make(map[string]int)
-	b.TimePV = make(map[string][]int)
-
-	now := tm.New(time.Now())
-	todayBegin := now.BeginningOfDay()
-	todayEnd := now.EndOfDay()
-
-	yestdBegin := todayBegin.Add(-24 * time.Hour)
-	yestdEnd := todayEnd.Add(-24 * time.Hour)
-
-	ms, c := db.Connect(DB, C_REQUEST)
-	c.EnsureIndexKey("time")
-	defer ms.Close()
-	count, err := c.Find(bson.M{"time": bson.M{"$gte": yestdBegin, "$lt": yestdEnd}}).Count()
-	if err != nil {
-		log.Error(err)
-	}
-	b.PV[YESTERDAY] = count
-	count, err = c.Find(bson.M{"time": bson.M{"$gte": todayBegin, "$lt": todayEnd}}).Count()
-	if err != nil {
-		log.Error(err)
-	}
-	b.PV[TODAY] = count
-	var sessions []string
-	err = c.Find(bson.M{"time": bson.M{"$gte": todayBegin, "$lt": todayEnd}}).Distinct("sessionid", &sessions)
-	if err != nil {
-		log.Error(err)
-	}
-	b.UV[TODAY] = len(sessions)
-	err = c.Find(bson.M{"time": bson.M{"$gte": yestdBegin, "$lt": yestdEnd}}).Distinct("sessionid", &sessions)
-	if err != nil {
-		log.Error(err)
-	}
-	b.UV[YESTERDAY] = len(sessions)
-	var ips []string
-	err = c.Find(bson.M{"time": bson.M{"$gte": yestdBegin, "$lt": yestdEnd}}).Distinct("remoteaddr", &ips)
-	if err != nil {
-		log.Error(err)
-	}
-	b.IP[YESTERDAY] = len(ips)
-	err = c.Find(bson.M{"time": bson.M{"$gte": todayBegin, "$lt": todayEnd}}).Distinct("remoteaddr", &ips)
-	if err != nil {
-		log.Error(err)
-	}
-	b.IP[TODAY] = len(ips)
-	var ts []*Request
-	err = c.Find(bson.M{"time": bson.M{"$gte": todayBegin, "$lt": todayEnd}}).Select(bson.M{"time": 1}).All(&ts)
-	if err != nil {
-		log.Error(err)
-	}
-	b.TimePV[TODAY] = make([]int, 145)
-	for _, v := range ts {
-		b.TimePV[TODAY][ParseTime(v.Time)]++
-	}
-	err = c.Find(bson.M{"time": bson.M{"$gte": yestdBegin, "$lt": yestdEnd}}).Select(bson.M{"time": true}).All(&ts)
-	if err != nil {
-		log.Error(err)
-	}
-	b.TimePV[YESTERDAY] = make([]int, 145)
-	for _, v := range ts {
-		b.TimePV[YESTERDAY][ParseTime(v.Time)]++
-	}
-
 }
 
 const (
 	pageCount = 30
 )
 
-func (b *BaseData) LoadLatestRequst(page int) {
+func (b *BaseData) loadData(typ string) {
+	b.lock.RLock()
+	defer b.lock.RUnlock()
 	ms, c := db.Connect(DB, C_REQUEST)
+	c.EnsureIndexKey("time")
 	defer ms.Close()
-	err := c.Find(nil).Sort("-time").Skip(pageCount * (page - 1)).Limit(pageCount).All(&b.Latest)
+
+	now := tm.New(time.Now())
+	var Begin, End time.Time
+	if typ == TODAY {
+		Begin = now.BeginningOfDay()
+		End = now.EndOfDay()
+	} else if typ == YESTERDAY {
+		Begin = now.BeginningOfDay().Add(-24 * time.Hour)
+		End = now.EndOfDay().Add(-24 * time.Hour)
+	}
+	if typ == TODAY {
+		err := c.Find(nil).Sort("-time").Skip(0).Limit(pageCount).All(&b.Latest)
+		if err != nil {
+			log.Error(err)
+		}
+	}
+	count, err := c.Find(bson.M{"time": bson.M{"$gte": Begin, "$lt": End}}).Count()
 	if err != nil {
 		log.Error(err)
 	}
+	b.PV[typ] = count
+	var sessions []string
+	err = c.Find(bson.M{"time": bson.M{"$gte": Begin, "$lt": End}}).Distinct("sessionid", &sessions)
+	if err != nil {
+		log.Error(err)
+	}
+	b.UV[typ] = len(sessions)
+	var ips []string
+	err = c.Find(bson.M{"time": bson.M{"$gte": Begin, "$lt": End}}).Distinct("remoteaddr", &ips)
+	if err != nil {
+		log.Error(err)
+	}
+	b.IP[typ] = len(ips)
+	var ts []*Request
+	err = c.Find(bson.M{"time": bson.M{"$gte": Begin, "$lt": End}}).Select(bson.M{"time": 1}).All(&ts)
+	if err != nil {
+		log.Error(err)
+	}
+	b.TimePV[typ] = make([]int, 145)
+	for _, v := range ts {
+		b.TimePV[typ][ParseTime(v.Time)]++
+	}
+}
+
+func (b *BaseData) LoadData() {
+	b.loadData(TODAY)
+	b.loadData(YESTERDAY)
 }
 
 func ParseTime(t time.Time) int { // 第几个十分钟
