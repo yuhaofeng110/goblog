@@ -16,6 +16,22 @@ $(function(){
             hljs.highlightBlock(block);
         });
     }
+    // $(".qrcode").hover(function(){
+    //         $("#bottom-qrcode").show();
+    //     },function(){
+    //         $("#bottom-qrcode").hide();
+    // });
+    $(window).scroll(function () {
+        if($(window).scrollTop()>=100 && !$(".go-top").is(':visible')) {
+            $(".go-top").fadeIn().css("display","inline-block");;
+        }else if($(window).scrollTop()<100 && $(".go-top").is(':visible')){
+            $(".go-top").fadeOut();
+        }
+    });
+    $(".go-top").click(function(event){ 
+        $('html,body').animate({scrollTop:0}, 100);
+        return false;
+    });
 });
 // ------------------------------------- 功能函数 ----------------------------------------
 // function timer(){
