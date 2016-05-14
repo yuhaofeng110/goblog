@@ -52,7 +52,7 @@ func (this *TopicController) Topic() {
 	}
 	topic.PV++
 	this.Data["IsFalse"] = false
-	this.Data["Title"] = topic.Title + " - " + models.Blogger.BlogName
+	this.Data["Title"] = topic.Title + " | " + models.Blogger.BlogName
 	this.Data["Topic"] = topic
 	this.Data["Domain"] = this.domain
 	this.Data["Description"] = fmt.Sprintf("%s,%s,%s,blog", topic.Title, models.Blogger.Introduce, models.Blogger.UserName)

@@ -13,7 +13,7 @@ type AboutController struct {
 func (this *AboutController) Get() {
 	this.Layout = "homelayout.html"
 	this.TplName = "aboutTemplate.html"
-	this.Data["Title"] = "关于博主 - " + models.Blogger.BlogName
+	this.Data["Title"] = "关于博主 | " + models.Blogger.BlogName
 	this.Leftbar("about")
 	this.Content()
 }

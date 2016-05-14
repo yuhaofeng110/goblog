@@ -56,7 +56,7 @@ func (this *CategoryController) ListTopic() {
 		}
 		this.Data["ListTopics"] = topics
 	}
-	this.Data["Title"] = name + " - " + models.Blogger.BlogName
+	this.Data["Title"] = name + " | " + models.Blogger.BlogName
 	this.Data["Description"] = fmt.Sprintf("%s的个人博客,%s,%s,blog", models.Blogger.UserName, models.Blogger.Introduce, category.Text)
 	this.Data["Keywords"] = fmt.Sprintf("博客分类,%s,%s,%s", category.Text, models.Blogger.Introduce, models.Blogger.UserName)
 }

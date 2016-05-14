@@ -12,7 +12,7 @@ type MessageController struct {
 
 func (this *MessageController) Get() {
 	this.TplName = "messageTemplate.html"
-	this.Data["Title"] = "给我留言 - " + models.Blogger.BlogName
+	this.Data["Title"] = "给我留言 | " + models.Blogger.BlogName
 	this.Leftbar("message")
 	this.Content()
 }
