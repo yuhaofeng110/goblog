@@ -71,12 +71,12 @@
     </ul>
   </nav>
   <div id="topicsModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridTopicsModalLabel">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
           <!-- title -->
-          <h4 class="modal-title" id="topicModalLabel"></h4>
+          <h5 class="modal-title" id="topicModalLabel"></h5>
           <h6><div id='newTag'></div></h6>
           <div class="btn-group chooseTag">
             <button type="button" id="choose-tag" class="btn btn-sm btn-success" aria-haspopup="true" aria-expanded="false">选择TAG <span class="caret"></span>
@@ -102,7 +102,7 @@
               <!-- editor -->
               <link rel="stylesheet" href="/static/css/editor.css">
               <div id="markdown-editor">
-                <div class="input-group">
+                <div class="input-group input-group-sm">
                   <span class="input-group-addon">标题</span>
                   <input id="editor-title" type="text" class="form-control" aria-describedby="sizing-addon2">
                 </div>
@@ -126,6 +126,7 @@
     </div><!-- /.modal-dialog -->
   </div>
   <script>
+    $('#topicsModal').modal({backdrop:false,keyboard:false,show:false});
     var flagNew = "";
     var tags = new Array();
     $('#selectCategory').on('change', function(){

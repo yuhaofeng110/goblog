@@ -1,6 +1,7 @@
 package models
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
 	"sync"
@@ -154,7 +155,7 @@ func (b *BaseData) loadData(typ string) {
 	for _, v := range ips {
 		info, err := ip17mon.Find(v)
 		if err != nil {
-			log.Error(err)
+			log.Debug(err)
 			continue
 		}
 		if info.Country == "中国" {
@@ -194,6 +195,10 @@ func ParseTime(t time.Time) int { // 第几个十分钟
 }
 
 ///////////////////////////////////////////////////////////////////////////
+const (
+	SITE_VERIFY = "siteverify"
+)
+
 type Verification struct {
 	Name       string // pk
 	Content    string
@@ -207,15 +212,23 @@ func NewVerify() *Verification {
 var ManageConf = LoadConf()
 
 type Config struct {
-	Name       string
 	SiteVerify map[string]*Verification
 }
 
 func LoadConf() *Config {
-	conf := &Config{Name: "config", SiteVerify: make(map[string]*Verification)}
-	err := db.FindOne(DB, C_CONFIG, bson.M{"name": "config"}, conf)
+	conf := &Config{SiteVerify: make(map[string]*Verification)}
+	ms, c := db.Connect(DB, C_CONFIG)
+	defer ms.Close()
+	tmp := make(map[string]string)
+	err := c.Find(nil).Select(bson.M{SITE_VERIFY: 1, "_id": 0}).One(tmp)
 	if err != nil && !strings.Contains(err.Error(), "not found") {
 		log.Error(err)
+	}
+	if str := tmp[SITE_VERIFY]; str != "" {
+		err := json.Unmarshal([]byte(str), &conf.SiteVerify)
+		if err != nil {
+			log.Error(err)
+		}
 	}
 	return conf
 }
@@ -234,7 +247,12 @@ func (conf *Config) DelVerification(name string) {
 }
 
 func (conf *Config) UpdateConf() {
-	err := db.Update(DB, C_CONFIG, bson.M{"name": "config"}, bson.M{"$set": bson.M{"siteverify": conf.SiteVerify}})
+	data, err := json.Marshal(conf.SiteVerify)
+	if err != nil {
+		log.Error(err)
+		return
+	}
+	err = db.Update(DB, C_CONFIG, bson.M{}, bson.M{"$set": bson.M{SITE_VERIFY: string(data)}})
 	if err != nil {
 		log.Error(err)
 	}

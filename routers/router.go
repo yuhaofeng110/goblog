@@ -9,11 +9,15 @@ import (
 	"github.com/deepzz0/goblog/controllers/feed"
 )
 
+const (
+	ONE_DAYS = 24 * 3600
+)
+
 func init() {
 	// config
 	beego.BConfig.WebConfig.Session.SessionOn = true
 	beego.BConfig.WebConfig.Session.SessionName = "SESSIONID"
-	beego.BConfig.WebConfig.Session.SessionCookieLifeTime = 3600
+	beego.BConfig.WebConfig.Session.SessionCookieLifeTime = ONE_DAYS
 	beego.BConfig.WebConfig.Session.SessionGCMaxLifetime = 3600
 	// admin
 	beego.BConfig.Listen.EnableAdmin = false
