@@ -215,7 +215,7 @@
         }
         tags.push(tag);
         var classname = $(this).attr('class')
-        var html = '<span class="'+ classname +'">'+ tag +'<span aria-hidden="true" class="remove-tag" onclick="removetag(this);">×</span></span>';
+        var html = '<span class="'+ classname +'">'+ tag +'<span aria-hidden="true" class="removeTag" onclick="removetag(this);">×</span></span>';
         $('#newTag').append(html);
       });
     });
@@ -226,7 +226,7 @@
         return;
       }
       tags.push(tag);
-      $('#newTag').append('<span class="label label-primary">'+ tag +'<span aria-hidden="true" class="remove-tag" onclick="removetag(this);">×</span></span>');
+      $('#newTag').append('<span class="label label-primary">'+ tag +'<span aria-hidden="true" class="removeTag" onclick="removetag(this);">×</span></span>');
     });
     $("#choose-tag").on('click', function(){
       if($("#dropdown-tag").is(":hidden")){
