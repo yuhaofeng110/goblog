@@ -190,6 +190,14 @@ func (b *BaseData) LoadData() {
 	b.loadData(YESTERDAY)
 }
 
+func (b *BaseData) CleanData(t time.Time) {
+	daysAgo20 := t.AddDate(0, 0, -20)
+	err := db.Remove(DB, C_REQUEST, bson.M{"time": bson.M{"$lt": daysAgo20}})
+	if err != nil {
+		log.Error(err)
+	}
+}
+
 func ParseTime(t time.Time) int { // 第几个十分钟
 	return (t.Hour()*60+t.Minute())/10 + 1
 }

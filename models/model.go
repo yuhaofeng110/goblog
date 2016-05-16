@@ -76,6 +76,7 @@ func NewDay() {
 			if time.Now().Day() != Today.Day() {
 				Today = time.Now()
 				ManageData.LoadData()
+				ManageData.CleanData(Today)
 			}
 		}
 	}
