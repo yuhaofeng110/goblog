@@ -59,7 +59,7 @@ func init() {
 	TMgr.loadTopics()
 	ManageData.LoadData()
 	monitor.HookOnExit("flushdata", flushdata)
-	go monitor.Startup()
+	monitor.Startup()
 	go RequestM.Saver()
 	go scheduleTopic()
 	go scheduleUser()
