@@ -31,6 +31,9 @@ const (
 var Blogger *User
 
 func init() {
+	// 开启邮件报错
+	log.SetEnableMail(true)
+
 	path, _ := os.Getwd()
 	if err := ip17mon.Init(path + "/conf/17monipdb.dat"); err != nil {
 		log.Fatal(err)

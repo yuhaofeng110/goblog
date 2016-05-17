@@ -160,6 +160,10 @@ func (b *BaseData) loadData(typ string) {
 		}
 		if info.Country == "中国" {
 			if city := b.China[info.City]; city == nil {
+				if info.Region == "台湾" {
+					b.China[info.Region] = &Area{Name: info.Region, Value: 1}
+					continue
+				}
 				b.China[info.City] = &Area{Name: info.Region, Value: 1}
 			} else {
 				city.Value++
@@ -193,7 +197,7 @@ func (b *BaseData) LoadData() {
 func (b *BaseData) CleanData(t time.Time) {
 	daysAgo20 := t.AddDate(0, 0, -20)
 	err := db.Remove(DB, C_REQUEST, bson.M{"time": bson.M{"$lt": daysAgo20}})
-	if err != nil {
+	if err != nil && !strings.Contains(err.Error(), "not found") {
 		log.Error(err)
 	}
 }
