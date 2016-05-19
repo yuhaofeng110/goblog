@@ -25,13 +25,13 @@ type Leftbar struct {
 
 ///////////////////////////////////////////////////////////////////////////
 type Request struct {
-	Referer    string               // 请求来源
-	URL        string               // 访问页面
-	Major      int                  // 主版本
-	RemoteAddr string               // 请求IP
-	SessionID  string               // 请求session
-	UserAgent  *useragent.UserAgent //
-	Time       time.Time            // 请求时间
+	Referer    string              // 请求来源
+	URL        string              // 访问页面
+	Major      int                 // 主版本
+	RemoteAddr string              // 请求IP
+	SessionID  string              // 请求session
+	UserAgent  useragent.UserAgent //
+	Time       time.Time           // 请求时间
 }
 
 func NewRequest(r *http.Request) *Request {
@@ -50,8 +50,6 @@ func NewRequest(r *http.Request) *Request {
 }
 
 type RequestManage struct {
-	// lock sync.RWMutex
-	// SSidToTime map[string]time.Time
 	Ch chan *Request
 }
 

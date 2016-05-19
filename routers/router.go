@@ -7,6 +7,7 @@ import (
 	"github.com/deepzz0/goblog/controllers"
 	"github.com/deepzz0/goblog/controllers/background"
 	"github.com/deepzz0/goblog/controllers/feed"
+	"github.com/deepzz0/goblog/controllers/plugin"
 )
 
 const (
@@ -56,6 +57,8 @@ func init() {
 	beego.Get("/robots.txt", feed.Robots)
 	// 404
 	beego.ErrorHandler("404", HTTPNotFound)
+	// plugin
+	beego.Router("/plugin/useragent.html", &plugin.UserAgent{})
 }
 
 // 404

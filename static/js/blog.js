@@ -32,6 +32,22 @@ $(function(){
         $('html,body').animate({scrollTop:0}, 100);
         return false;
     });
+    window.options = {
+        showArrayIndex: false,
+        hyperlinks : {
+            enable : true,
+            keys: [],
+            target : '_blank'
+        },
+
+        bool : {
+            showText : true,
+            text : {
+                true : "true",
+                false : "false"
+            },
+        }
+    }
 });
 // ------------------------------------- 功能函数 ----------------------------------------
 // function timer(){
@@ -84,20 +100,20 @@ $(".anchor-link").click(function(){
 // ------------------------------------- json format ----------------------------------------
 (function(window) {
     var p = [],
-        push = function( m ) { return '\\' + p.push( m ) + '\\'; },
-        pop = function( m, i ) { return p[i-1] },
-        tabs = function( count ) { return new Array( count + 1 ).join( '\t' ); };
+    push = function( m ) { return '\\' + p.push( m ) + '\\'; },
+    pop = function( m, i ) { return p[i-1] },
+    tabs = function( count ) { return new Array( count + 1 ).join( '\t' ); };
 
     window.JSONFormat = function( json ) {
         p = [];
         var out = "",
-            indent = 0;
+        indent = 0;
         
         // Extract backslashes and strings
         json = json
-            .replace( /\\./g, push )
-            .replace( /(".*?"|'.*?')/g, push )
-            .replace( /\s+/, '' );      
+        .replace( /\\./g, push )
+        .replace( /(".*?"|'.*?')/g, push )
+        .replace( /\s+/, '' );      
         
         // Indent and insert newlines
         for( var i = 0; i < json.length; i++ ) {
@@ -106,50 +122,50 @@ $(".anchor-link").click(function(){
             switch(c) {
                 case '{':
                 case '[':
-                    out += c + "\n" + tabs(++indent);
-                    break;
+                out += c + "\n" + tabs(++indent);
+                break;
                 case '}':
                 case ']':
-                    out += "\n" + tabs(--indent) + c;
-                    break;
+                out += "\n" + tabs(--indent) + c;
+                break;
                 case ',':
-                    out += ",\n" + tabs(indent);
-                    break;
+                out += ",\n" + tabs(indent);
+                break;
                 case ':':
-                    out += ": ";
-                    break;
+                out += ": ";
+                break;
                 default:
-                    out += c;
-                    break;      
+                out += c;
+                break;      
             }                   
         }
         
         // Strip whitespace from numeric arrays and put backslashes 
         // and strings back in
         out = out
-            .replace( /\[[\d,\s]+?\]/g, function(m){ return m.replace(/\s/g,''); } )
+        .replace( /\[[\d,\s]+?\]/g, function(m){ return m.replace(/\s/g,''); } )
             .replace( /\\(\d+)\\/g, pop ) // strings
             .replace( /\\(\d+)\\/g, pop ); // backslashes in strings
-        
-        return out;
-    };
-    window.onresize = function(){
-        if (window.innerWidth){
-            winWidth = window.innerWidth;
-        }else if ((document.body) && (document.body.clientWidth)){
-            winWidth = document.body.clientWidth;
-        }
-        if(winWidth<768){
-            $('#home-content').addClass('col-md-12 col-xs-12').removeClass('col-md-9 col-xs-10');
-            $('#home-right').css('display', 'none');
-            $('.right-content').css('width', '100%');
-        }else if(winWidth>768){
-            $('#home-content').addClass('col-md-9 col-xs-10').removeClass('col-md-12 col-xs-12');
-            $('#home-right').css('display', 'block');
-            $('.right-content').css('width', '85%');
-        }  
-    }   
-})(window);
+            
+            return out;
+        };
+        window.onresize = function(){
+            if (window.innerWidth){
+                winWidth = window.innerWidth;
+            }else if ((document.body) && (document.body.clientWidth)){
+                winWidth = document.body.clientWidth;
+            }
+            if(winWidth<768){
+                $('#home-content').addClass('col-md-12 col-xs-12').removeClass('col-md-9 col-xs-10');
+                $('#home-right').css('display', 'none');
+                $('.right-content').css('width', '100%');
+            }else if(winWidth>768){
+                $('#home-content').addClass('col-md-9 col-xs-10').removeClass('col-md-12 col-xs-12');
+                $('#home-right').css('display', 'block');
+                $('.right-content').css('width', '85%');
+            }  
+        }   
+    })(window);
 // ------------------------------------- 通信 ----------------------------------------
 function get(method, url, data, async) 
 {   
