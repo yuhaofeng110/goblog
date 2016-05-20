@@ -86,12 +86,12 @@ b, strong {font-weight: inherit;}
 /*page->pre,next*/
 .pager li>a, .pager li>span{border: none;}
 /*fix-btn*/
-.fixed-btn {position: fixed;right: 1%;bottom: 2.5%;width: 40px;border: 1px solid #eee;background-color: white;font-size: 24px;z-index: 1040;-webkit-backface-visibility: hidden;}
-.fixed-btn a{display:inline-block;width:40px;height:40px;text-align:center}
+.fixed-btn {line-height: 0%; position: fixed;right: 1%;bottom: 2%;width: 40px;border: 1px solid #eee;background-color: white;font-size: 24px;z-index: 1040;-webkit-backface-visibility: hidden;}
+.fixed-btn a{display: inline-block;width: 38px;height: 38px;text-align: center;text-decoration: none;}
 .fixed-btn a:after{content:".";font-size:0;height:100%;display:inline-block;vertical-align:middle}
-.fixed-btn a i{vertical-align:middle}
-.fixed-btn .go-top{border-bottom:1px solid #eee;display: none;}
-.fixed-btn .writer{background-color:#1ca8dd;font-size:18px;color:white}
+.fixed-btn a i{vertical-align: middle;}
+.fixed-btn .go-top{display: none;border-bottom: 1px solid #eee;}
+.fixed-btn .writer{background-color:#1ca8dd;font-size:12px;color:white}
 .fixed-btn .hide-go-top{display:none;opacity:0;filter:alpha(opacity=0)}
 /*.modal.fade{-webkit-transition:opacity .3s linear,top .3s ease-out;-moz-transition:opacity .3s linear,top .3s ease-out;-o-transition:opacity .3s linear,top .3s ease-out;transition:opacity .3s linear,top .3s ease-out;top:-25%}*/
 /*.modal.fade.in{top:10%}.modal-header{padding:9px 15px;border-bottom:1px solid #eee}*/
