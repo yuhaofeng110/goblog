@@ -16,7 +16,7 @@ type UserAgent struct {
 
 func (this *UserAgent) Get() {
 	this.TplName = "plugin/useragent.html"
-	this.Data["Title"] = "UserAgent Paser 解析器 | " + models.Blogger.BlogName
+	this.Data["Title"] = "UserAgent Parser 解析器 | " + models.Blogger.BlogName
 	this.Data["BlogName"] = models.Blogger.BlogName
 	this.Data["Domain"] = this.domain
 	this.Data["Year"] = time.Now().Format("2006")
