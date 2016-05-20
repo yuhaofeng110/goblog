@@ -86,7 +86,7 @@ b, strong {font-weight: inherit;}
 /*page->pre,next*/
 .pager li>a, .pager li>span{border: none;}
 /*fix-btn*/
-.fixed-btn {line-height: 0%; position: fixed;right: 1%;bottom: 2%;width: 40px;border: 1px solid #eee;background-color: white;font-size: 24px;z-index: 1040;-webkit-backface-visibility: hidden;}
+.fixed-btn {line-height: 0%; position: fixed;right: 1%;bottom: 2.5%;width: 40px;border: 1px solid #eee;background-color: white;font-size: 24px;z-index: 1040;-webkit-backface-visibility: hidden;}
 .fixed-btn a{display: inline-block;width: 38px;height: 38px;text-align: center;text-decoration: none;}
 .fixed-btn a:after{content:".";font-size:0;height:100%;display:inline-block;vertical-align:middle}
 .fixed-btn a i{vertical-align: middle;}
