@@ -4,3 +4,4 @@ conf/qiniu.conf
 goblog
 goblog.exe
 static/feed.xml
+static/sitemap.xml
