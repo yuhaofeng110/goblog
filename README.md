@@ -9,7 +9,7 @@ goblog 是基于beego框架开发的博客系统。主张简约、简单。系�
 go get github.com/deepzz0/goblog
 ```
 
-安装mongodb
+安装mongodb数据库
 ```
 brew install mongodb
 ```
@@ -21,9 +21,11 @@ export MGO="127.0.0.1"
 ```
 #### 配置文件
 
-监听端口在<code>goblog/conf/app.conf</code>修改
+<code>conf/app.conf</code>
 ```
+# 程序运行名称
 appname = goblog
+# 程序运行模式
 runmode = prod
 [dev]
 httpport = 8080
