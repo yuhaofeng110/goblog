@@ -104,6 +104,9 @@ zone = 0
 ```
 这里博主用了Google的数据统计，你可以将上面的代码替换成百度的统计代码等其它统计方式。在<code>views/homelayout.html</code>
 
+#### 插件相关
+UserAgent Parser，基于GO的用户代理解析器。
+
 #### 有关其它
 <code>static</code>目录下:
 
