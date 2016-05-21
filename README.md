@@ -55,15 +55,15 @@ zone = 0
 该文件为七牛cdn，配置之后你在写文章时，可以直接上传文件倒cdn。
 
 <code>backup</code>
-该文件是前台菜单模版，你可以直接修改配置。或者在程序运行成功后，后台修改。
+该文件是前台展示，账号信息的模版，你可以直接修改配置。或者在程序运行成功后，后台修改。
 ``` json
-// 这里配置你后台的用户名，密码，随机盐。配置时使用明文，数据库是加密过的。
 {
     "UserName": "deepzz",
     "PassWord": "deepzz",
     "Salt": "__(f",
 ```
-注意，你需要倒<code>models/model.go</code>修改默认用户。
+上面配置你后台的用户名，密码，随机盐。配置时使用的是明文，数据库存储是加密过的。  
+注意，你需要到<code>models/model.go</code>修改默认用户，将deepzz替换成你的用户名。
 ``` go
 	UMgr.loadUsers()
 	Blogger = UMgr.Get("deepzz")
@@ -105,12 +105,12 @@ zone = 0
 这里博主用了Google的数据统计，你可以将上面的代码替换成百度的统计代码等其它统计方式。在<code>views/homelayout.html</code>
 
 #### 插件相关
-UserAgent Parser，基于GO的用户代理解析器。
+UserAgent Parser，基于GO的用户代理解析器。可以到<code>domain:port/plugin/useragent.html</code>访问。
 
 #### 有关其它
 <code>static</code>目录下:
 
-1. feedTemplate.xml是生成feed.xml的模版，你可以通过访问<code>domain:port/feed</code>查看，每小时自动更新。
+1. <code>feedTemplate.xml</code>是生成feed.xml的模版，你可以通过访问<code>domain:port/feed</code>查看，每小时自动更新。
 2. <code>robots.txt</code>，网络爬虫排除协议。
 3. <code>sitemap.xml</code>，网站地图，用于搜索引擎快速收录，博主爬虫尚未写好，现只能通过后台手动配置，你也可以通过自己的方式处理。访问两种方式<code>domain:port/sitemap</code>和<code>domain:port/sitemap.xml</code>。
 
