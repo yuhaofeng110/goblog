@@ -9,6 +9,7 @@ import (
 	"github.com/deepzz0/go-common/log"
 	"github.com/deepzz0/go-common/monitor"
 	"github.com/deepzz0/goblog/RS"
+	"github.com/deepzz0/goblog/helper"
 	"github.com/wangtuanjie/ip17mon"
 )
 
@@ -49,6 +50,7 @@ func init() {
 		if err != nil {
 			panic(err)
 		}
+		user.PassWord = helper.EncryptPasswd(user.UserName, user.PassWord, user.Salt)
 		UMgr.RegisterUser(&user)
 		code := UMgr.UpdateUsers()
 		if code != RS.RS_success {
