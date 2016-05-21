@@ -67,7 +67,7 @@ func doFeed() {
 	ts, _ := models.TMgr.GetTopicsByPage(1)
 	var Topics []*Topic
 	for i, v := range ts {
-		if i == 0 && v.CreateTime == buildDate {
+		if i == 0 && v.CreateTime.Before(buildDate) {
 			return
 		}
 		t := &Topic{}
