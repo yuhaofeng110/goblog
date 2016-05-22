@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/deepzz0/go-common/useragent"
+	"github.com/deepzz0/go-com/useragent"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"

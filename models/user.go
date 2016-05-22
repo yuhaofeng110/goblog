@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/deepzz0/go-common/log"
-	db "github.com/deepzz0/go-common/mongo"
+	"github.com/deepzz0/go-com/log"
+	db "github.com/deepzz0/go-com/mongo"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"gopkg.in/mgo.v2/bson"

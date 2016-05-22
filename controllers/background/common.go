@@ -7,7 +7,7 @@ import (
 	"github.com/deepzz0/goblog/cache"
 	"github.com/deepzz0/goblog/helper"
 	// "github.com/deepzz0/goblog/models"
-	// "github.com/deepzz0/go-common/log"
+	// "github.com/deepzz0/go-com/log"
 )
 
 var sessionname = beego.AppConfig.String("sessionname")

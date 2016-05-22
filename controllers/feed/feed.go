@@ -10,7 +10,7 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
-	"github.com/deepzz0/go-common/log"
+	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"
 )

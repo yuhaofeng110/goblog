@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego"
-	// "github.com/deepzz0/go-common/log"
+	// "github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/cache"
 	"github.com/deepzz0/goblog/models"
 )

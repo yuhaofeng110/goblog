@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/deepzz0/go-common/log"
-	"github.com/deepzz0/go-common/monitor"
+	"github.com/deepzz0/go-com/log"
+	"github.com/deepzz0/go-com/monitor"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/wangtuanjie/ip17mon"

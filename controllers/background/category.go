@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"sort"
 
-	"github.com/deepzz0/go-common/log"
+	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"
-	// db "github.com/deepzz0/go-common/mongo"
+	// db "github.com/deepzz0/go-com/mongo"
 )
 
 type CategoryController struct {

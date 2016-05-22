@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/deepzz0/goblog/models"
-	// "github.com/deepzz0/go-common/log"
+	// "github.com/deepzz0/go-com/log"
 )
 
 type TagController struct {
