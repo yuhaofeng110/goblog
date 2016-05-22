@@ -1,6 +1,6 @@
 ## goblog 
 
-goblog 是基于beego框架开发的博客系统。主张简约、简单。系统采用mongodb数据库存储，七牛云存储提供cdn支持，markdown书写文章，拥有完整后台，可docker部署。
+goblog 是基于beego框架开发的博客系统。主张简约、简单。系统采用mongodb数据库存储，七牛云存储提供cdn支持，markdown书写文章，拥有完整后台，可docker部署。各位朋友，不要吝啬你的star，赏个星星吧。
 
 #### 快速开始
 
