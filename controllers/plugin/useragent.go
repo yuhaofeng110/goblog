@@ -16,12 +16,12 @@ type UserAgent struct {
 
 func (this *UserAgent) Get() {
 	this.TplName = "plugin/useragent.html"
-	this.Data["Title"] = "UserAgent Parser 解析器 | " + models.Blogger.BlogName
+	this.Data["Title"] = "UserAgent Parser, Go | " + models.Blogger.BlogName
 	this.Data["BlogName"] = models.Blogger.BlogName
 	this.Data["Domain"] = this.domain
 	this.Data["Year"] = time.Now().Format("2006")
 	this.Data["UserAgent"] = this.Ctx.Request.UserAgent()
-	this.Data["Keywords"] = fmt.Sprintf("useragent, 用户代理解析器, %s, %s", models.Blogger.Introduce, models.Blogger.BlogName)
+	this.Data["Keywords"] = fmt.Sprintf("useragent,golang,go,用户代理解析器, %s, %s", models.Blogger.Introduce, models.Blogger.BlogName)
 	this.Data["Description"] = fmt.Sprintf("useragent,parser,%s,%s", models.Blogger.Introduce, models.Blogger.BlogName)
 }
 
