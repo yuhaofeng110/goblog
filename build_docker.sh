@@ -7,6 +7,7 @@ mkdir tmp && \
 cp -a views tmp/views && \
 cp -a conf tmp/conf && \
 cp -a static tmp/static && \
+cp -a .cert tmp/.cert && \
 cp Dockerfile tmp/ && \
 cp goblog tmp/ && \
 cp version tmp/ && \
