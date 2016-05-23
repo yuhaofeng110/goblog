@@ -17,6 +17,6 @@ func (this *MessageController) Get() {
 
 func (this *MessageController) Content() {
 	this.Data["ID"] = 99999
-	this.Data["URL"] = this.domain + "/message"
+	this.Data["URL"] = "/message"
 	this.Data["Title"] = "给我留言"
 }

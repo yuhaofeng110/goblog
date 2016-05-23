@@ -24,13 +24,13 @@ func (this *TopicsController) Get() {
 
 func (this *TopicsController) Content() {
 	this.Data["Categories"] = models.Blogger.GetValidCategory()
-	this.Data["PreviousDis"] = "disabled"
-	this.Data["PreviousURL"] = "#"
-	this.Data["NextDis"] = "disabled"
-	this.Data["NextURL"] = "#"
+	this.Data["ClassOlder"] = "disabled"
+	this.Data["UrlOlder"] = "#"
+	this.Data["ClassNewer"] = "disabled"
+	this.Data["UrlNewer"] = "#"
 	cat := this.GetString("cat")
 	this.Data["ChooseCat"] = cat
-	page, err := this.GetInt("page")
+	page, err := this.GetInt("p")
 	if err != nil {
 		page = 1
 	}
@@ -41,13 +41,14 @@ func (this *TopicsController) Content() {
 	} else {
 		pageTopics, remainpage = models.TMgr.GetTopicsByCatgory(cat, page)
 	}
+	log.Debug(remainpage, page)
 	if page > 1 {
-		this.Data["PreviousDis"] = ""
-		this.Data["PreviousURL"] = fmt.Sprintf("/admin/topics?cat=%s&p=%d", cat, page-1)
+		this.Data["ClassNewer"] = ""
+		this.Data["UrlNewer"] = fmt.Sprintf("/admin/topics?cat=%s&p=%d", cat, page-1)
 	}
 	if remainpage > 0 {
-		this.Data["NextDis"] = ""
-		this.Data["NextURL"] = fmt.Sprintf("/admin/topics?cat=%s&p=%d", cat, page+1)
+		this.Data["ClassOlder"] = ""
+		this.Data["UrlOlder"] = fmt.Sprintf("/admin/topics?cat=%s&p=%d", cat, page+1)
 	}
 	this.Data["Topics"] = pageTopics
 	var style string

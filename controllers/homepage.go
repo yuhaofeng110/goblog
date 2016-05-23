@@ -24,7 +24,6 @@ func (this *HomeController) Get() {
 func (this *HomeController) Home() {
 	this.Data["Tags"] = models.Blogger.Tags
 	this.Data["Blogrolls"] = models.Blogger.Blogrolls
-	this.Data["Domain"] = this.domain
 	// 文章列表
 	page := 1
 	pageStr := this.Ctx.Input.Param(":page")
@@ -32,7 +31,6 @@ func (this *HomeController) Home() {
 		page = temp
 	}
 	topics, remainpage := models.TMgr.GetTopicsByPage(page)
-	// log.Debugf("page = %d，remainpage=%d	", page, remainpage)
 	if remainpage == -1 {
 		this.Data["ClassOlder"] = "disabled"
 		this.Data["UrlOlder"] = "#"
@@ -40,18 +38,18 @@ func (this *HomeController) Home() {
 		this.Data["UrlNewer"] = "#"
 	} else {
 		if page == 1 {
-			this.Data["ClassOlder"] = "disabled"
-			this.Data["UrlOlder"] = "#"
-		} else {
-			this.Data["ClassOlder"] = ""
-			this.Data["UrlOlder"] = this.domain + "/p/" + fmt.Sprint(page-1)
-		}
-		if remainpage == 0 {
 			this.Data["ClassNewer"] = "disabled"
 			this.Data["UrlNewer"] = "#"
 		} else {
 			this.Data["ClassNewer"] = ""
-			this.Data["UrlNewer"] = this.domain + "/p/" + fmt.Sprint(page+1)
+			this.Data["UrlNewer"] = "/p/" + fmt.Sprint(page-1)
+		}
+		if remainpage == 0 {
+			this.Data["ClassOlder"] = "disabled"
+			this.Data["UrlOlder"] = "#"
+		} else {
+			this.Data["ClassOlder"] = ""
+			this.Data["UrlOlder"] = "/p/" + fmt.Sprint(page+1)
 		}
 		this.Data["ListTopics"] = topics
 	}

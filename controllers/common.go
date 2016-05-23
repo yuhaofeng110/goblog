@@ -13,16 +13,9 @@ var sessionname = beego.AppConfig.String("sessionname")
 
 type Common struct {
 	beego.Controller
-	domain string
-	url    string
 }
 
 func (this *Common) Prepare() {
-	this.url = this.Ctx.Request.URL.String()
-	this.domain = beego.AppConfig.String("mydomain")
-	if beego.BConfig.RunMode == beego.DEV {
-		this.domain = this.domain + ":" + beego.AppConfig.String("httpport")
-	}
 	this.Layout = "homelayout.html"
 	this.Build()
 	this.DoRequest()
@@ -33,7 +26,6 @@ func (this *Common) Leftbar(cat string) {
 	this.Data["Introduce"] = models.Blogger.Introduce
 	this.Data["Categories"] = models.Blogger.Categories
 	this.Data["Socials"] = models.Blogger.Socials
-	this.Data["Domain"] = this.domain
 	this.Data["Choose"] = cat
 	this.Data["CopyTime"] = time.Now().Year()
 }

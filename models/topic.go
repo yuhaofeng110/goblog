@@ -131,7 +131,7 @@ func (m *TopicMgr) DoTopicUpdate(topic *Topic) {
 	x := index[len(index)-1]
 	topic.Preview = string(blackfriday.MarkdownCommon([]byte(topic.Content[:x[len(x)-1]])))
 
-	topic.URL = fmt.Sprintf("%s/%d.html", topic.CreateTime.Format(helper.Layout_y_m_d), topic.ID)
+	topic.URL = fmt.Sprintf("/%s/%d.html", topic.CreateTime.Format(helper.Layout_y_m_d), topic.ID)
 	topic.Time = topic.CreateTime.Format(helper.Layout_y_m_d)
 }
 

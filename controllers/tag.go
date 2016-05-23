@@ -24,7 +24,7 @@ func (this *TagController) ListTopic() {
 	this.Data["Name"] = "无效TAG"
 	if tag != nil {
 		this.Data["Name"] = tag.ID
-		this.Data["URL"] = fmt.Sprintf("tag/%s", tag.ID)
+		this.Data["URL"] = fmt.Sprintf("/tag/%s", tag.ID)
 		page := 1
 		tagName := this.Ctx.Input.Param(":tag")
 		pageStr := this.Ctx.Input.Param(":page")
@@ -39,18 +39,18 @@ func (this *TagController) ListTopic() {
 			this.Data["UrlNewer"] = "#"
 		} else {
 			if page == 1 {
-				this.Data["ClassOlder"] = "disabled"
-				this.Data["UrlOlder"] = "#"
-			} else {
-				this.Data["ClassOlder"] = ""
-				this.Data["UrlOlder"] = this.domain + "/tag/" + tagName + fmt.Sprintf("/p/%d", page-1)
-			}
-			if remainpage == 0 {
 				this.Data["ClassNewer"] = "disabled"
 				this.Data["UrlNewer"] = "#"
 			} else {
 				this.Data["ClassNewer"] = ""
-				this.Data["UrlNewer"] = this.domain + "/tag/" + tagName + fmt.Sprintf("/p/%d", page+1)
+				this.Data["UrlNewer"] = "/tag/" + tagName + fmt.Sprintf("/p/%d", page-1)
+			}
+			if remainpage == 0 {
+				this.Data["ClassOlder"] = "disabled"
+				this.Data["UrlOlder"] = "#"
+			} else {
+				this.Data["ClassOlder"] = ""
+				this.Data["UrlOlder"] = "/tag/" + tagName + fmt.Sprintf("/p/%d", page+1)
 			}
 			this.Data["ListTopics"] = topics
 		}

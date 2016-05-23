@@ -14,17 +14,10 @@ var sessionname = beego.AppConfig.String("sessionname")
 
 type Common struct {
 	beego.Controller
-	index  string
-	domain string
-	url    string
+	index string
 }
 
 func (this *Common) Prepare() {
-	this.url = this.Ctx.Request.URL.String()
-	this.domain = beego.AppConfig.String("mydomain")
-	if beego.BConfig.RunMode == beego.DEV {
-		this.domain = this.domain + ":" + beego.AppConfig.String("httpport")
-	}
 	this.Layout = "manage/adminlayout.html"
 }
 func (this *Common) LeftBar(index string) {

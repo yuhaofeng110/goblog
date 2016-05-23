@@ -26,8 +26,7 @@ func (this *CategoryController) ListTopic() {
 		name = category.Text
 	}
 	this.Data["Name"] = name
-	this.Data["URL"] = fmt.Sprintf("cat/%s", category.ID)
-	this.Data["Domain"] = this.domain
+	this.Data["URL"] = fmt.Sprintf("/cat/%s", category.ID)
 	pageStr := this.Ctx.Input.Param(":page")
 	page := 1
 	if temp, err := strconv.Atoi(pageStr); err == nil {
@@ -41,18 +40,18 @@ func (this *CategoryController) ListTopic() {
 		this.Data["UrlNewer"] = "#"
 	} else {
 		if page == 1 {
-			this.Data["ClassOlder"] = "disabled"
-			this.Data["UrlOlder"] = "#"
-		} else {
-			this.Data["ClassOlder"] = ""
-			this.Data["UrlOlder"] = this.domain + "/cat/" + cat + fmt.Sprintf("/p/%d", page-1)
-		}
-		if remainpage == 0 {
 			this.Data["ClassNewer"] = "disabled"
 			this.Data["UrlNewer"] = "#"
 		} else {
 			this.Data["ClassNewer"] = ""
-			this.Data["UrlNewer"] = this.domain + "/cat/" + cat + fmt.Sprintf("/p/%d", page+1)
+			this.Data["UrlNewer"] = "/cat/" + cat + fmt.Sprintf("/p/%d", page-1)
+		}
+		if remainpage == 0 {
+			this.Data["ClassOlder"] = "disabled"
+			this.Data["UrlOlder"] = "#"
+		} else {
+			this.Data["ClassOlder"] = ""
+			this.Data["UrlOlder"] = "/cat/" + cat + fmt.Sprintf("/p/%d", page+1)
 		}
 		this.Data["ListTopics"] = topics
 	}

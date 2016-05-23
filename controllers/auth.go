@@ -19,7 +19,7 @@ func (this *AuthController) Get() {
 	}
 	this.TplName = "login.html"
 	this.Data["Name"] = models.Blogger.BlogName
-	this.Data["URL"] = beego.AppConfig.String("mydomain")
+	this.Data["URL"] = "/"
 }
 
 func (this *AuthController) Post() {

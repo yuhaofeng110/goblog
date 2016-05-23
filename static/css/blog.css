@@ -44,7 +44,7 @@ pre{padding: 0px; border: none;}
 .notify.info .notify-closer:active {background-color: #1b6eae;}
 /* preloader */
 .preloader{position:fixed;top:0;left:0;right:0;bottom:0;background-color:#FFF;z-index:9999;}
-#status{position:fixed;z-index:9999;width:250px;height:250px;left:50%;top:50%;background-image:url("http://7xokm2.com1.z0.glb.clouddn.com/img/status.gif");background-size:32px 32px;background-repeat:no-repeat;background-position:center;margin:-125px 0 0 -125px;}
+#status{position:fixed;z-index:9999;width:250px;height:250px;left:50%;top:50%;background-image:url("https://o7msui8ho.qnssl.com/img/modify.png/img/status.gif");background-size:32px 32px;background-repeat:no-repeat;background-position:center;margin:-125px 0 0 -125px;}
 #status p{top:60%;}
 #status em{font-size:10px!important;display:block;font-style:normal;}
 em{display: block;color:#646569;font-family:Dosis, sans-serif;font-style:normal;text-align:center;font-size:14px;font-weight:400;padding-top:10px;}

@@ -20,7 +20,7 @@ func (this *AboutController) Get() {
 
 func (this *AboutController) Content() {
 	this.Data["Title"] = "关于博主"
-	this.Data["URL"] = this.domain + "/about"
+	this.Data["URL"] = "/about"
 	if about := models.TMgr.GetTopic(1); about != nil {
 		this.Data["Content"] = string(about.Content)
 	} else {
