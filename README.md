@@ -25,12 +25,15 @@ export MGO="127.0.0.1"
 ```
 appname = goblog
 runmode = prod
+
 [dev]
 httpport = 8080
-mydomain = http://127.0.0.1
 [prod]
+enablehttps = true
+httpsport = 443
+httpscertfile = .cert/fullchain.pem
+httpskeyfile = .cert/privkey.pem
 httpport = 80
-mydomain = http://deepzz.com
 [test]
 httpport = 8888
 ```

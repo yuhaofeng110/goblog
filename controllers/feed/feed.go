@@ -81,14 +81,14 @@ func doFeed() {
 	}
 	buildDate = time.Now()
 	params := make(map[string]interface{})
-	params["Title"] = "Deepzz 的个人博客"
+	params["Title"] = models.Blogger.BlogName + " 的个人博客"
 	params["Domain"] = domain
-	params["Desc"] = "Golang爱好者，技术架构，服务器开发，微服务，网络开发"
+	params["Desc"] = models.Blogger.Introduce
 	params["PubDate"] = time.Now().Format(time.RFC1123Z)
 	params["BuildDate"] = buildDate.Format(time.RFC1123Z)
 	params["Year"] = year
 	params["Version"] = version
-	params["Author"] = "deepzz"
+	params["Author"] = models.Blogger.BlogName
 	params["Topics"] = Topics
 
 	_, err = os.Stat(models.FeedFile)
