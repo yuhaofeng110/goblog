@@ -24,9 +24,9 @@ const (
 
 const (
 	TemplateFile = "./static/feedTemplate.xml"
-	FeedFile     = "./static/feed.xml"
-	SiteFile     = "./static/sitemap.xml"
 	RobotsFile   = "./static/robots.txt"
+	FeedFile     = "/data/goblog/feed.xml"
+	SiteFile     = "/data/goblog/sitemap.xml"
 )
 
 var Blogger *User
