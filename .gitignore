@@ -5,3 +5,4 @@ goblog
 goblog.exe
 static/feed.xml
 static/sitemap.xml
+.cert/

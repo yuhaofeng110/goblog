@@ -20,6 +20,10 @@ func init() {
 	beego.BConfig.WebConfig.Session.SessionName = "SESSIONID"
 	beego.BConfig.WebConfig.Session.SessionCookieLifeTime = ONE_DAYS
 	beego.BConfig.WebConfig.Session.SessionGCMaxLifetime = 3600
+	// https
+	beego.BConfig.Listen.EnableHTTPS = true
+	beego.BConfig.Listen.HTTPSCertFile = ".cert/cert.pem"
+	beego.BConfig.Listen.HTTPSKeyFile = ".cert/privkey.pem"
 	// admin
 	beego.BConfig.Listen.EnableAdmin = false
 	beego.BConfig.Listen.AdminAddr = "localhost"
