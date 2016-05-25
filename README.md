@@ -64,7 +64,8 @@ enablehttps开启https，依次是https监听端口，https相关证书(证书�
     "Tags": {},)"
 }
 ```
-UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数据库存储是加密过的，可以在后台进行修改。Salt这是加密的随机盐，由于是手动注册，请随便填写。HeadIcon头像图片，这个地址填图片链接地址.  
+UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数据库存储是加密过的，可以在后台进行修改。Salt这是加密的随机盐，由于是手动注册，请随便填写。HeadIcon头像图片，这个地址填图片链接地址.
+
 6. <code>models/model.go</code>修改默认用户，将deepzz替换成你的用户名。
 ``` go
 	UMgr.loadUsers()
