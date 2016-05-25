@@ -8,17 +8,16 @@ go get github.com/deepzz0/goblog
 ```
 #### 部署步骤
 ###### Mac OS X
-1. 安装mongodb数据库
+安装mongodb数据库
 ```
 brew install mongodb
 ```
 若没有<code>brew</code>，可自行谷歌，安装。  
 配置mongodb，mongodb默认读取环境变量<code>MGO</code>，追加<code>export MGO="127.0.0.1"</code>到<code>~/.bash_profile</code>末尾。如果没有该文件可手动创建。
 
-2. 修改配置  
+修改配置  
 所有配置文件均在项目目录下的<code>conf</code>下。
 1. <code>app.conf</code>，这里是beego框架的配置文件，采用ini配置方式，如果你了解过beego，应该能看懂。beego框架地址:[http://beego.me](http://beego.me)  
-
 ``` ini
 appname = goblog
 runmode = prod
@@ -36,7 +35,6 @@ httpport = 8888
 
 mydomain = http://deepzz.com
 ```
-
 runmode选择你要运行的模式，对应下面的dev、prod、test。线上模式一般为prod，因为该模式不会输出beego的调试log。  
 enablehttps开启https，依次是https监听端口，https相关证书(证书位置替换为自己的)，http的监听端口(当然你也可以关掉http，enablehttp=false)。mydomain是生成feed需要的域名地址
 
@@ -44,7 +42,6 @@ enablehttps开启https，依次是https监听端口，https相关证书(证书�
         3. <code>qiniu.conf</code>，该文件存放了有关qiniu相关参数，如果没有请创建。
         4. <code>backleft</code>，该文件是后台相关菜单项，你可以进行删减，并实现对应的功能。
         5. <code>backup</code>，该文件夹存放的是账号相关，前台菜单项等相关配置。
-
 ``` json
 {
     "UserName": "deepzz",
