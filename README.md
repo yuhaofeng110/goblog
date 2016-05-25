@@ -8,13 +8,13 @@ go get github.com/deepzz0/goblog
 ```
 #### 部署步骤
 ###### Mac OS X
-* 安装mongodb数据库
+#####安装mongodb数据库
 ```
 brew install mongodb
 ```
 若没有<code>brew</code>，可自行谷歌，安装。配置mongodb，mongodb默认读取环境变量<code>MGO</code>，追加<code>export MGO="127.0.0.1"</code>到<code>~/.bash_profile</code>末尾。如果没有该文件可手动创建。
 
-* 修改配置
+##### 修改配置
 
 所有配置文件均在项目目录下的<code>conf</code>下。
 1. <code>app.conf</code>，这里是beego框架的配置文件，采用ini配置方式，如果你了解过beego，应该能看懂。beego框架地址:[http://beego.me](http://beego.me)  
@@ -70,7 +70,7 @@ UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数�
 	Blogger = UMgr.Get("deepzz")
 ```
 
-* 多说评论框架  
+##### 多说评论框架  
 ``` js
 <!-- 多说评论框 start -->
     <div class="ds-thread" data-order="desc" data-limit="20" data-form-position="top" data-thread-key="{{.ID}}" data-title="{{.Title}}" data-url="{{$.Domain}}/{{.URL}}"></div>
@@ -106,12 +106,12 @@ UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数�
 
 这里博主用了Google的数据统计，你可以将上面的代码替换成百度的统计代码等其它统计方式。在<code>views/homelayout.html</code>
 
-* 插件相关  
+##### 插件相关  
 暂时做了一个小工具，以后其它工具都会写高该目录下<code>controllers/plugin</code>。
 
 1. UserAgent Parser，基于GO的用户代理解析器。可以到<code>domain:port/plugin/useragent.html</code>访问。
 
-* 其它说明  
+##### 其它说明  
 关于持久化，现阶段有sitemap.xml和feed.xml需要持久化，我把它们存放于<code>/data/goblog</code>目录下。
 <code>static</code>目录下:
 
