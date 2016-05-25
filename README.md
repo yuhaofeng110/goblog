@@ -70,7 +70,7 @@ UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数�
 	Blogger = UMgr.Get("deepzz")
 ```
 
-3. 多说评论框架  
+* 多说评论框架  
 ``` js
 <!-- 多说评论框 start -->
     <div class="ds-thread" data-order="desc" data-limit="20" data-form-position="top" data-thread-key="{{.ID}}" data-title="{{.Title}}" data-url="{{$.Domain}}/{{.URL}}"></div>
@@ -90,7 +90,7 @@ UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数�
 ```
 博客集成多说评论框架，你需要到多说官网获取的你网站的shot_name，将上面的deepzz替换掉。该代码段嵌到多个页面，你需要一一替换。
 
-4. 统计相关  
+* 统计相关  
 ``` js
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -106,11 +106,11 @@ UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数�
 
 这里博主用了Google的数据统计，你可以将上面的代码替换成百度的统计代码等其它统计方式。在<code>views/homelayout.html</code>
 
-5. 插件相关  
+* 插件相关  
 暂时做了一个小工具，以后其它工具都会写高该目录下<code>controllers/plugin</code>。
 1. UserAgent Parser，基于GO的用户代理解析器。可以到<code>domain:port/plugin/useragent.html</code>访问。
 
-6. 其它说明  
+* 其它说明  
 关于持久化，现阶段有sitemap.xml和feed.xml需要持久化，我把它们存放于<code>/data/goblog</code>目录下。
 <code>static</code>目录下:
 
