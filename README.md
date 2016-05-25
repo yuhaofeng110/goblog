@@ -17,6 +17,7 @@ brew install mongodb
 ##### 修改配置
 
 所有配置文件均在项目目录下的<code>conf</code>下。
+
 1. <code>app.conf</code>，这里是beego框架的配置文件，采用ini配置方式，如果你了解过beego，应该能看懂。beego框架地址:[http://beego.me](http://beego.me)  
 ``` ini
 appname = goblog
@@ -90,7 +91,7 @@ UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数�
 ```
 博客集成多说评论框架，你需要到多说官网获取的你网站的shot_name，将上面的deepzz替换掉。该代码段嵌到多个页面，你需要一一替换。
 
-* 统计相关  
+##### 统计相关  
 ``` js
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
