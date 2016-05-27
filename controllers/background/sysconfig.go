@@ -17,7 +17,7 @@ type SysconfigController struct {
 
 func (this *SysconfigController) Get() {
 	this.TplName = "manage/system/systemConfig.html"
-	this.Data["Title"] = "系统设置 - " + models.Blogger.BlogName
+	this.Data["Title"] = "系统设置 | " + models.Blogger.BlogName
 	this.LeftBar("sysconfig")
 	this.Content()
 }

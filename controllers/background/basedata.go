@@ -13,7 +13,7 @@ type DataController struct {
 
 func (this *DataController) Get() {
 	this.TplName = "manage/basedata/basedataTemplate.html"
-	this.Data["Title"] = "基础数据 - " + models.Blogger.BlogName
+	this.Data["Title"] = "基础数据 | " + models.Blogger.BlogName
 	this.LeftBar("data")
 	this.Content()
 }
