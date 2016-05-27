@@ -42,13 +42,3 @@ func (this *Common) DoRequest() {
 	requst := models.NewRequest(this.Ctx.Request)
 	models.RequestM.Ch <- requst
 }
-
-type listOfTopic struct {
-	ID        int32
-	Title     string
-	URL       string
-	Time      string
-	Preview   string
-	PCategory *models.Category
-	PTags     []*models.Tag
-}
