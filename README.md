@@ -124,7 +124,7 @@ UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数�
 所有都配置完成，在根目录下运行<code>bee run</code>
 
 #### 基本页面 
-可以到我的博客[http://deepzz.com](http://deepzz.com)查看，国外服务器网速稍慢。  
+可以到我的博客[http://deepzz.com](http://deepzz.com)查看，https访问[https://deepzz.com](https://deepzz.com)，国外服务器网速稍慢。  
 前端页面
 ![show](https://o7msui8ho.qnssl.com/img/home.png)
 后台登陆
