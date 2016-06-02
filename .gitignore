@@ -6,3 +6,4 @@ goblog.exe
 static/feed.xml
 static/sitemap.xml
 .cert/
+build_server.sh
