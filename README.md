@@ -119,7 +119,7 @@ UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数�
 
 1. <code>feedTemplate.xml</code>是生成feed.xml的模版，你可以通过访问<code>domain:port/feed</code>查看，每小时自动更新。
 2. <code>robots.txt</code>，网络爬虫排除协议。
-3. <code>sitemap.xml</code>，网站地图，用于搜索引擎快速收录，博主爬虫尚未写好，现只能通过后台手动配置，你也可以通过自己的方式处理。访问两种方式<code>domain:port/sitemap</code>和<code>domain:port/sitemap.xml</code>。
+3. <code>sitemap.xml</code>，网站地图，用于搜索引擎快速收录，现只能通过后台手动配置，你也可以通过自己的方式处理。访问两种方式<code>domain:port/sitemap</code>和<code>domain:port/sitemap.xml</code>。
 
 所有都配置完成，在根目录下运行<code>bee run</code>
 
