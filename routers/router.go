@@ -1,6 +1,7 @@
 package routers
 
 import (
+	"html/template"
 	"net/http"
 
 	"github.com/astaxie/beego"
@@ -59,8 +60,11 @@ func init() {
 
 // 404
 func HTTPNotFound(w http.ResponseWriter, r *http.Request) {
-	t := beego.BeeTemplates["404.html"]
-	err := t.Execute(w, "")
+	t, err := template.ParseFiles("views/404.html")
+	if err != nil {
+		panic(err)
+	}
+	err = t.Execute(w, "")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

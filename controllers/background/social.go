@@ -3,6 +3,7 @@ package background
 import (
 	"encoding/json"
 	"sort"
+	"time"
 
 	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/RS"
@@ -60,6 +61,7 @@ func (this *SocialController) saveSocial(resp *helper.Response) {
 		*social = sc
 		sort.Sort(models.Blogger.Socials)
 	} else {
+		sc.CreateTime = time.Now()
 		models.Blogger.AddSocial(&sc)
 	}
 }

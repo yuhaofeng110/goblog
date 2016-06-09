@@ -29,7 +29,7 @@
         <td><a href="{{.Extra}}" target="_black">{{.Extra}}</a></td>
         <td>{{.Text}}</td>
         <td>{{.Count}}</td>
-        <td>{{.CreateTime}}</td>
+        <td>{{dateformat .CreateTime "2006-01-02 15:04:05"}}</td>
         <td>
           <button type="button" data-toggle="modal" data-target="#categoryModal" class="btn btn-info btn-xs modifyCategory">修改</button>
           <button type="button" class="btn btn-warning btn-xs deleteCategory">删除</button>

@@ -3,6 +3,7 @@ package background
 import (
 	"encoding/json"
 	"sort"
+	"time"
 
 	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/RS"
@@ -77,6 +78,7 @@ func (this *CategoryController) saveCategory(resp *helper.Response) {
 		*category = cat
 		sort.Sort(models.Blogger.Categories)
 	} else {
+		cat.CreateTime = time.Now()
 		models.Blogger.AddCategory(&cat)
 	}
 }

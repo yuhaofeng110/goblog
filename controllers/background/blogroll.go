@@ -3,6 +3,7 @@ package background
 import (
 	"encoding/json"
 	"sort"
+	"time"
 
 	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/RS"
@@ -62,6 +63,7 @@ func (this *BlogrollController) saveBlogroll(resp *helper.Response) {
 		*blogroll = br
 		sort.Sort(models.Blogger.Blogrolls)
 	} else {
+		br.CreateTime = time.Now()
 		models.Blogger.AddBlogroll(&br)
 	}
 }

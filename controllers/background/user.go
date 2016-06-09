@@ -2,8 +2,9 @@ package background
 
 import (
 	"bytes"
+	"html/template"
 
-	"github.com/astaxie/beego"
+	// "github.com/astaxie/beego"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"
@@ -32,7 +33,10 @@ func (this *UserController) Post() {
 	}
 }
 func (this *UserController) userInfo(resp *helper.Response) {
-	infoT := beego.BeeTemplates["manage/user/user.html"]
+	infoT, err := template.ParseFiles("views/manage/user/user.html")
+	if err != nil {
+		panic(err)
+	}
 	Map := make(map[string]string)
 	Map["BlogName"] = models.Blogger.BlogName
 	Map["Icon"] = models.Blogger.HeadIcon
@@ -50,7 +54,10 @@ func (this *UserController) userInfo(resp *helper.Response) {
 	resp.Data = buffer.String()
 }
 func (this *UserController) modifyPasswd(resp *helper.Response) {
-	modifypasswdT := beego.BeeTemplates["manage/user/modifypasswd.html"]
+	modifypasswdT, err := template.ParseFiles("views/manage/user/modifypasswd.html")
+	if err != nil {
+		panic(err)
+	}
 	var buffer bytes.Buffer
 	modifypasswdT.Execute(&buffer, nil)
 	resp.Data = buffer.String()

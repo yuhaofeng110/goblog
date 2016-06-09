@@ -57,7 +57,7 @@
         <th scope="row"><input id="{{.Name}}" type="checkbox"></th>
         <td>{{.Name}}</td>
         <td>{{.Content}}</td>
-        <td>{{.CreateTime}}</td>
+        <td>{{dateformat .CreateTime "2006-01-02 15:04:05"}}</td>
         <td>
           <button type="button" class="btn btn-warning btn-xs deleteVerify">删除</button>
         </td>
