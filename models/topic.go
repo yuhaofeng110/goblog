@@ -50,7 +50,7 @@ type Topic struct {
 
 type TopicMgr struct {
 	lock            sync.Mutex
-	Topics          map[int32]*Topic // userid --> *User
+	Topics          map[int32]*Topic // id --> *Topic
 	IDs             INT32
 	GroupByCategory map[string]Topics
 	GroupByTag      map[string]Topics

@@ -1,9 +1,6 @@
 package helper
 
 import (
-	"bytes"
-	"crypto/cipher"
-	"crypto/des"
 	"crypto/md5"
 	"encoding/json"
 	"fmt"
@@ -133,39 +130,4 @@ func VerifyPasswd(passwd, name, pass, salt string) bool {
 // randseed
 func GetRand() *rand.Rand {
 	return rand.New(rand.NewSource(time.Now().UnixNano()))
-}
-
-// -------------------------- Entrypdata --------------------------
-func DesEncrypt(origData, key []byte) ([]byte, error) {
-	block, err := des.NewCipher(key)
-	if err != nil {
-		return nil, err
-	}
-	origData = PKCS5Padding(origData, block.BlockSize())
-	crypted := make([]byte, len(origData))
-	blockMode := cipher.NewCBCEncrypter(block, key)
-	blockMode.CryptBlocks(crypted, origData)
-	return crypted, nil
-}
-func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
-	padding := blockSize - len(ciphertext)%blockSize
-	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
-	return append(ciphertext, padtext...)
-}
-func DesDecrypt(crypted, key []byte) ([]byte, error) {
-	block, err := des.NewCipher(key)
-	if err != nil {
-		return nil, err
-	}
-	origData := make([]byte, len(crypted))
-	blockMode := cipher.NewCBCDecrypter(block, key)
-	blockMode.CryptBlocks(origData, crypted)
-	origData = PKCS5UnPadding(origData)
-	return origData, nil
-}
-func PKCS5UnPadding(origData []byte) []byte {
-	length := len(origData)
-	// 去掉最后一个字节 unpadding 次
-	unpadding := int(origData[length-1])
-	return origData[:(length - unpadding)]
 }

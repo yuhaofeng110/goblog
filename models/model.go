@@ -58,7 +58,7 @@ func init() {
 		}
 		Blogger = UMgr.Get("deepzz")
 	}
-	// 开启警告邮件
+	// 开启警告邮件，收件箱 Blogger.Email
 	log.SetEmail(Blogger.Email)
 	TMgr.loadTopics()
 	ManageData.LoadData()

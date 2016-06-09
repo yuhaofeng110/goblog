@@ -17,28 +17,22 @@ import (
 
 // 账户
 type User struct {
-	/* 注册数据 */
-	UserName string // 账户ID
-	PassWord string // 账户密码
-	Email    string // email
-	Salt     string
-	/* 资料补充 */
-	Sex       string // 1:男， 2：女
-	PNumber   int64  // 手机号
-	Address   string // 住址
-	Education string // 教育
-	RealName  string // 真实姓名
-	/* 自动记录 */
-	CreateTime time.Time // 创建时间
-	LoginTime  time.Time // 登录时间
-	LoginIp    string    // 登录ip
-	LogoutTime time.Time // 登出时间
-
-	/* 个性设置 */
-	BlogName  string // 博客名
-	Introduce string // 个人简介
-	HeadIcon  string // 头像
-	/* 博客信息 */
+	UserName   string          // 账户ID
+	PassWord   string          // 账户密码
+	Email      string          // email
+	Salt       string          //
+	Sex        string          // 1:男， 2：女
+	PNumber    int64           // 手机号
+	Address    string          // 住址
+	Education  string          // 教育
+	RealName   string          // 真实姓名
+	CreateTime time.Time       // 创建时间
+	LoginTime  time.Time       // 登录时间
+	LoginIp    string          // 登录ip
+	LogoutTime time.Time       // 登出时间
+	BlogName   string          // 博客名
+	Introduce  string          // 个人简介
+	HeadIcon   string          // 头像
 	Tags       map[string]*Tag // 标签
 	Categories SortCategory    // 分类
 	Socials    SortSocial      // social

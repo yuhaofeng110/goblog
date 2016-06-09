@@ -15,6 +15,6 @@ cd tmp && \
 
 # docker -H tcp://127.0.0.1:2375 build -t gameserver .
 docker build -t registry.deepzz.com:5000/goblog . 
-
+docker build -t server.deepzz.com:5000/goblog . 
 cd .. 
 rm -rf tmp

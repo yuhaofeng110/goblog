@@ -10,10 +10,6 @@ import (
 	// "github.com/deepzz0/go-com/log"
 )
 
-const (
-	DUOSHUO_COMMENT_NUM_URL = "http://api.duoshuo.com/threads/counts.json?short_name=%s&threads=%d"
-)
-
 type TopicController struct {
 	Common
 }
