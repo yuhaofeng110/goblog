@@ -11,21 +11,25 @@ Go    :go version go1.6.2 darwin/amd64
 
 #### 获取项目 
 ```
-go get github.com/deepzz0/goblog
+go get -u github.com/deepzz0/goblog
 ```
 #### 部署步骤
 ###### Mac OS X
-#####安装mongodb数据库
+######安装mongodb数据库
 ```
 brew install mongodb
 ```
-若没有<code>brew</code>，可自行谷歌，安装。配置mongodb，mongodb默认读取环境变量<code>MGO</code>，追加<code>export MGO="127.0.0.1"</code>到<code>~/.bash_profile</code>末尾。如果没有该文件可手动创建。
+若没有<code>brew</code>，可自行百度谷歌，安装。
+###### 配置mongod
+mongodb默认读取环境变量<code>MGO</code>，追加<code>export MGO="127.0.0.1"</code>到<code>~/.bash_profile</code>末尾。如果没有该文件可手动创建。
+``` sh
+export 'export MGO="127.0.0.1"' >> .bash_profile
+```
 
 ##### 修改配置
-
-所有配置文件均在项目目录下的<code>conf</code>下。
-
-1. <code>app.conf</code>，这里是beego框架的配置文件，采用ini配置方式，如果你了解过beego，应该能看懂。beego框架地址:[http://beego.me](http://beego.me)  
+所有配置文件均在项目目录下的<code>conf</code>下。  
+1. <code>app.conf</code>，这里是beego框架的配置文件，采用ini配置方式，如果你了解过beego，应该能看懂。beego框架地址:[http://beego.me](http://beego.me) .
+runmode选择你要运行的模式，对应下面的dev、prod、test。线上模式一般为prod，因为该模式不会输出beego的调试log。enablehttps开启https，依次是https监听端口，https相关证书(证书位置替换为自己的)，http的监听端口(当然你也可以关掉http，enablehttp=false)。mydomain是生成feed需要的域名地址
 ``` ini
 appname = goblog
 runmode = prod
@@ -43,13 +47,10 @@ httpport = 8888
 
 mydomain = http://deepzz.com
 ```
-runmode选择你要运行的模式，对应下面的dev、prod、test。线上模式一般为prod，因为该模式不会输出beego的调试log。  
-enablehttps开启https，依次是https监听端口，https相关证书(证书位置替换为自己的)，http的监听端口(当然你也可以关掉http，enablehttp=false)。mydomain是生成feed需要的域名地址
-
 2. <code>17monipdb.dat</code>，该文件是后台解析ip地址的数据库，你可以查看[www.ipip.net](www.ipip.net)
 3. <code>qiniu.conf</code>，该文件存放了有关qiniu相关参数，如果没有请创建。
 4. <code>backleft</code>，该文件是后台相关菜单项，你可以进行删减，并实现对应的功能。
-5. <code>backup</code>，该文件夹存放的是账号相关，前台菜单项等相关配置。
+5. <code>backup</code>，该文件夹存放的是账号相关，前台菜单项等相关配置。UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数据库存储是加密过的，可以在后台进行修改。Salt这是加密的随机盐，由于是手动注册，请随便填写。HeadIcon头像图片，这个地址填图片链接地址.
 ``` json
 {
     "UserName": "deepzz",
@@ -71,8 +72,6 @@ enablehttps开启https，依次是https监听端口，https相关证书(证书�
     "Tags": {},)"
 }
 ```
-UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数据库存储是加密过的，可以在后台进行修改。Salt这是加密的随机盐，由于是手动注册，请随便填写。HeadIcon头像图片，这个地址填图片链接地址.
-
 6. <code>models/model.go</code>修改默认用户，将deepzz替换成你的用户名。
 ``` go
 	UMgr.loadUsers()
