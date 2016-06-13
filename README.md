@@ -120,13 +120,13 @@ mydomain = http://deepzz.com
 1. UserAgent Parser，基于GO的用户代理解析器。可以到<code>domain:port/plugin/useragent.html</code>访问。
 
 ##### 其它说明  
-关于持久化，现阶段有sitemap.xml和feed.xml需要持久化，我把它们存放于<code>/data/goblog</code>目录下。
+关于持久化，现阶段有sitemap.xml和feed.xml需要持久化，我把它们存放于<code>/data/goblog</code>目录下，自我测试时可能会报错，你可以随意指定该路径<code>models/model.go</code>中的const。
 <code>static</code>目录下:
 
 1. <code>feedTemplate.xml</code>是生成feed.xml的模版，你可以通过访问<code>domain:port/feed</code>查看，每小时自动更新。
 2. <code>robots.txt</code>，网络爬虫排除协议。
 3. <code>sitemap.xml</code>，网站地图，用于搜索引擎快速收录，现只能通过后台手动配置，你也可以通过自己的方式处理。访问两种方式<code>domain:port/sitemap</code>和<code>domain:port/sitemap.xml</code>。
-4. 邮件报错，<code>models/model</code>下<code>init</code>的<code>log.SetEmail(Blogger.Email)</code>，如果不开启请注释。
+4. 邮件报错，<code>models/model</code>下<code>init</code>的<code>log.SetEmail(Blogger.Email)</code>，如果不开启请注释掉。
 
 所有都配置完成，在根目录下运行<code>bee run</code>
 
