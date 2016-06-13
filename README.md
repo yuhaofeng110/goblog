@@ -120,7 +120,12 @@ mydomain = http://deepzz.com
 1. UserAgent Parser，基于GO的用户代理解析器。可以到<code>domain:port/plugin/useragent.html</code>访问。
 
 ##### 其它说明  
-关于持久化，现阶段有sitemap.xml和feed.xml需要持久化，我把它们存放于<code>/data/goblog</code>目录下，自我测试时可能会报错，你可以随意指定该路径<code>models/model.go</code>中的const。
+关于持久化，现阶段有sitemap.xml和feed.xml需要持久化，我把它们存放于<code>/data/goblog</code>目录下，自我测试时可能会报错，你可以随意指定该路径<code>models/model.go</code>中。
+```
+FeedFile     = "/data/goblog/feed.xml"
+SiteFile     = "/data/goblog/sitemap.xml"
+```
+
 <code>static</code>目录下:
 
 1. <code>feedTemplate.xml</code>是生成feed.xml的模版，你可以通过访问<code>domain:port/feed</code>查看，每小时自动更新。
