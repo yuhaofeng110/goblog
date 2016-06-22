@@ -13,12 +13,14 @@ var sessionname = beego.AppConfig.String("sessionname")
 
 type Common struct {
 	beego.Controller
+	domain string
 }
 
 func (this *Common) Prepare() {
 	this.Layout = "homelayout.html"
 	this.Build()
 	this.DoRequest()
+	this.domain = beego.AppConfig.String("mydomain")
 }
 func (this *Common) Leftbar(cat string) {
 	this.Data["Picture"] = models.Blogger.HeadIcon
