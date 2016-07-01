@@ -23,7 +23,7 @@ func (this *TopicController) Get() {
 func (this *TopicController) Post() {
 	resp := helper.NewResponse()
 	defer resp.WriteJson(this.Ctx.ResponseWriter)
-	resp.Data = "文章索引错误."
+	resp.Data = "Not Found."
 	id := this.Ctx.Input.Param(":id")
 	ID, err := strconv.Atoi(id)
 	if err == nil {
@@ -50,6 +50,7 @@ func (this *TopicController) Topic() {
 	this.Data["IsFalse"] = false
 	this.Data["Title"] = topic.Title + " | " + models.Blogger.BlogName
 	this.Data["Topic"] = topic
+	this.Data["Domain"] = this.domain
 	this.Data["Description"] = fmt.Sprintf("%s,%s,%s,blog", topic.Title, models.Blogger.Introduce, models.Blogger.UserName)
 	this.Data["Keywords"] = fmt.Sprintf("%s,%s,%s,%s,%s", topic.Title, topic.CategoryID, strings.Join(topic.TagIDs, ","), models.Blogger.Introduce, models.Blogger.UserName)
 }

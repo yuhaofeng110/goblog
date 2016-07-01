@@ -81,7 +81,7 @@ func doFeed() {
 	}
 	buildDate = time.Now()
 	params := make(map[string]interface{})
-	params["Title"] = models.Blogger.BlogName + " 的个人博客"
+	params["Title"] = models.Blogger.BlogName + "'s Blog"
 	params["Domain"] = domain
 	params["Desc"] = models.Blogger.Introduce
 	params["PubDate"] = time.Now().Format(time.RFC1123Z)

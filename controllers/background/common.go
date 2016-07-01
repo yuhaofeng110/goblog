@@ -14,11 +14,13 @@ var sessionname = beego.AppConfig.String("sessionname")
 
 type Common struct {
 	beego.Controller
-	index string
+	index  string
+	domain string
 }
 
 func (this *Common) Prepare() {
 	this.Layout = "manage/adminlayout.html"
+	this.domain = beego.AppConfig.String("mydomain")
 }
 func (this *Common) LeftBar(index string) {
 	this.Data["Choose"] = index

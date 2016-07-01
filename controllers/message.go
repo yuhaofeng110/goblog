@@ -12,15 +12,14 @@ type MessageController struct {
 
 func (this *MessageController) Get() {
 	this.TplName = "messageTemplate.html"
-	this.Data["Title"] = "给我留言 | " + models.Blogger.BlogName
+	this.Data["Title"] = "Message Board | " + models.Blogger.BlogName
 	this.Leftbar("message")
 	this.Content()
 }
 
 func (this *MessageController) Content() {
-	this.Data["Title"] = "给我留言"
 	this.Data["ID"] = "99999"
 	this.Data["URL"] = "/message"
-	this.Data["Description"] = fmt.Sprintf("给我留言,%s,%s,blog", models.Blogger.Introduce, models.Blogger.UserName)
-	this.Data["Keywords"] = fmt.Sprintf("给我留言,message,%s,%s", models.Blogger.Introduce, models.Blogger.UserName)
+	this.Data["Description"] = fmt.Sprintf("message board,%s,%s,blog", models.Blogger.Introduce, models.Blogger.UserName)
+	this.Data["Keywords"] = fmt.Sprintf("message,%s,%s", models.Blogger.Introduce, models.Blogger.UserName)
 }
