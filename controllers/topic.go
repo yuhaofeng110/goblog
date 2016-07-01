@@ -23,7 +23,7 @@ func (this *TopicController) Get() {
 func (this *TopicController) Post() {
 	resp := helper.NewResponse()
 	defer resp.WriteJson(this.Ctx.ResponseWriter)
-	resp.Data = "文章索引错误."
+	resp.Data = "Not Found."
 	id := this.Ctx.Input.Param(":id")
 	ID, err := strconv.Atoi(id)
 	if err == nil {

@@ -21,7 +21,7 @@ func (this *CategoryController) ListTopic() {
 	cat := this.Ctx.Input.Param(":cat")
 	this.Leftbar(cat)
 	category := models.Blogger.GetCategoryByID(cat)
-	var name string = "暂无该分类"
+	var name string = "Not Found."
 	if category != nil && category.Extra != "" {
 		name = category.Text
 	}
@@ -34,28 +34,28 @@ func (this *CategoryController) ListTopic() {
 	}
 	topics, remainpage := models.TMgr.GetTopicsByCatgory(cat, page)
 	if remainpage == -1 {
-		this.Data["ClassOlder"] = "disabled"
+		this.Data["StyleOlder"] = "disabled"
 		this.Data["UrlOlder"] = "#"
-		this.Data["ClassNewer"] = "disabled"
+		this.Data["StyleNewer"] = "disabled"
 		this.Data["UrlNewer"] = "#"
 	} else {
 		if page == 1 {
-			this.Data["ClassNewer"] = "disabled"
+			this.Data["StyleNewer"] = "disabled"
 			this.Data["UrlNewer"] = "#"
 		} else {
-			this.Data["ClassNewer"] = ""
+			this.Data["StyleNewer"] = ""
 			this.Data["UrlNewer"] = "/cat/" + cat + fmt.Sprintf("/p/%d", page-1)
 		}
 		if remainpage == 0 {
-			this.Data["ClassOlder"] = "disabled"
+			this.Data["StyleOlder"] = "disabled"
 			this.Data["UrlOlder"] = "#"
 		} else {
-			this.Data["ClassOlder"] = ""
+			this.Data["StyleOlder"] = ""
 			this.Data["UrlOlder"] = "/cat/" + cat + fmt.Sprintf("/p/%d", page+1)
 		}
 		this.Data["ListTopics"] = topics
 	}
 	this.Data["Title"] = name + " | " + models.Blogger.BlogName
-	this.Data["Description"] = fmt.Sprintf("%s的个人博客,%s,%s,blog", models.Blogger.UserName, models.Blogger.Introduce, category.Text)
-	this.Data["Keywords"] = fmt.Sprintf("博客分类,%s,%s,%s", category.Text, models.Blogger.Introduce, models.Blogger.UserName)
+	this.Data["Description"] = fmt.Sprintf("%s's blog,%s,%s,blog", models.Blogger.UserName, models.Blogger.Introduce, category.Text)
+	this.Data["Keywords"] = fmt.Sprintf("blog category,%s,%s,%s", category.Text, models.Blogger.Introduce, models.Blogger.UserName)
 }

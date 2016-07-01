@@ -18,14 +18,14 @@ func (this *SearchController) Get() {
 
 func (this *SearchController) ListTopic() {
 	search := this.GetString("title")
-	this.Data["ClassOlder"] = "disabled"
+	this.Data["StyleOlder"] = "disabled"
 	this.Data["UrlOlder"] = "#"
-	this.Data["ClassNewer"] = "disabled"
+	this.Data["StyleNewer"] = "disabled"
 	this.Data["UrlNewer"] = "#"
-	this.Data["Name"] = "搜索：" + search
+	this.Data["Name"] = "Search：" + search
 	this.Data["URL"] = fmt.Sprintf("/search?title=%s", search)
 	this.Data["ListTopics"] = models.TMgr.GetTopicsSearch(search)
-	this.Data["Title"] = fmt.Sprintf("搜索: %s | %s", search, models.Blogger.BlogName)
-	this.Data["Description"] = fmt.Sprintf("搜索标题,%s,%s,blog", models.Blogger.Introduce, models.Blogger.UserName)
-	this.Data["Keywords"] = fmt.Sprintf("搜索标题,find,%s,%s", models.Blogger.Introduce, models.Blogger.UserName)
+	this.Data["Title"] = fmt.Sprintf("Search: %s | %s", search, models.Blogger.BlogName)
+	this.Data["Description"] = fmt.Sprintf("search title,%s,%s,blog", models.Blogger.Introduce, models.Blogger.UserName)
+	this.Data["Keywords"] = fmt.Sprintf("search title,find,%s,%s", models.Blogger.Introduce, models.Blogger.UserName)
 }

@@ -40,22 +40,15 @@ type User struct {
 }
 
 type UserMgr struct {
-	lock  sync.Mutex
-	Users map[string]*User // userid --> *User
+	lock sync.Mutex
+	// userid --> *User
+	Users map[string]*User
 }
 
 func NewUM() *UserMgr { return &UserMgr{Users: make(map[string]*User)} }
 
-var UMgr = NewUM()
-
 func scheduleUser() {
-	tk := time.NewTicker(time.Hour)
-	for {
-		select {
-		case <-tk.C:
-			UMgr.UpdateUsers()
-		}
-	}
+
 }
 
 func (m *UserMgr) loadUsers() {
@@ -70,7 +63,7 @@ func (m *UserMgr) loadUsers() {
 	}
 }
 
-func (m *UserMgr) RegisterUser(user *User) int {
+func (m *UserMgr) Register(user *User) int {
 	m.lock.Lock()
 	defer m.lock.Unlock()
 	err := db.Update(DB, C_USER, bson.M{"username": user.UserName}, *user)
@@ -94,7 +87,7 @@ func (m *UserMgr) FoundPass(name, email string) int {
 	return RS.RS_success
 }
 
-func (m *UserMgr) LoginUser(name, passwd string) int {
+func (m *UserMgr) Login(name, passwd string) int {
 	user := m.Users[name]
 	if user == nil {
 		return RS.RS_user_inexistence
@@ -106,7 +99,7 @@ func (m *UserMgr) LoginUser(name, passwd string) int {
 	return RS.RS_success
 }
 
-func (m *UserMgr) LogoutUser(name string) int {
+func (m *UserMgr) Logout(name string) int {
 	user := m.Users[name]
 	if user == nil {
 		return RS.RS_user_inexistence
@@ -120,7 +113,7 @@ func (m *UserMgr) Get(name string) *User {
 	return m.Users[name]
 }
 
-func (m *UserMgr) UpdateUsers() int {
+func (m *UserMgr) Update() int {
 	for _, u := range m.Users {
 		err := db.Update(DB, C_USER, bson.M{"username": u.UserName}, *u)
 		if err != nil {

@@ -18,16 +18,6 @@ import (
 
 const OnePageCount = 15
 
-func scheduleTopic() {
-	t := time.NewTicker(time.Minute * 10)
-	for {
-		select {
-		case <-t.C:
-			TMgr.DoDelete(time.Now())
-		}
-	}
-}
-
 // topic URL ＝ "/2016/01/02/id.html"
 type Topic struct {
 	ID         int32
@@ -79,8 +69,6 @@ func (ts Topics) Swap(i, j int)      { ts[i], ts[j] = ts[j], ts[i] }
 func NewTM() *TopicMgr {
 	return &TopicMgr{Topics: make(map[int32]*Topic), GroupByCategory: make(map[string]Topics), GroupByTag: make(map[string]Topics), DeleteTopics: make(map[int32]*Topic)}
 }
-
-var TMgr = NewTM()
 
 func (m *TopicMgr) loadTopics() {
 	var topics []*Topic
@@ -135,7 +123,7 @@ func (m *TopicMgr) DoTopicUpdate(topic *Topic) {
 	topic.Time = topic.CreateTime.Format(helper.Layout_y_m_d)
 }
 
-func (m *TopicMgr) UpdateTopics() int {
+func (m *TopicMgr) Update() int {
 	for _, topic := range m.Topics {
 		err := db.Update(DB, C_TOPIC, bson.M{"id": topic.ID}, bson.M{"$set": bson.M{"pv": topic.PV}})
 		if err != nil {

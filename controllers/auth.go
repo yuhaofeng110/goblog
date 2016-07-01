@@ -34,7 +34,7 @@ func (this *AuthController) Post() {
 		resp.WriteJson(this.Ctx.ResponseWriter)
 		return
 	}
-	if code := models.UMgr.LoginUser(username, password); code == RS.RS_user_inexistence {
+	if code := models.UMgr.Login(username, password); code == RS.RS_user_inexistence {
 		resp.Status = code
 		resp.Tips(helper.WARNING, code)
 	} else if code == RS.RS_password_error {

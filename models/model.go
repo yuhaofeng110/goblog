@@ -29,10 +29,12 @@ const (
 	SiteFile     = "/data/goblog/sitemap.xml"
 )
 
+var UMgr = NewUM()
+var TMgr = NewTM()
+var path, _ = os.Getwd()
 var Blogger *User
 
 func init() {
-	path, _ := os.Getwd()
 	if err := ip17mon.Init(path + "/conf/17monipdb.dat"); err != nil {
 		log.Fatal(err)
 	}
@@ -40,40 +42,46 @@ func init() {
 	UMgr.loadUsers()
 	Blogger = UMgr.Get("deepzz")
 	if Blogger == nil { // 从配置初始化用户
-		f, err := os.Open(path + "/conf/backup/user.json")
-		if err != nil {
-			panic(err)
-		}
-		user := User{}
-		b, _ := ioutil.ReadAll(f)
-		err = json.Unmarshal(b, &user)
-		if err != nil {
-			panic(err)
-		}
-		user.PassWord = helper.EncryptPasswd(user.UserName, user.PassWord, user.Salt)
-		UMgr.RegisterUser(&user)
-		code := UMgr.UpdateUsers()
-		if code != RS.RS_success {
-			panic("更新用户数据失败。")
-		}
-		Blogger = UMgr.Get("deepzz")
+		initAccount()
 	}
-	// 开启警告邮件，收件箱 Blogger.Email
-	log.SetEmail(Blogger.Email)
 	TMgr.loadTopics()
+	// open error mail，email addr : Blogger.Email
+	log.SetEmail(Blogger.Email)
 	ManageData.LoadData()
 	monitor.HookOnExit("flushdata", flushdata)
 	monitor.Startup()
+
 	go RequestM.Saver()
-	go scheduleTopic()
-	go scheduleUser()
-	go NewDay()
+	go timer()
+}
+
+func initAccount() {
+	f, err := os.Open(path + "/conf/init/user.json")
+	if err != nil {
+		panic(err)
+	}
+	user := User{}
+	b, _ := ioutil.ReadAll(f)
+	err = json.Unmarshal(b, &user)
+	if err != nil {
+		panic(err)
+	}
+	user.PassWord = helper.EncryptPasswd(user.UserName, user.PassWord, user.Salt)
+	UMgr.Register(&user)
+	code := UMgr.Update()
+	if code != RS.RS_success {
+		panic("init failed。")
+	}
+	Blogger = UMgr.Get("deepzz")
 }
 
 // 新的一天
-func NewDay() {
+func timer() {
 	t := time.NewTicker(time.Minute)
 	Today := time.Now()
+
+	tUser := time.NewTicker(time.Hour)
+	tTopic := time.NewTicker(time.Minute * 10)
 	for {
 		select {
 		case <-t.C:
@@ -82,12 +90,16 @@ func NewDay() {
 				ManageData.LoadData()
 				ManageData.CleanData(Today)
 			}
+		case <-tUser.C:
+			UMgr.Update()
+		case <-tTopic.C:
+			TMgr.DoDelete(time.Now())
 		}
 	}
 }
 
 func flushdata() {
-	UMgr.UpdateUsers()
-	TMgr.UpdateTopics()
+	UMgr.Update()
+	TMgr.Update()
 	ManageConf.UpdateConf()
 }
