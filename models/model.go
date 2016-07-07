@@ -43,7 +43,6 @@ func init() {
 	if err := ip17mon.Init(path + "/conf/17monipdb.dat"); err != nil {
 		log.Fatal(err)
 	}
-	//
 	UMgr.loadUsers()
 	Blogger = UMgr.Get("deepzz")
 	// not found account
@@ -52,7 +51,7 @@ func init() {
 	}
 	TMgr.loadTopics()
 	// open error mail，email addr : Blogger.Email
-	log.SetEmail(Blogger.Email)
+	// log.SetEmail(Blogger.Email)
 	ManageData.LoadData()
 	monitor.HookOnExit("flushdata", flushdata)
 	monitor.Startup()
