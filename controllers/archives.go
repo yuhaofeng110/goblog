@@ -4,8 +4,6 @@ package controllers
 import (
 	"fmt"
 
-	"qiniupkg.com/x/log.v7"
-
 	"github.com/deepzz0/goblog/models"
 )
 
@@ -21,7 +19,6 @@ func (this *ArchivesController) Get() {
 
 func (this *ArchivesController) ListTopic() {
 	date := fmt.Sprintf("%s/%s", this.Ctx.Input.Param(":year"), this.Ctx.Input.Param(":month"))
-	log.Debug(date, "--------------------")
 	this.Data["StyleOlder"] = "disabled"
 	this.Data["UrlOlder"] = "#"
 	this.Data["StyleNewer"] = "disabled"

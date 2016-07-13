@@ -3,7 +3,5 @@
 conf/qiniu.conf
 goblog
 goblog.exe
-static/feed.xml
-static/sitemap.xml
+version
 .cert/
-build_server.sh
