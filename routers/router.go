@@ -29,6 +29,7 @@ func init() {
 	beego.Router("/tag/:tag([a-zA-Z0-9\u4e00-\u9fa5]+)", &controllers.TagController{})
 	beego.Router("/tag/:tag([a-zA-Z0-9\u4e00-\u9fa5]+)/p/:page([0-9]+)", &controllers.TagController{})
 	beego.Router("/:year([0-9]{4})/:month([0-9]{2})/:day([0-9]{2})/:id([0-9]+).html", &controllers.TopicController{})
+	beego.Router("/archives/:year([0-9]{4})/:month([0-9]{2})", &controllers.ArchivesController{})
 	beego.Router("/message", &controllers.MessageController{})
 	beego.Router("/about", &controllers.AboutController{})
 	beego.Router("/login", &controllers.AuthController{})

@@ -24,6 +24,7 @@ func (this *HomeController) Get() {
 func (this *HomeController) Home() {
 	this.Data["Tags"] = models.Blogger.Tags
 	this.Data["Blogrolls"] = models.Blogger.Blogrolls
+	this.Data["Archives"] = models.TMgr.Archives
 	page := 1
 	pageStr := this.Ctx.Input.Param(":page")
 	if temp, err := strconv.Atoi(pageStr); err == nil {

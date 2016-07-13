@@ -45,6 +45,7 @@ type TopicMgr struct {
 	GroupByCategory map[string]Topics
 	GroupByTag      map[string]Topics
 	DeleteTopics    map[int32]*Topic
+	Archives        map[string]Topics
 }
 
 func NewTopic() *Topic {
@@ -67,7 +68,7 @@ func (ts Topics) Less(i, j int) bool { return ts[i].ID > ts[j].ID }
 func (ts Topics) Swap(i, j int)      { ts[i], ts[j] = ts[j], ts[i] }
 
 func NewTM() *TopicMgr {
-	return &TopicMgr{Topics: make(map[int32]*Topic), GroupByCategory: make(map[string]Topics), GroupByTag: make(map[string]Topics), DeleteTopics: make(map[int32]*Topic)}
+	return &TopicMgr{Topics: make(map[int32]*Topic), GroupByCategory: make(map[string]Topics), GroupByTag: make(map[string]Topics), DeleteTopics: make(map[int32]*Topic), Archives: make(map[string]Topics)}
 }
 
 func (m *TopicMgr) loadTopics() {
@@ -102,6 +103,9 @@ func (m *TopicMgr) loadTopics() {
 		m.DoTopicUpdate(topic)
 		m.Topics[topic.ID] = topic
 		m.IDs = append(m.IDs, topic.ID)
+		// archives
+		date := topic.CreateTime.Format(helper.Layout_y_m)
+		m.Archives[date] = append(m.Archives[date], topic)
 	}
 	sort.Sort(m.IDs)
 	for k, _ := range m.GroupByCategory {
@@ -223,6 +227,10 @@ func (m *TopicMgr) GetTopicsSearch(search string) []*Topic {
 	return topics
 }
 
+func (m *TopicMgr) GetTopicsArchives(date string) []*Topic {
+	return m.Archives[date]
+}
+
 func getPage(length int) int {
 	page := length / OnePageCount
 	if length%OnePageCount > 0 {
@@ -265,7 +273,7 @@ func (m *TopicMgr) AddTopic(topic *Topic) error {
 	m.Topics[topic.ID] = topic
 	m.IDs = append(m.IDs, topic.ID)
 	sort.Sort(m.IDs)
-
+	m.AddArchive(topic)
 	m.DoTopicUpdate(topic)
 	return nil
 }
@@ -363,6 +371,7 @@ func (m *TopicMgr) DelTopic(id int32) error {
 			}
 		}
 		m.DeleteTopics[topic.ID] = topic
+		m.DelArchive(topic)
 		delete(m.Topics, id)
 		return db.Update(DB, C_TOPIC, bson.M{"id": id}, topic)
 	}
@@ -382,6 +391,7 @@ func (m *TopicMgr) RestoreTopic(topic *Topic) int {
 	m.Topics[topic.ID] = topic
 	m.IDs = append(m.IDs, topic.ID)
 	sort.Sort(m.IDs)
+	m.AddArchive(topic)
 	return RS.RS_success
 }
 
@@ -404,6 +414,20 @@ func (m *TopicMgr) DoDelete(t time.Time) {
 			db.Remove(DB, C_TOPIC, bson.M{"id": topic.ID})
 		}
 	}
+}
+
+func (m *TopicMgr) DelArchive(topic *Topic) {
+	date := topic.CreateTime.Format(helper.Layout_y_m)
+	for i, t := range m.Archives[date] {
+		if t == topic {
+			m.Archives[date] = append(m.Archives[date][:i], m.Archives[date][i+1:]...)
+		}
+	}
+}
+
+func (m *TopicMgr) AddArchive(topic *Topic) {
+	date := topic.CreateTime.Format(helper.Layout_y_m)
+	m.Archives[date] = append(m.Archives[date], topic)
 }
 
 // -----------------------------------------------------------------

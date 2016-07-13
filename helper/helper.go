@@ -13,6 +13,7 @@ import (
 )
 
 const (
+	Layout_y_m        = "2006/01"
 	Layout_y_m_d      = "2006/01/02"
 	Layout_y_m_d2     = "2006年01月02日"
 	Layout_y_m_d_time = "2006/01/02 15:04:05"
