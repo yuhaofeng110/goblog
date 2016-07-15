@@ -3,5 +3,4 @@
 conf/qiniu.conf
 goblog
 goblog.exe
-version
 .cert/
