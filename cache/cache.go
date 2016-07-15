@@ -49,13 +49,9 @@ func doReadBackLeftBarConfig() {
 }
 
 func doReadBuildVersionConfig() {
-	f, err := os.Open(path + "/version")
+	b, err := ioutil.ReadFile(path + "/version")
 	if err != nil {
-		log.Fatal(err)
-	}
-	b, err := ioutil.ReadAll(f)
-	if err != nil {
-		log.Fatal(err)
+		log.Error(err)
 	}
 	Cache.BuildVersion = string(b)
 }
