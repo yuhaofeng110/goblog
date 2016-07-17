@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/astaxie/beego"
@@ -9,18 +10,29 @@ import (
 	"github.com/deepzz0/goblog/models"
 )
 
+var domain string
 var sessionname = beego.AppConfig.String("sessionname")
+
+func init() {
+	if beego.BConfig.Listen.EnableHTTPS {
+		domain = "https://" + beego.AppConfig.String("mydomain")
+	} else {
+		domain = "http://" + beego.AppConfig.String("mydomain")
+	}
+}
 
 type Common struct {
 	beego.Controller
-	domain string
 }
 
 func (this *Common) Prepare() {
+	if beego.BConfig.Listen.EnableHTTPS && this.Ctx.Input.Scheme() == "http" {
+		this.Redirect(fmt.Sprintf("%s%s", domain, this.Ctx.Input.URL()), 301)
+		return
+	}
 	this.Layout = "homelayout.html"
 	this.Build()
 	this.DoRequest()
-	this.domain = beego.AppConfig.String("mydomain")
 }
 func (this *Common) Leftbar(cat string) {
 	this.Data["Picture"] = models.Blogger.HeadIcon
