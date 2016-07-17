@@ -313,7 +313,6 @@ func (m *TopicMgr) ModTopic(topic *Topic, catgoryID string, tags string) error {
 		topic.CategoryID = catgoryID
 		topic.PCategory = category
 		m.GroupByCategory[catgoryID] = append(m.GroupByCategory[catgoryID], topic.ID)
-		sort.Sort(m.GroupByCategory[catgoryID])
 		category.addCount()
 	}
 	if tags == "" {
@@ -341,7 +340,6 @@ func (m *TopicMgr) ModTopic(topic *Topic, catgoryID string, tags string) error {
 				topic.PTags = append(topic.PTags, newtag)
 				Blogger.AddTag(newtag)
 			}
-			sort.Sort(m.GroupByTag[id])
 		}
 	}
 	topic.EditTime = time.Now()
@@ -353,8 +351,6 @@ func (m *TopicMgr) ModTopic(topic *Topic, catgoryID string, tags string) error {
 }
 
 func (m *TopicMgr) DelTopic(id int32) error {
-	m.lock.Lock()
-	defer m.lock.Unlock()
 	if topic := m.GetTopic(id); topic != nil && topic.NeedDelete.IsZero() {
 		topic.NeedDelete = time.Now()
 		if topic.CategoryID != "" {
@@ -377,6 +373,8 @@ func (m *TopicMgr) DelTopic(id int32) error {
 }
 
 func (m *TopicMgr) RestoreTopic(topic *Topic) int {
+	m.lock.Lock()
+	defer m.lock.Unlock()
 	if topic.NeedDelete.IsZero() {
 		return RS.RS_notin_trash
 	}
