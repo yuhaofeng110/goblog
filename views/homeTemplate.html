@@ -65,16 +65,16 @@
     <!-- <a href="http://hessian.cn/tag/4741" class="tag-link-10">4741</a> -->
       {{range .Tags}}
         {{if lt .Count 23}}
-          <a class="tag-link-{{.Count}}" href="{{.Extra}}" title="{{.Count}} topic">{{.Text}}</a>
+          <a class="tag-link-{{.Count}}" href="{{.Extra}}" target="_self" title="{{.Count}} topic">{{.Text}}</a>
         {{else}}
-          <a class="tag-link-22" href="{{.Extra}}" title="{{.Count}} topic">{{.Text}}</a>
+          <a class="tag-link-22" href="{{.Extra}}" target="_self" title="{{.Count}} topic">{{.Text}}</a>
         {{end}}
       {{end}}
     </div>
     <h3 class="tq">归档</h3>
     <ul class="blogroll">
       {{range $key, $val := .Archives}}
-      <li><a href="/archives/{{$key}}" target="_blank" title="归档：{{$key}}">{{$key}} ({{$val|len}})</a></li>
+      <li><a href="/archives/{{$key}}" target="_self" title="归档：{{$key}}">{{$key}} ({{$val|len}})</a></li>
       {{end}}
     </ul>
     <h3 class="tq">友情连接</h3>

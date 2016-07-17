@@ -1,8 +1,6 @@
-package controllers
+package background
 
 import (
-	"fmt"
-
 	"github.com/astaxie/beego"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
@@ -14,12 +12,9 @@ type AuthController struct {
 }
 
 func (this *AuthController) Get() {
-	if beego.BConfig.Listen.EnableHTTPS && this.Ctx.Input.Scheme() == "http" {
-		this.Redirect(fmt.Sprintf("%s%s", domain, this.Ctx.Input.URL()), 301)
-	}
 	if logout := this.GetString("logout"); logout == "now" {
-		this.DelSession(sessionname)
-	} else if val, ok := this.GetSession(sessionname).(string); ok && val != "" {
+		this.DelSession(SESSIONNAME)
+	} else if val, ok := this.GetSession(SESSIONNAME).(string); ok && val != "" {
 		this.Redirect("/admin/data", 302)
 	}
 	this.TplName = "login.html"
@@ -47,7 +42,7 @@ func (this *AuthController) Post() {
 		resp.Tips(helper.WARNING, code)
 	} else {
 		models.Blogger.LoginIp = this.Ctx.Request.RemoteAddr
-		this.SetSession(sessionname, username)
+		this.SetSession(SESSIONNAME, username)
 		resp.Data = "/admin/data"
 	}
 }

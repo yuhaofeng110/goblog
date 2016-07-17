@@ -1,23 +1,20 @@
 package controllers
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/astaxie/beego"
-	// "github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/cache"
 	"github.com/deepzz0/goblog/models"
 )
 
-var domain string
-var sessionname = beego.AppConfig.String("sessionname")
+var Domain string
 
 func init() {
 	if beego.BConfig.Listen.EnableHTTPS {
-		domain = "https://" + beego.AppConfig.String("mydomain")
+		Domain = "https://" + beego.AppConfig.String("mydomain")
 	} else {
-		domain = "http://" + beego.AppConfig.String("mydomain")
+		Domain = "http://" + beego.AppConfig.String("mydomain")
 	}
 }
 
@@ -26,9 +23,6 @@ type Common struct {
 }
 
 func (this *Common) Prepare() {
-	if beego.BConfig.Listen.EnableHTTPS && this.Ctx.Input.Scheme() == "http" {
-		this.Redirect(fmt.Sprintf("%s%s", domain, this.Ctx.Input.URL()), 301)
-	}
 	this.Layout = "homelayout.html"
 	this.Build()
 	this.DoRequest()
