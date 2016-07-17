@@ -63,7 +63,7 @@ func doFeed() {
 		log.Error(err)
 		return
 	}
-	ts, _ := models.TMgr.GetTopicsByPage(1)
+	ts := models.TMgr.GetTopics()
 	var Topics []*Topic
 	for i, v := range ts {
 		if i == 0 && v.CreateTime.Before(buildDate) {

@@ -138,14 +138,6 @@ func (m *TopicMgr) Update() int {
 	return RS.RS_success
 }
 
-func (m *TopicMgr) GetTopic(id int32) *Topic {
-	return m.Topics[id]
-}
-
-func (m *TopicMgr) GetWaitDelTopic(id int32) *Topic {
-	return m.DeleteTopics[id]
-}
-
 func (m *TopicMgr) LoadTopic(id int32) (*Topic, error) {
 	var t *Topic
 	err := db.FindOne(DB, C_TOPIC, bson.M{"id": id}, &t)
@@ -162,6 +154,18 @@ func (m *TopicMgr) handleTopics(ids INT32) (ts Topics) {
 		ts[i] = m.Topics[id]
 	}
 	return
+}
+
+func (m *TopicMgr) GetTopic(id int32) *Topic {
+	return m.Topics[id]
+}
+
+func (m *TopicMgr) GetTopics() Topics {
+	return m.handleTopics(m.IDs)
+}
+
+func (m *TopicMgr) GetWaitDelTopic(id int32) *Topic {
+	return m.DeleteTopics[id]
 }
 
 func (m *TopicMgr) GetTopicsByPage(page int) (Topics, int) {
