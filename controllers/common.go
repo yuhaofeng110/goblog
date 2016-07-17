@@ -28,7 +28,6 @@ type Common struct {
 func (this *Common) Prepare() {
 	if beego.BConfig.Listen.EnableHTTPS && this.Ctx.Input.Scheme() == "http" {
 		this.Redirect(fmt.Sprintf("%s%s", domain, this.Ctx.Input.URL()), 301)
-		return
 	}
 	this.Layout = "homelayout.html"
 	this.Build()

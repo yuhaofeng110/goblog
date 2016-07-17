@@ -1,6 +1,8 @@
 package background
 
 import (
+	"fmt"
+
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 	"github.com/deepzz0/goblog/RS"
@@ -13,12 +15,23 @@ import (
 var sessionname = beego.AppConfig.String("sessionname")
 var domain = beego.AppConfig.String("mydomain")
 
+func init() {
+	if beego.BConfig.Listen.EnableHTTPS {
+		domain = "https://" + beego.AppConfig.String("mydomain")
+	} else {
+		domain = "http://" + beego.AppConfig.String("mydomain")
+	}
+}
+
 type Common struct {
 	beego.Controller
 	index string
 }
 
 func (this *Common) Prepare() {
+	if beego.BConfig.Listen.EnableHTTPS && this.Ctx.Input.Scheme() == "http" {
+		this.Redirect(fmt.Sprintf("%s%s", domain, this.Ctx.Input.URL()), 301)
+	}
 	this.Layout = "manage/adminlayout.html"
 }
 func (this *Common) LeftBar(index string) {

@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"fmt"
+
 	"github.com/astaxie/beego"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
@@ -12,6 +14,9 @@ type AuthController struct {
 }
 
 func (this *AuthController) Get() {
+	if beego.BConfig.Listen.EnableHTTPS && this.Ctx.Input.Scheme() == "http" {
+		this.Redirect(fmt.Sprintf("%s%s", domain, this.Ctx.Input.URL()), 301)
+	}
 	if logout := this.GetString("logout"); logout == "now" {
 		this.DelSession(sessionname)
 	} else if val, ok := this.GetSession(sessionname).(string); ok && val != "" {
