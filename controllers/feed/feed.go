@@ -76,7 +76,7 @@ func doFeed() {
 		t.PubDate = v.CreateTime.Format(time.RFC1123Z)
 		t.Author = v.Author
 		t.Category = v.CategoryID
-		t.Desc = v.Preview
+		t.Desc = v.Content
 		Topics = append(Topics, t)
 	}
 	buildDate = time.Now()

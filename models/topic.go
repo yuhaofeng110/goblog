@@ -78,7 +78,7 @@ func (m *TopicMgr) loadTopics() {
 		panic(err)
 	}
 	length := len(topics)
-	m.IDs = make([]int32, 0, length)
+	m.IDs = make(INT32, 0, length)
 	for _, topic := range topics {
 		if !topic.NeedDelete.IsZero() {
 			m.DeleteTopics[topic.ID] = topic
