@@ -5,9 +5,9 @@ import (
 	"html/template"
 	"net/http"
 
-	"code.ccplaying.com/d1/gc/RS"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
+	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/controllers"
 	"github.com/deepzz0/goblog/controllers/background"
 	"github.com/deepzz0/goblog/controllers/feed"
