@@ -62,7 +62,7 @@ func init() {
 }
 
 func initAccount() {
-	b, err := ioutil.ReadFile(path + "conf/init/user.json")
+	b, err := ioutil.ReadFile(path + "/conf/init/user.json")
 	if err != nil {
 		panic(err)
 	}
