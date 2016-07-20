@@ -53,6 +53,8 @@ func init() {
 	beego.Router("/admin/datarecover", &background.DataBackupRecover{})
 	beego.Router("/admin/syslog", &background.SyslogController{})
 	beego.Router("/admin/trash", &background.TrashController{})
+	// proxy
+	beego.Router("/proxy/:url(.*)", &controllers.ProxyController{})
 	// rss
 	beego.Get("/feed", feed.Feed)
 	beego.Get("/sitemap", feed.SiteMap)
