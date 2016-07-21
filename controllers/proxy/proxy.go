@@ -1,17 +1,18 @@
 // Package controllers provides ...
-package controllers
+package proxy
 
 import (
 	"io/ioutil"
 	"net/http"
 	"time"
 
+	"github.com/astaxie/beego"
 	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/cache"
 )
 
 type ProxyController struct {
-	Common
+	beego.Controller
 }
 
 func (this *ProxyController) Get() {

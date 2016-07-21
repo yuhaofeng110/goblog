@@ -12,6 +12,7 @@ import (
 	"github.com/deepzz0/goblog/controllers/background"
 	"github.com/deepzz0/goblog/controllers/feed"
 	"github.com/deepzz0/goblog/controllers/plugin"
+	"github.com/deepzz0/goblog/controllers/proxy"
 	"github.com/deepzz0/goblog/helper"
 )
 
@@ -54,7 +55,7 @@ func init() {
 	beego.Router("/admin/syslog", &background.SyslogController{})
 	beego.Router("/admin/trash", &background.TrashController{})
 	// proxy
-	beego.Router("/proxy/:url(.*)", &controllers.ProxyController{})
+	beego.Router("/proxy/:url(.*)", &proxy.ProxyController{})
 	// rss
 	beego.Get("/feed", feed.Feed)
 	beego.Get("/sitemap", feed.SiteMap)
