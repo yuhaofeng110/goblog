@@ -4,8 +4,10 @@ package controllers
 import (
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	"github.com/deepzz0/go-com/log"
+	"github.com/deepzz0/goblog/cache"
 )
 
 type ProxyController struct {
@@ -21,6 +23,11 @@ func (this *ProxyController) Get() {
 		}
 	}()
 	url := this.Ctx.Input.Param(":url")
+	if icon := cache.Cache.Icons[url]; icon != nil {
+		icon.Time = time.Now()
+		this.Ctx.Output.Body(icon.Data)
+		return
+	}
 	response, err := http.Get("http://" + url)
 	if err != nil {
 		return
@@ -30,5 +37,6 @@ func (this *ProxyController) Get() {
 	if err != nil {
 		return
 	}
+	cache.Cache.Icons[url] = &cache.Icon{Data: b, Time: time.Now()}
 	this.Ctx.Output.Body(b)
 }
