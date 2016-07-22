@@ -38,6 +38,7 @@ var UMgr = NewUM()
 var TMgr = NewTM()
 var path, _ = os.Getwd()
 var Blogger *User
+var Icons = make(map[string]*Icon, 500)
 
 func init() {
 	if err := ip17mon.Init(path + "/conf/17monipdb.dat"); err != nil {
@@ -86,6 +87,7 @@ func timer() {
 
 	tUser := time.NewTicker(time.Hour)
 	tTopic := time.NewTicker(time.Minute * 10)
+	tIcon := time.NewTicker(time.Hour * 12)
 	for {
 		select {
 		case <-t.C:
@@ -98,6 +100,8 @@ func timer() {
 			UMgr.Update()
 		case <-tTopic.C:
 			TMgr.DoDelete(time.Now())
+		case <-tIcon.C:
+			cleanIcons()
 		}
 	}
 }

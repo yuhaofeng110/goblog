@@ -361,3 +361,21 @@ type Blogroll struct {
 func NewBlogroll() *Blogroll {
 	return &Blogroll{CreateTime: time.Now()}
 }
+
+// -------------------------------icon-------------------------------------
+type Icon struct {
+	Data []byte
+	Time time.Time
+}
+
+func cleanIcons() {
+	var lock sync.Mutex
+	lock.Lock()
+	defer lock.Unlock()
+	for k, v := range Icons {
+		if v.Time.Before(time.Now().AddDate(0, 0, -2)) {
+			Icons[k] = nil
+			delete(Icons, k)
+		}
+	}
+}

@@ -8,7 +8,7 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/deepzz0/go-com/log"
-	"github.com/deepzz0/goblog/cache"
+	"github.com/deepzz0/goblog/models"
 )
 
 type ProxyController struct {
@@ -24,7 +24,7 @@ func (this *ProxyController) Get() {
 		}
 	}()
 	url := this.Ctx.Input.Param(":url")
-	if icon := cache.Cache.Icons[url]; icon != nil {
+	if icon := models.Icons[url]; icon != nil {
 		icon.Time = time.Now()
 		this.Ctx.Output.Body(icon.Data)
 		return
@@ -38,6 +38,6 @@ func (this *ProxyController) Get() {
 	if err != nil {
 		return
 	}
-	cache.Cache.Icons[url] = &cache.Icon{Data: b, Time: time.Now()}
+	models.Icons[url] = &models.Icon{Data: b, Time: time.Now()}
 	this.Ctx.Output.Body(b)
 }
