@@ -36,7 +36,7 @@ runmode = dev
 
 [dev]
 httpport = 8080
-" 用于生成feed
+# 用于生成feed
 mydomain = 127.0.0.1:8080
 [prod]
 enablehttp = true
@@ -45,7 +45,7 @@ enablehttps = false
 httpsport = 443
 httpscertfile = /certs/fullchain.pem
 httpskeyfile = /certs/privkey.pem
-" 用于生成feed等其它需要用到域名的地方
+# 用于生成feed等其它需要用到域名的地方
 mydomain = deepzz.com
 [test]
 httpport = 8888
