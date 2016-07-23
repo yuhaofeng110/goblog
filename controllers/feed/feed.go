@@ -83,7 +83,7 @@ func doFeed() {
 	params["Title"] = models.Blogger.BlogName + "'s Blog"
 	params["Domain"] = controllers.Domain
 	params["Desc"] = models.Blogger.Introduce
-	params["PubDate"] = time.Now().Format(time.RFC1123Z)
+	params["PubDate"] = buildDate.Format(time.RFC1123Z)
 	params["BuildDate"] = buildDate.Format(time.RFC1123Z)
 	params["Year"] = year
 	params["Version"] = version
