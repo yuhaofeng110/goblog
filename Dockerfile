@@ -6,7 +6,6 @@ RUN apt-get install -y ca-certificates
 ENV MGO 172.17.42.1
 ADD views /goblog/views
 ADD conf /goblog/conf
-ADD .cert /goblog/.cert
 ADD static /goblog/static
 ADD goblog /goblog/goblog
 ADD version /goblog/version
