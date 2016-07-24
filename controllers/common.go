@@ -4,23 +4,28 @@ import (
 	"time"
 
 	"github.com/astaxie/beego"
-	// "github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/cache"
 	"github.com/deepzz0/goblog/models"
 )
 
-var sessionname = beego.AppConfig.String("sessionname")
+var Domain string
+
+func init() {
+	if beego.BConfig.Listen.EnableHTTPS {
+		Domain = "https://" + beego.AppConfig.String("mydomain")
+	} else {
+		Domain = "http://" + beego.AppConfig.String("mydomain")
+	}
+}
 
 type Common struct {
 	beego.Controller
-	domain string
 }
 
 func (this *Common) Prepare() {
 	this.Layout = "homelayout.html"
 	this.Build()
 	this.DoRequest()
-	this.domain = beego.AppConfig.String("mydomain")
 }
 func (this *Common) Leftbar(cat string) {
 	this.Data["Picture"] = models.Blogger.HeadIcon

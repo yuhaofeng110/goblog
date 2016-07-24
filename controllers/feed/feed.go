@@ -8,9 +8,9 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 	"github.com/deepzz0/go-com/log"
+	"github.com/deepzz0/goblog/controllers"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"
 )
@@ -63,8 +63,7 @@ func doFeed() {
 		log.Error(err)
 		return
 	}
-	domain := beego.AppConfig.String("mydomain")
-	ts, _ := models.TMgr.GetTopicsByPage(1)
+	ts := models.TMgr.GetTopics()
 	var Topics []*Topic
 	for i, v := range ts {
 		if i == 0 && v.CreateTime.Before(buildDate) {
@@ -72,19 +71,19 @@ func doFeed() {
 		}
 		t := &Topic{}
 		t.Title = v.Title
-		t.URL = fmt.Sprintf("%s/%s/%d.html", domain, v.CreateTime.Format(helper.Layout_y_m_d), v.ID)
+		t.URL = fmt.Sprintf("%s/%s/%d.html", controllers.Domain, v.CreateTime.Format(helper.Layout_y_m_d), v.ID)
 		t.PubDate = v.CreateTime.Format(time.RFC1123Z)
 		t.Author = v.Author
 		t.Category = v.CategoryID
-		t.Desc = v.Preview
+		t.Desc = v.Content
 		Topics = append(Topics, t)
 	}
 	buildDate = time.Now()
 	params := make(map[string]interface{})
 	params["Title"] = models.Blogger.BlogName + "'s Blog"
-	params["Domain"] = domain
+	params["Domain"] = controllers.Domain
 	params["Desc"] = models.Blogger.Introduce
-	params["PubDate"] = time.Now().Format(time.RFC1123Z)
+	params["PubDate"] = buildDate.Format(time.RFC1123Z)
 	params["BuildDate"] = buildDate.Format(time.RFC1123Z)
 	params["Year"] = year
 	params["Version"] = version

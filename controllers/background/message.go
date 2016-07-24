@@ -1,6 +1,7 @@
 package background
 
 import (
+	"github.com/deepzz0/goblog/controllers"
 	"github.com/deepzz0/goblog/models"
 )
 
@@ -18,6 +19,6 @@ func (this *MessageController) Get() {
 func (this *MessageController) Content() {
 	this.Data["ID"] = 99999
 	this.Data["URL"] = "/message"
-	this.Data["Domain"] = this.domain
+	this.Data["Domain"] = controllers.Domain
 	this.Data["Title"] = "给我留言"
 }

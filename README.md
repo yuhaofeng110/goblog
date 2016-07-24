@@ -32,23 +32,26 @@ export 'export MGO="127.0.0.1"' >> .bash_profile
 runmode选择你要运行的模式，对应下面的dev、prod、test。线上模式一般为prod，因为该模式不会输出beego的调试log。enablehttps开启https，依次是https监听端口，https相关证书(证书位置替换为自己的)，http的监听端口(当然你也可以关掉http，enablehttp=false)。mydomain是生成feed需要的域名地址
 ``` ini
 appname = goblog
-runmode = prod
+runmode = dev 
 
 [dev]
 httpport = 8080
+# 用于生成feed
+mydomain = 127.0.0.1:8080
 [prod]
-enablehttps = true
-httpsport = 443
-httpscertfile = .cert/fullchain.pem
-httpskeyfile = .cert/privkey.pem
+enablehttp = true
 httpport = 80
+enablehttps = false
+httpsport = 443
+httpscertfile = /certs/fullchain.pem
+httpskeyfile = /certs/privkey.pem
+# 用于生成feed等其它需要用到域名的地方
+mydomain = deepzz.com
 [test]
 httpport = 8888
-
-mydomain = http://deepzz.com
 ```
 2. <code>17monipdb.dat</code>，该文件是后台解析ip地址的数据库，你可以查看[www.ipip.net](www.ipip.net)
-3. <code>qiniu.conf</code>，该文件存放了有关qiniu相关参数，如果没有请创建。
+3. <code>qiniu.conf</code>，该文件存放了有关qiniu相关参数，如果没有请创建，暂时没有用到。
 4. <code>backleft</code>，该文件是后台相关菜单项，你可以进行删减，并实现对应的功能。
 5. <code>backup</code>，该文件夹存放的是账号相关，前台菜单项等相关配置。UserName是后台登陆用户名，PassWord登陆密码(这里填明文)，数据库存储是加密过的，可以在后台进行修改。Salt这是加密的随机盐，由于是手动注册，请随便填写。HeadIcon头像图片，这个地址填图片链接地址.
 ``` json
@@ -96,7 +99,7 @@ mydomain = http://deepzz.com
     </script>
     <!-- 多说公共JS代码 end -->
 ```
-博客集成多说评论框架，你需要到多说官网获取的你网站的shot_name，将上面的deepzz替换掉。该代码段嵌到多个页面，你需要一一替换。
+博客集成多说评论框架，你需要到多说官网获取的你网站的shot_name，将上面的deepzz替换掉。该代码段嵌到多个页面，你需要一一替换。由于多说多渠道登陆头像是基于http协议。固如果博客部署为https，将自动进行头像代理为https，实现全站https。
 
 ##### 统计相关  
 ``` js

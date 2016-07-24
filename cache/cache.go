@@ -29,11 +29,7 @@ func init() {
 var path, _ = os.Getwd()
 
 func doReadBackLeftBarConfig() {
-	f, err := os.Open(path + "/conf/backleft.conf")
-	if err != nil {
-		log.Fatal(err)
-	}
-	b, err := ioutil.ReadAll(f)
+	b, err := ioutil.ReadFile(path + "/conf/backleft.conf")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -49,13 +45,9 @@ func doReadBackLeftBarConfig() {
 }
 
 func doReadBuildVersionConfig() {
-	f, err := os.Open(path + "/version")
+	b, err := ioutil.ReadFile(path + "/version")
 	if err != nil {
-		log.Fatal(err)
-	}
-	b, err := ioutil.ReadAll(f)
-	if err != nil {
-		log.Fatal(err)
+		log.Error(err)
 	}
 	Cache.BuildVersion = string(b)
 }

@@ -19,7 +19,7 @@
   <sy:updatePeriod>hourly</sy:updatePeriod>
   <sy:updateFrequency>1</sy:updateFrequency>
   <copyright>{{.Year}} deepzz.com. All rights reserved.</copyright>
-  <generator>{{.Domain}}/feed?{{.Version}}</generator>
+  <generator>{{.Domain}}/feed?v={{.Version}}</generator>
   <ttl>1440</ttl>
   
   {{range .Topics}}

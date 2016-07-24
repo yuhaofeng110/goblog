@@ -16,7 +16,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-const OnePageCount = 15
+const OnePageCount = 8
 
 // topic URL ＝ "/2016/01/02/id.html"
 type Topic struct {
@@ -42,9 +42,10 @@ type TopicMgr struct {
 	lock            sync.Mutex
 	Topics          map[int32]*Topic // id --> *Topic
 	IDs             INT32
-	GroupByCategory map[string]Topics
-	GroupByTag      map[string]Topics
+	GroupByCategory map[string]INT32
+	GroupByTag      map[string]INT32
 	DeleteTopics    map[int32]*Topic
+	Archives        map[string]INT32
 }
 
 func NewTopic() *Topic {
@@ -67,7 +68,7 @@ func (ts Topics) Less(i, j int) bool { return ts[i].ID > ts[j].ID }
 func (ts Topics) Swap(i, j int)      { ts[i], ts[j] = ts[j], ts[i] }
 
 func NewTM() *TopicMgr {
-	return &TopicMgr{Topics: make(map[int32]*Topic), GroupByCategory: make(map[string]Topics), GroupByTag: make(map[string]Topics), DeleteTopics: make(map[int32]*Topic)}
+	return &TopicMgr{Topics: make(map[int32]*Topic), GroupByCategory: make(map[string]INT32), GroupByTag: make(map[string]INT32), DeleteTopics: make(map[int32]*Topic), Archives: make(map[string]INT32)}
 }
 
 func (m *TopicMgr) loadTopics() {
@@ -77,7 +78,7 @@ func (m *TopicMgr) loadTopics() {
 		panic(err)
 	}
 	length := len(topics)
-	m.IDs = make([]int32, 0, length)
+	m.IDs = make(INT32, 0, length)
 	for _, topic := range topics {
 		if !topic.NeedDelete.IsZero() {
 			m.DeleteTopics[topic.ID] = topic
@@ -89,12 +90,12 @@ func (m *TopicMgr) loadTopics() {
 			category = Blogger.GetCategoryByID(topic.CategoryID)
 		}
 		topic.PCategory = category
-		m.GroupByCategory[topic.CategoryID] = append(m.GroupByCategory[topic.CategoryID], topic)
+		m.GroupByCategory[topic.CategoryID] = append(m.GroupByCategory[topic.CategoryID], topic.ID)
 		var newTagIDs []string
 		for _, id := range topic.TagIDs {
 			if tag := Blogger.GetTagByID(id); tag != nil {
 				topic.PTags = append(topic.PTags, tag)
-				m.GroupByTag[id] = append(m.GroupByTag[id], topic)
+				m.GroupByTag[id] = append(m.GroupByTag[id], topic.ID)
 				newTagIDs = append(newTagIDs, id)
 			}
 		}
@@ -102,6 +103,9 @@ func (m *TopicMgr) loadTopics() {
 		m.DoTopicUpdate(topic)
 		m.Topics[topic.ID] = topic
 		m.IDs = append(m.IDs, topic.ID)
+		// archives
+		date := topic.CreateTime.Format(helper.Layout_y_m)
+		m.Archives[date] = append(m.Archives[date], topic.ID)
 	}
 	sort.Sort(m.IDs)
 	for k, _ := range m.GroupByCategory {
@@ -134,14 +138,6 @@ func (m *TopicMgr) Update() int {
 	return RS.RS_success
 }
 
-func (m *TopicMgr) GetTopic(id int32) *Topic {
-	return m.Topics[id]
-}
-
-func (m *TopicMgr) GetWaitDelTopic(id int32) *Topic {
-	return m.DeleteTopics[id]
-}
-
 func (m *TopicMgr) LoadTopic(id int32) (*Topic, error) {
 	var t *Topic
 	err := db.FindOne(DB, C_TOPIC, bson.M{"id": id}, &t)
@@ -151,29 +147,44 @@ func (m *TopicMgr) LoadTopic(id int32) (*Topic, error) {
 	return t, nil
 }
 
-func (m *TopicMgr) GetTopicsByPage(page int) ([]*Topic, int) {
-	var ts []*Topic
-	if page <= 0 {
-		return ts, -1
+func (m *TopicMgr) handleTopics(ids INT32) (ts Topics) {
+	sort.Sort(ids)
+	ts = make(Topics, len(ids))
+	for i, id := range ids {
+		ts[i] = m.Topics[id]
 	}
+	return
+}
+
+func (m *TopicMgr) GetTopic(id int32) *Topic {
+	return m.Topics[id]
+}
+
+func (m *TopicMgr) GetTopics() Topics {
+	return m.handleTopics(m.IDs)
+}
+
+func (m *TopicMgr) GetWaitDelTopic(id int32) *Topic {
+	return m.DeleteTopics[id]
+}
+
+func (m *TopicMgr) GetTopicsByPage(page int) (Topics, int) {
 	length := len(m.IDs)
 	remainPage := getPage(length) - page
 	if remainPage >= 0 {
-		index := page * OnePageCount
-		for i := index - OnePageCount; i < length && i < index; i++ {
-			ts = append(ts, m.Topics[m.IDs[i]])
+		end := page * OnePageCount
+		start := end - OnePageCount
+		if end > length {
+			end = length
 		}
-		return ts, remainPage
+		return m.handleTopics(m.IDs[start:end]), remainPage
 	}
-	return ts, -1
+	return Topics{}, -1
 }
 
-func (m *TopicMgr) GetTopicsByCatgory(categoryID string, page int) ([]*Topic, int) {
-	if page <= 0 {
-		return make([]*Topic, 0), -1
-	}
-	topics := m.GroupByCategory[categoryID]
-	length := len(topics)
+func (m *TopicMgr) GetTopicsByCatgory(categoryID string, page int) (Topics, int) {
+	ids := m.GroupByCategory[categoryID]
+	length := len(ids)
 	remainPage := getPage(length) - page
 	if remainPage >= 0 {
 		var start, end int
@@ -185,17 +196,14 @@ func (m *TopicMgr) GetTopicsByCatgory(categoryID string, page int) ([]*Topic, in
 		if start < 0 {
 			start = 0
 		}
-		return topics[start:end], remainPage
+		return m.handleTopics(ids[start:end]), remainPage
 	}
-	return make([]*Topic, 0), -1
+	return Topics{}, -1
 }
 
-func (m *TopicMgr) GetTopicsByTag(tagID string, page int) ([]*Topic, int) {
-	if page <= 0 {
-		return make([]*Topic, 0), -1
-	}
-	topics := m.GroupByTag[tagID]
-	length := len(topics)
+func (m *TopicMgr) GetTopicsByTag(tagID string, page int) (Topics, int) {
+	ids := m.GroupByTag[tagID]
+	length := len(ids)
 	remainPage := getPage(length) - page
 
 	if remainPage >= 0 {
@@ -208,9 +216,9 @@ func (m *TopicMgr) GetTopicsByTag(tagID string, page int) ([]*Topic, int) {
 		if start < 0 {
 			start = 0
 		}
-		return topics[start:end], remainPage
+		return m.handleTopics(ids[start:end]), remainPage
 	}
-	return make([]*Topic, 0), -1
+	return Topics{}, -1
 }
 
 func (m *TopicMgr) GetTopicsSearch(search string) []*Topic {
@@ -221,6 +229,10 @@ func (m *TopicMgr) GetTopicsSearch(search string) []*Topic {
 		}
 	}
 	return topics
+}
+
+func (m *TopicMgr) GetTopicsArchives(date string) Topics {
+	return m.handleTopics(m.Archives[date])
 }
 
 func getPage(length int) int {
@@ -242,13 +254,12 @@ func (m *TopicMgr) AddTopic(topic *Topic) error {
 		topic.CategoryID = "default"
 		category = Blogger.GetCategoryByID(topic.CategoryID)
 	}
-	m.GroupByCategory[topic.CategoryID] = append(m.GroupByCategory[topic.CategoryID], topic)
-	sort.Sort(m.GroupByCategory[topic.CategoryID])
+	m.GroupByCategory[topic.CategoryID] = append(m.GroupByCategory[topic.CategoryID], topic.ID)
 	topic.PCategory = category
 	category.addCount()
 	for _, id := range topic.TagIDs {
 		if tag := Blogger.GetTagByID(id); tag != nil {
-			m.GroupByTag[id] = append(m.GroupByTag[id], topic)
+			m.GroupByTag[id] = append(m.GroupByTag[id], topic.ID)
 			topic.PTags = append(topic.PTags, tag)
 			tag.addCount()
 		} else {
@@ -256,8 +267,7 @@ func (m *TopicMgr) AddTopic(topic *Topic) error {
 			newtag.ID = id
 			newtag.Extra = "/tag/" + id
 			newtag.Text = id
-			m.GroupByTag[id] = append(m.GroupByTag[id], topic)
-			sort.Sort(m.GroupByTag[id])
+			m.GroupByTag[id] = append(m.GroupByTag[id], topic.ID)
 			topic.PTags = append(topic.PTags, newtag)
 			Blogger.AddTag(newtag)
 		}
@@ -265,15 +275,15 @@ func (m *TopicMgr) AddTopic(topic *Topic) error {
 	m.Topics[topic.ID] = topic
 	m.IDs = append(m.IDs, topic.ID)
 	sort.Sort(m.IDs)
-
+	m.AddArchive(topic)
 	m.DoTopicUpdate(topic)
 	return nil
 }
 
 func (m *TopicMgr) CategoryGroupDeleteTopic(topic *Topic) {
-	topics := m.GroupByCategory[topic.CategoryID]
-	for i, t := range topics {
-		if t != nil && t == topic {
+	ids := m.GroupByCategory[topic.CategoryID]
+	for i, id := range ids {
+		if id == topic.ID {
 			Blogger.ReduceCategoryCount(topic.CategoryID)
 			if m.GroupByCategory[topic.CategoryID] != nil {
 				m.GroupByCategory[topic.CategoryID] = append(m.GroupByCategory[topic.CategoryID][:i], m.GroupByCategory[topic.CategoryID][i+1:]...)
@@ -283,9 +293,9 @@ func (m *TopicMgr) CategoryGroupDeleteTopic(topic *Topic) {
 }
 
 func (m *TopicMgr) TagGroupDeleteTopic(id string, topic *Topic) {
-	topics := m.GroupByTag[id]
-	for i, t := range topics {
-		if t != nil && t == topic {
+	ids := m.GroupByTag[id]
+	for i, v := range ids {
+		if v == topic.ID {
 			Blogger.ReduceTagCount(id)
 			if m.GroupByTag[id] != nil {
 				m.GroupByTag[id] = append(m.GroupByTag[id][:i], m.GroupByTag[id][i+1:]...)
@@ -306,8 +316,7 @@ func (m *TopicMgr) ModTopic(topic *Topic, catgoryID string, tags string) error {
 		}
 		topic.CategoryID = catgoryID
 		topic.PCategory = category
-		m.GroupByCategory[catgoryID] = append(m.GroupByCategory[catgoryID], topic)
-		sort.Sort(m.GroupByCategory[catgoryID])
+		m.GroupByCategory[catgoryID] = append(m.GroupByCategory[catgoryID], topic.ID)
 		category.addCount()
 	}
 	if tags == "" {
@@ -325,17 +334,16 @@ func (m *TopicMgr) ModTopic(topic *Topic, catgoryID string, tags string) error {
 			if tag := Blogger.GetTagByID(id); tag != nil {
 				topic.PTags = append(topic.PTags, tag)
 				tag.addCount()
-				m.GroupByTag[id] = append(m.GroupByTag[id], topic)
+				m.GroupByTag[id] = append(m.GroupByTag[id], topic.ID)
 			} else {
 				newtag := NewTag()
 				newtag.ID = id
 				newtag.Extra = "/tag/" + id
 				newtag.Text = id
-				m.GroupByTag[id] = append(m.GroupByTag[id], topic)
+				m.GroupByTag[id] = append(m.GroupByTag[id], topic.ID)
 				topic.PTags = append(topic.PTags, newtag)
 				Blogger.AddTag(newtag)
 			}
-			sort.Sort(m.GroupByTag[id])
 		}
 	}
 	topic.EditTime = time.Now()
@@ -347,8 +355,6 @@ func (m *TopicMgr) ModTopic(topic *Topic, catgoryID string, tags string) error {
 }
 
 func (m *TopicMgr) DelTopic(id int32) error {
-	m.lock.Lock()
-	defer m.lock.Unlock()
 	if topic := m.GetTopic(id); topic != nil && topic.NeedDelete.IsZero() {
 		topic.NeedDelete = time.Now()
 		if topic.CategoryID != "" {
@@ -363,6 +369,7 @@ func (m *TopicMgr) DelTopic(id int32) error {
 			}
 		}
 		m.DeleteTopics[topic.ID] = topic
+		m.DelArchive(topic)
 		delete(m.Topics, id)
 		return db.Update(DB, C_TOPIC, bson.M{"id": id}, topic)
 	}
@@ -370,6 +377,8 @@ func (m *TopicMgr) DelTopic(id int32) error {
 }
 
 func (m *TopicMgr) RestoreTopic(topic *Topic) int {
+	m.lock.Lock()
+	defer m.lock.Unlock()
 	if topic.NeedDelete.IsZero() {
 		return RS.RS_notin_trash
 	}
@@ -382,6 +391,7 @@ func (m *TopicMgr) RestoreTopic(topic *Topic) int {
 	m.Topics[topic.ID] = topic
 	m.IDs = append(m.IDs, topic.ID)
 	sort.Sort(m.IDs)
+	m.AddArchive(topic)
 	return RS.RS_success
 }
 
@@ -404,6 +414,20 @@ func (m *TopicMgr) DoDelete(t time.Time) {
 			db.Remove(DB, C_TOPIC, bson.M{"id": topic.ID})
 		}
 	}
+}
+
+func (m *TopicMgr) DelArchive(topic *Topic) {
+	date := topic.CreateTime.Format(helper.Layout_y_m)
+	for i, id := range m.Archives[date] {
+		if id == topic.ID {
+			m.Archives[date] = append(m.Archives[date][:i], m.Archives[date][i+1:]...)
+		}
+	}
+}
+
+func (m *TopicMgr) AddArchive(topic *Topic) {
+	date := topic.CreateTime.Format(helper.Layout_y_m)
+	m.Archives[date] = append(m.Archives[date], topic.ID)
 }
 
 // -----------------------------------------------------------------

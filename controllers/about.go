@@ -13,7 +13,7 @@ type AboutController struct {
 func (this *AboutController) Get() {
 	this.Layout = "homelayout.html"
 	this.TplName = "aboutTemplate.html"
-	this.Data["Title"] = "About Me | " + models.Blogger.BlogName
+	this.Data["Title"] = "关于博主 | " + models.Blogger.BlogName
 	this.Leftbar("about")
 	this.Content()
 }
@@ -25,6 +25,7 @@ func (this *AboutController) Content() {
 	} else {
 		this.Data["Content"] = "nothing。"
 	}
+	this.Data["Name"] = "关于博主"
 	this.Data["Description"] = fmt.Sprintf("about me,%s,%s,blog", models.Blogger.Introduce, models.Blogger.UserName)
 	this.Data["Keywords"] = fmt.Sprintf("about me,%s,%s", models.Blogger.Introduce, models.Blogger.UserName)
 }

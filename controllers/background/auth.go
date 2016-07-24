@@ -1,4 +1,4 @@
-package controllers
+package background
 
 import (
 	"github.com/astaxie/beego"
@@ -13,8 +13,8 @@ type AuthController struct {
 
 func (this *AuthController) Get() {
 	if logout := this.GetString("logout"); logout == "now" {
-		this.DelSession(sessionname)
-	} else if val, ok := this.GetSession(sessionname).(string); ok && val != "" {
+		this.DelSession(SESSIONNAME)
+	} else if val, ok := this.GetSession(SESSIONNAME).(string); ok && val != "" {
 		this.Redirect("/admin/data", 302)
 	}
 	this.TplName = "login.html"
@@ -42,7 +42,7 @@ func (this *AuthController) Post() {
 		resp.Tips(helper.WARNING, code)
 	} else {
 		models.Blogger.LoginIp = this.Ctx.Request.RemoteAddr
-		this.SetSession(sessionname, username)
+		this.SetSession(SESSIONNAME, username)
 		resp.Data = "/admin/data"
 	}
 }
