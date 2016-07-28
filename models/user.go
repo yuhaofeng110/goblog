@@ -1,9 +1,6 @@
 package models
 
 import (
-	// "fmt"
-	// "sort"
-	// "strings"
 	"sort"
 	"sync"
 	"time"
@@ -47,10 +44,6 @@ type UserMgr struct {
 
 func NewUM() *UserMgr { return &UserMgr{Users: make(map[string]*User)} }
 
-func scheduleUser() {
-
-}
-
 func (m *UserMgr) loadUsers() {
 	var users []*User
 	err := db.FindAll(DB, C_USER, nil, &users)
@@ -68,7 +61,7 @@ func (m *UserMgr) Register(user *User) int {
 	defer m.lock.Unlock()
 	err := db.Update(DB, C_USER, bson.M{"username": user.UserName}, *user)
 	if err != nil {
-		log.Error(err)
+		log.Warn(err)
 		return RS.RS_register_failed
 	}
 	m.Users[user.UserName] = user

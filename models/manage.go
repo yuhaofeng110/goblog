@@ -43,7 +43,7 @@ func NewRequest(r *http.Request) *Request {
 	request.UserAgent = useragent.ParseByRequest(r)
 	sessionid, err := r.Cookie("SESSIONID")
 	if err != nil {
-		log.Error(err)
+		log.Warn(err)
 	}
 	request.SessionID = sessionid.Value
 	return request
@@ -153,7 +153,7 @@ func (b *BaseData) loadData(typ string) {
 	for _, v := range ips {
 		info, err := ip17mon.Find(v)
 		if err != nil {
-			log.Debug(err)
+			log.Warn(err)
 			continue
 		}
 		if info.Country == "中国" {
