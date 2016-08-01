@@ -23,7 +23,7 @@ brew install mongodb
 ###### 配置mongod
 mongodb默认读取环境变量<code>MGO</code>，追加<code>export MGO="127.0.0.1"</code>到<code>~/.bash_profile</code>末尾。如果没有该文件可手动创建。
 ``` sh
-export 'export MGO="127.0.0.1"' >> .bash_profile
+echo 'export MGO="127.0.0.1"' >> .bash_profile
 ```
 
 ##### 修改配置
