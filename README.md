@@ -23,7 +23,7 @@ brew install mongodb
 ###### 配置mongod
 mongodb默认读取环境变量<code>MGO</code>，追加<code>export MGO="127.0.0.1"</code>到<code>~/.bash_profile</code>末尾。如果没有该文件可手动创建。
 ``` sh
-export 'export MGO="127.0.0.1"' >> .bash_profile
+echo 'export MGO="127.0.0.1"' >> .bash_profile
 ```
 
 ##### 修改配置
@@ -139,7 +139,7 @@ SiteFile     = "/data/goblog/sitemap.xml"
 所有都配置完成，在根目录下运行<code>bee run</code>
 
 #### 基本页面 
-可以到我的博客[http://deepzz.com](http://deepzz.com)查看，https访问[https://deepzz.com](https://deepzz.com)，国外服务器网速稍慢。  
+可以到我的博客[http://blog.deepzz.com](http://blog.deepzz.com)查看，https访问[https://blog.deepzz.com](https://blog.deepzz.com)，国外服务器网速稍慢。  
 前端页面
 ![show](https://o7msui8ho.qnssl.com/img/home.png)
 后台登陆
