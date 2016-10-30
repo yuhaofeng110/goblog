@@ -12,7 +12,6 @@ ADD version /goblog/version
 RUN ["cp","/usr/share/zoneinfo/Asia/Shanghai","/etc/localtime"]
 
 EXPOSE 80
-EXPOSE 8080
 
 VOLUME ["/goblog/log"]
 

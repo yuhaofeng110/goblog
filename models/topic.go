@@ -16,7 +16,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-const OnePageCount = 8
+const OnePageCount = 15
 
 // topic URL ＝ "/2016/01/02/id.html"
 type Topic struct {
