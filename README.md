@@ -148,4 +148,3 @@ SiteFile     = "/data/goblog/sitemap.xml"
 ![analysis](https://o7msui8ho.qnssl.com/img/analysis.png)
 博文修改
 ![modify](https://o7msui8ho.qnssl.com/img/modify.png)
-![modify](http://115.29.145.169:8080/p/test.png)
