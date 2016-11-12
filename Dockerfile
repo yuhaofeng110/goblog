@@ -1,15 +1,15 @@
-FROM ubuntu:trusty
+FROM alpine
 MAINTAINER deepzz <deepzz.qi@gmail.com>
 
-RUN apt-get update
-RUN apt-get install -y ca-certificates
-ENV MGO 172.17.42.1
+RUN apk update
+RUN apk add ca-certificates
+RUN echo "Asia/Shanghai" > /etc/timezone
+ENV MGO 192.168.0.1
 ADD views /goblog/views
 ADD conf /goblog/conf
 ADD static /goblog/static
 ADD goblog /goblog/goblog
 ADD version /goblog/version
-RUN ["cp","/usr/share/zoneinfo/Asia/Shanghai","/etc/localtime"]
 
 EXPOSE 80
 
