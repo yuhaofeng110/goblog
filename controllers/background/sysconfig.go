@@ -5,7 +5,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/deepzz0/go-com/log"
+	log "qiniupkg.com/x/log.v7"
+
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"

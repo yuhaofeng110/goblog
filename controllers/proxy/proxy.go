@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/astaxie/beego"
-	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/models"
+	"github.com/deepzz0/logd"
 )
 
 type ProxyController struct {
@@ -19,7 +19,7 @@ func (this *ProxyController) Get() {
 	var err error
 	defer func() {
 		if err != nil {
-			log.Error(err)
+			logd.Error(err)
 			this.Ctx.WriteString(err.Error())
 		}
 	}()

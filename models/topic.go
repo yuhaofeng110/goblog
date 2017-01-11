@@ -8,10 +8,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/deepzz0/go-com/log"
 	db "github.com/deepzz0/go-com/mongo"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
+	"github.com/deepzz0/logd"
 	"github.com/russross/blackfriday"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -131,7 +131,7 @@ func (m *TopicMgr) Update() int {
 	for _, topic := range m.Topics {
 		err := db.Update(DB, C_TOPIC, bson.M{"id": topic.ID}, bson.M{"$set": bson.M{"pv": topic.PV}})
 		if err != nil {
-			log.Error(err)
+			logd.Error(err)
 			return RS.RS_update_failed
 		}
 	}

@@ -5,11 +5,10 @@ import (
 	"sort"
 	"time"
 
-	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"
-	// db "github.com/deepzz0/go-com/mongo"
+	"github.com/deepzz0/logd"
 )
 
 type CategoryController struct {
@@ -31,7 +30,7 @@ func (this *CategoryController) Post() {
 	resp := helper.NewResponse()
 	defer resp.WriteJson(this.Ctx.ResponseWriter)
 	flag := this.GetString("flag")
-	log.Debugf("flag = %s", flag)
+	logd.Debugf("flag = %s", flag)
 	switch flag {
 	case "save":
 		this.saveCategory(resp)
@@ -64,7 +63,7 @@ func (this *CategoryController) saveCategory(resp *helper.Response) {
 	var cat models.Category
 	err := json.Unmarshal([]byte(content), &cat)
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 		resp.Status = RS.RS_failed
 		resp.Err = helper.Error{Level: helper.WARNING, Msg: "内容错误|要仔细检查哦。"}
 		return

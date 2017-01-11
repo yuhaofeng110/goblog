@@ -1,10 +1,10 @@
 package background
 
 import (
-	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"
+	"github.com/deepzz0/logd"
 )
 
 type DataController struct {
@@ -26,7 +26,7 @@ func (this *DataController) Post() {
 	resp := helper.NewResponse()
 	defer resp.WriteJson(this.Ctx.ResponseWriter)
 	flag := this.GetString("flag")
-	log.Debugf("flag = %s", flag)
+	logd.Debugf("flag = %s", flag)
 	switch flag {
 	case "base":
 		this.Base(resp)

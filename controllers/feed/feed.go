@@ -9,10 +9,10 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/context"
-	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/controllers"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"
+	"github.com/deepzz0/logd"
 )
 
 func init() {
@@ -60,7 +60,7 @@ var buildDate time.Time
 func doFeed() {
 	temp, err := template.ParseFiles(models.TemplateFile)
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 		return
 	}
 	ts := models.TMgr.GetTopics()
@@ -92,20 +92,20 @@ func doFeed() {
 
 	_, err = os.Stat(models.FeedFile)
 	if err != nil && !strings.Contains(err.Error(), "no such file") {
-		log.Error(err)
+		logd.Error(err)
 		return
 	} else {
 		os.Remove(models.FeedFile)
 	}
 	f, err := os.Create(models.FeedFile)
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 		return
 	}
 	defer f.Close()
 	err = temp.Execute(f, params)
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 		return
 	}
 }

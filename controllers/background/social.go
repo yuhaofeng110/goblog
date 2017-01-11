@@ -5,10 +5,10 @@ import (
 	"sort"
 	"time"
 
-	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"
+	"github.com/deepzz0/logd"
 )
 
 type SocialController struct {
@@ -29,7 +29,7 @@ func (this *SocialController) Post() {
 	resp := helper.NewResponse()
 	defer resp.WriteJson(this.Ctx.ResponseWriter)
 	flag := this.GetString("flag")
-	log.Debugf("flag = %s", flag)
+	logd.Debugf("flag = %s", flag)
 	switch flag {
 	case "save":
 		this.saveSocial(resp)
@@ -47,7 +47,7 @@ func (this *SocialController) saveSocial(resp *helper.Response) {
 	var sc models.Social
 	err := json.Unmarshal([]byte(content), &sc)
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 		resp.Status = RS.RS_failed
 		resp.Err = helper.Error{Level: helper.WARNING, Msg: "内容错误|要仔细检查哦。"}
 		return

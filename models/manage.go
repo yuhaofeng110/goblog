@@ -7,10 +7,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/deepzz0/go-com/log"
 	db "github.com/deepzz0/go-com/mongo"
 	tm "github.com/deepzz0/go-com/time"
 	"github.com/deepzz0/go-com/useragent"
+	"github.com/deepzz0/logd"
 	"github.com/wangtuanjie/ip17mon"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -43,7 +43,7 @@ func NewRequest(r *http.Request) *Request {
 	request.UserAgent = useragent.ParseByRequest(r)
 	sessionid, err := r.Cookie("SESSIONID")
 	if err != nil {
-		log.Warn(err)
+		logd.Warn(err)
 	}
 	request.SessionID = sessionid.Value
 	return request
@@ -66,7 +66,7 @@ func (m *RequestManage) Saver() {
 		case request := <-m.Ch:
 			err := db.Insert(DB, C_REQUEST, request)
 			if err != nil {
-				log.Error(err)
+				logd.Error(err)
 			}
 
 		case <-t.C:
@@ -129,31 +129,31 @@ func (b *BaseData) loadData(typ string) {
 	if typ == TODAY {
 		err := c.Find(nil).Sort("-time").Skip(0).Limit(pageCount).All(&b.Latest)
 		if err != nil {
-			log.Error(err)
+			logd.Error(err)
 		}
 	}
 	count, err := c.Find(bson.M{"time": bson.M{"$gte": Begin, "$lt": End}}).Count()
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 	}
 	b.PV[typ] = count
 	var sessions []string
 	err = c.Find(bson.M{"time": bson.M{"$gte": Begin, "$lt": End}}).Distinct("sessionid", &sessions)
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 	}
 	b.UV[typ] = len(sessions)
 	var ips []string
 	err = c.Find(bson.M{"time": bson.M{"$gte": Begin, "$lt": End}}).Distinct("remoteaddr", &ips)
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 	}
 	b.China = make(map[string]*Area)
 	b.World = make(map[string]*Area)
 	for _, v := range ips {
 		info, err := ip17mon.Find(v)
 		if err != nil {
-			log.Warn(err)
+			logd.Warn(err)
 			continue
 		}
 		if info.Country == "中国" {
@@ -179,7 +179,7 @@ func (b *BaseData) loadData(typ string) {
 	var ts []*Request
 	err = c.Find(bson.M{"time": bson.M{"$gte": Begin, "$lt": End}}).Select(bson.M{"time": 1}).All(&ts)
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 	}
 	b.TimePV[typ] = make([]int, 145)
 	for _, v := range ts {
@@ -196,7 +196,7 @@ func (b *BaseData) CleanData(t time.Time) {
 	daysAgo20 := t.AddDate(0, 0, -20)
 	err := db.Remove(DB, C_REQUEST, bson.M{"time": bson.M{"$lt": daysAgo20}})
 	if err != nil && !strings.Contains(err.Error(), "not found") {
-		log.Error(err)
+		logd.Error(err)
 	}
 }
 
@@ -232,12 +232,12 @@ func LoadConf() *Config {
 	tmp := make(map[string]string)
 	err := c.Find(nil).Select(bson.M{SITE_VERIFY: 1, "_id": 0}).One(tmp)
 	if err != nil && !strings.Contains(err.Error(), "not found") {
-		log.Error(err)
+		logd.Error(err)
 	}
 	if str := tmp[SITE_VERIFY]; str != "" {
 		err := json.Unmarshal([]byte(str), &conf.SiteVerify)
 		if err != nil {
-			log.Error(err)
+			logd.Error(err)
 		}
 	}
 	return conf
@@ -259,11 +259,11 @@ func (conf *Config) DelVerification(name string) {
 func (conf *Config) UpdateConf() {
 	data, err := json.Marshal(conf.SiteVerify)
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 		return
 	}
 	err = db.Update(DB, C_CONFIG, bson.M{}, bson.M{"$set": bson.M{SITE_VERIFY: string(data)}})
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 	}
 }

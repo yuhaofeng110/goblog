@@ -5,10 +5,10 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"
+	"github.com/deepzz0/logd"
 )
 
 type TopicsController struct {
@@ -41,7 +41,7 @@ func (this *TopicsController) Content() {
 	} else {
 		pageTopics, remainpage = models.TMgr.GetTopicsByCatgory(cat, page)
 	}
-	log.Debug(remainpage, page)
+	logd.Debug(remainpage, page)
 	if page > 1 {
 		this.Data["ClassNewer"] = ""
 		this.Data["UrlNewer"] = fmt.Sprintf("/admin/topics?cat=%s&p=%d", cat, page-1)
@@ -62,7 +62,7 @@ func (this *TopicsController) Post() {
 	resp := helper.NewResponse()
 	defer resp.WriteJson(this.Ctx.ResponseWriter)
 	flag := this.GetString("flag")
-	log.Debugf("flag = %s", flag)
+	logd.Debugf("flag = %s", flag)
 	switch flag {
 	case "save":
 		this.saveTopic(resp)
@@ -90,7 +90,7 @@ func (this *TopicsController) saveTopic(resp *helper.Response) {
 	cat := this.GetString("cat")
 	tags := this.GetString("tags")
 	if title == "" || content == "" || cat == "" {
-		log.Debugf("%s,%s,%s,%s, %s", title, content, cat, tags, operate)
+		logd.Debugf("%s,%s,%s,%s, %s", title, content, cat, tags, operate)
 		resp.Status = RS.RS_failed
 		resp.Err = helper.Error{Level: helper.WARNING, Msg: "错误|请检查是否填写完整。"}
 		return
@@ -183,7 +183,7 @@ func (this *TopicsController) doDeleteTopic(resp *helper.Response) {
 
 func (this *TopicsController) doDeleteTopics(resp *helper.Response) {
 	ids := this.GetString("ids")
-	log.Debugf("%s", ids)
+	logd.Debugf("%s", ids)
 	if ids == "" {
 		resp.Status = RS.RS_failed
 		resp.Err = helper.Error{Level: helper.WARNING, Msg: "ID错误|走正常途径哦。"}
@@ -193,7 +193,7 @@ func (this *TopicsController) doDeleteTopics(resp *helper.Response) {
 	for _, v := range sliceID {
 		id, err := strconv.Atoi(v)
 		if err != nil {
-			log.Error(err)
+			logd.Error(err)
 			resp.Status = RS.RS_failed
 			resp.Err = helper.Error{Level: helper.WARNING, Msg: "ID错误|走正常途径哦。"}
 			return

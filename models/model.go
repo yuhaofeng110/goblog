@@ -6,10 +6,10 @@ import (
 	"os"
 	"time"
 
-	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/go-com/monitor"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
+	"github.com/deepzz0/logd"
 	"github.com/wangtuanjie/ip17mon"
 )
 
@@ -42,7 +42,7 @@ var Icons = make(map[string]*Icon, 500)
 
 func init() {
 	if err := ip17mon.Init(path + "/conf/17monipdb.dat"); err != nil {
-		log.Fatal(err)
+		logd.Fatal(err)
 	}
 	//
 	UMgr.loadUsers()
@@ -53,7 +53,7 @@ func init() {
 	}
 	TMgr.loadTopics()
 	// open error mail，email addr : Blogger.Email
-	log.SetEmail(Blogger.Email)
+	logd.SetEmail(Blogger.Email)
 	ManageData.LoadData()
 	monitor.HookOnExit("flushdata", flushdata)
 	monitor.Startup()

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"html/template"
 
-	// "github.com/astaxie/beego"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
 	"github.com/deepzz0/goblog/models"

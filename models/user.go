@@ -5,10 +5,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/deepzz0/go-com/log"
 	db "github.com/deepzz0/go-com/mongo"
 	"github.com/deepzz0/goblog/RS"
 	"github.com/deepzz0/goblog/helper"
+	"github.com/deepzz0/logd"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -50,7 +50,7 @@ func (m *UserMgr) loadUsers() {
 	if err != nil {
 		panic(err)
 	}
-	log.Debug(len(users))
+	logd.Debug(len(users))
 	for _, u := range users {
 		m.Users[u.UserName] = u
 	}
@@ -61,7 +61,7 @@ func (m *UserMgr) Register(user *User) int {
 	defer m.lock.Unlock()
 	err := db.Update(DB, C_USER, bson.M{"username": user.UserName}, *user)
 	if err != nil {
-		log.Warn(err)
+		logd.Warn(err)
 		return RS.RS_register_failed
 	}
 	m.Users[user.UserName] = user
@@ -72,7 +72,7 @@ func (m *UserMgr) FoundPass(name, email string) int {
 	if user, found := m.Users[name]; !found {
 		return RS.RS_user_inexistence
 	} else {
-		log.Debug(user.UserName)
+		logd.Debug(user.UserName)
 	}
 
 	// 发送邮件

@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/deepzz0/go-com/log"
 	"github.com/deepzz0/goblog/models"
+	"github.com/deepzz0/logd"
 )
 
 type cache struct {
@@ -31,11 +31,11 @@ var path, _ = os.Getwd()
 func doReadBackLeftBarConfig() {
 	b, err := ioutil.ReadFile(path + "/conf/backleft.conf")
 	if err != nil {
-		log.Fatal(err)
+		logd.Fatal(err)
 	}
 	err = json.Unmarshal(b, &Cache.BackgroundLeftBars)
 	if err != nil {
-		log.Fatal(err)
+		logd.Fatal(err)
 	}
 	for _, v := range Cache.BackgroundLeftBars {
 		if v.ID != "" {
@@ -47,7 +47,7 @@ func doReadBackLeftBarConfig() {
 func doReadBuildVersionConfig() {
 	b, err := ioutil.ReadFile(path + "/version")
 	if err != nil {
-		log.Error(err)
+		logd.Error(err)
 	}
 	Cache.BuildVersion = string(b)
 }
