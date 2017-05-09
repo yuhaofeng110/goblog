@@ -52,8 +52,6 @@ func init() {
 		initAccount()
 	}
 	TMgr.loadTopics()
-	// open error mail，email addr : Blogger.Email
-	logd.SetEmail(Blogger.Email)
 	ManageData.LoadData()
 	monitor.HookOnExit("flushdata", flushdata)
 	monitor.Startup()

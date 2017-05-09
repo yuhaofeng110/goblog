@@ -119,7 +119,7 @@ func (m *TopicMgr) loadTopics() {
 func (m *TopicMgr) DoTopicUpdate(topic *Topic) {
 	topic.Content = string(blackfriday.MarkdownCommon([]byte(topic.Content)))
 	reg, _ := regexp.Compile(`\</\w{1,3}\>`)
-	index := reg.FindAllStringIndex(topic.Content, 8)
+	index := reg.FindAllStringIndex(topic.Content, 3)
 	x := index[len(index)-1]
 	topic.Preview = string(blackfriday.MarkdownCommon([]byte(topic.Content[:x[len(x)-1]])))
 
