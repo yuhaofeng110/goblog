@@ -1,4 +1,4 @@
-## Goblog 
+## Goblog  yhf's fork
 
 Goblog 是基于beego框架开发的博客系统。主张简约、简单、轻量。数据存储mongodb，cdn推荐七牛，多功能后台，可docker部署。
 
