@@ -46,7 +46,7 @@ func init() {
 	}
 	//
 	UMgr.loadUsers()
-	Blogger = UMgr.Get("deepzz")
+	Blogger = UMgr.Get("ExcitedYu")
 	// not found account
 	if Blogger == nil {
 		initAccount()
