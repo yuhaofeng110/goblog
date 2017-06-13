@@ -107,5 +107,5 @@ func timer() {
 func flushdata() {
 	UMgr.Update()
 	TMgr.Update()
-	ManageConf.UpdateConf()git
+	ManageConf.UpdateConf()
 }
