@@ -76,7 +76,7 @@ func initAccount() {
 	if code != RS.RS_success {
 		panic("init failed。")
 	}
-	Blogger = UMgr.Get("deepzz")
+	Blogger = UMgr.Get("ExcitedYu")
 }
 
 func timer() {
