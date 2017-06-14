@@ -9,8 +9,8 @@ import (
 	"time"
 
 	db "github.com/deepzz0/go-com/mongo"
-	"github.com/deepzz0/goblog/RS"
-	"github.com/deepzz0/goblog/helper"
+	"github.com/yuhaofeng110/goblog/RS"
+	"github.com/yuhaofeng110/goblog/helper"
 	"github.com/deepzz0/logd"
 	"github.com/russross/blackfriday"
 	"gopkg.in/mgo.v2/bson"

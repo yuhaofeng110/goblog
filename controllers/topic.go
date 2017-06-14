@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/deepzz0/goblog/helper"
-	"github.com/deepzz0/goblog/models"
+	"github.com/yuhaofeng110/goblog/helper"
+	"github.com/yuhaofeng110/goblog/models"
 )
 
 type TopicController struct {

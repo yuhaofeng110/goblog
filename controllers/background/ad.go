@@ -1,7 +1,7 @@
 package background
 
 import (
-	"github.com/deepzz0/goblog/models"
+	"github.com/yuhaofeng110/goblog/models"
 )
 
 type ADController struct {

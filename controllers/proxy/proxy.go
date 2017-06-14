@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/astaxie/beego"
-	"github.com/deepzz0/goblog/models"
+	"github.com/yuhaofeng110/goblog/models"
 	"github.com/deepzz0/logd"
 )
 

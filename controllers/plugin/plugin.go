@@ -2,7 +2,7 @@ package plugin
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/deepzz0/goblog/models"
+	"github.com/yuhaofeng110/goblog/models"
 )
 
 type Plugin struct {

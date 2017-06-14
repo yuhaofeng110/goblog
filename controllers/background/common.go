@@ -2,7 +2,7 @@ package background
 
 import (
 	"github.com/astaxie/beego"
-	"github.com/deepzz0/goblog/cache"
+	"github.com/yuhaofeng110/goblog/cache"
 )
 
 var SESSIONNAME = beego.AppConfig.String("sessionname")

@@ -7,8 +7,8 @@ import (
 	"time"
 
 	"github.com/deepzz0/go-com/monitor"
-	"github.com/deepzz0/goblog/RS"
-	"github.com/deepzz0/goblog/helper"
+	"github.com/yuhaofeng110/goblog/RS"
+	"github.com/yuhaofeng110/goblog/helper"
 	"github.com/deepzz0/logd"
 	"github.com/wangtuanjie/ip17mon"
 )
@@ -76,7 +76,7 @@ func initAccount() {
 	if code != RS.RS_success {
 		panic("init failed。")
 	}
-	Blogger = UMgr.Get("deepzz")
+	Blogger = UMgr.Get("ExcitedYu")
 }
 
 func timer() {

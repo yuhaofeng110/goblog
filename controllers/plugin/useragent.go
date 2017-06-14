@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/deepzz0/go-com/useragent"
-	"github.com/deepzz0/goblog/RS"
-	"github.com/deepzz0/goblog/helper"
-	"github.com/deepzz0/goblog/models"
+	"github.com/yuhaofeng110/goblog/RS"
+	"github.com/yuhaofeng110/goblog/helper"
+	"github.com/yuhaofeng110/goblog/models"
 )
 
 type UserAgent struct {

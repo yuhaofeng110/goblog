@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/deepzz0/goblog/RS"
+	"github.com/yuhaofeng110/goblog/RS"
 )
 
 const (
