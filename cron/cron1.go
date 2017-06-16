@@ -54,8 +54,11 @@ func mainSend(){
 	}
 	tianqi_day := weather.Results[0].Daily[0].TextDay
 	tianqi_night := weather.Results[0].Daily[0].TextNight
+	low := weather.Results[0].Daily[0].Low
+	high := weather.Results[0].Daily[0].High
 
-	SendMsg("报告队长,天气预报说明天白天 ["+tianqi_day+"] 晚上 ["+tianqi_night+"]")
+
+	SendMsg("报告队长,天气预报说明天白天 ["+tianqi_day+"] 晚上 ["+tianqi_night+"],气温 "+low+"~"+high+"℃。" )
 }
 
 
