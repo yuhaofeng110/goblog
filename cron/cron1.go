@@ -8,6 +8,7 @@ import (
 	"time"
 	"encoding/json"
 	"github.com/astaxie/beego/toolbox"
+	"strconv"
 )
 
 const (
@@ -38,13 +39,34 @@ type NewMsg struct {
 	Totag   string `json:"totag"`
 	Touser  string `json:"touser"`
 }
-
+var Scale map[int]string =  map[int]string{
+	0:"[无风],地面现象 [静，烟直上]",
+	1:"[软风],地面现象 [烟示风向]",
+	2:"[轻风],地面现象 [感觉有风]",
+	3:"[微风],地面现象 [旌旗展开]",
+	4:"[和风],地面现象 [吹起尘土]",
+	5:"[清风],地面现象 [小树摇摆]",
+	6:"[强风],地面现象 [电线有声]",
+	7:"[疾风],地面现象 [步行困难]",
+	8:"[大风],地面现象 [折毁树枝]",
+	9:"[烈风],地面现象 [小损房屋]",
+	10:"[狂风],地面现象 [拔起树木]",
+	11:"[暴风],地面现象 [损毁重大]",
+	12:"[台风],地面现象 [摧毁极大]",
+	13:"[一级飓风]",
+	14:"[二级飓风]",
+	15:"[三级飓风]",
+	16:"[超强台风]",
+	17:"[四级飓风]",
+	18:"[吊炸天风]",
+}
 
 const (
 	GetTokenURL = "https://qyapi.weixin.qq.com/cgi-bin/gettoken"
 	SendMsgURL = "https://qyapi.weixin.qq.com/cgi-bin/message/send"
 )
 var token Token
+
 func mainSend(){
 	weather := Weather{}
 	err :=weather.getWeather()
@@ -54,18 +76,26 @@ func mainSend(){
 	}
 	tianqi_day := weather.Results[0].Daily[0].TextDay
 	tianqi_night := weather.Results[0].Daily[0].TextNight
-	low := weather.Results[0].Daily[0].Low
-	high := weather.Results[0].Daily[0].High
-
-
-	SendMsg("报告队长,天气预报说明天白天 ["+tianqi_day+"] 晚上 ["+tianqi_night+"],气温 "+low+"~"+high+"℃。" )
+	low ,err := strconv.Atoi(weather.Results[0].Daily[0].Low)
+	if err != nil {
+		return
+	}
+	high ,err := strconv.Atoi(weather.Results[0].Daily[0].High)
+	if err != nil {
+		return
+	}
+	direction := weather.Results[0].Daily[0].WindDirection
+	scale,err := strconv.Atoi(weather.Results[0].Daily[0].WindScale)
+	if err != nil {
+		return
+	}
+	SendMsg("报告队长,天气预报说明天白天 ["+tianqi_day+"] 晚上 ["+tianqi_night+"],气温 "+weather.Results[0].Daily[0].Low+"~"+weather.Results[0].Daily[0].High+"℃,平均气温"+strconv.Itoa((low+high)/2)+"℃,"+direction+"风 ,"+weather.Results[0].Daily[0].WindScale+"级,属于 "+Scale[scale]+"。" )
 }
 
 
 func (token *Token)GetToken() (string,error) {
 	if token == nil || time.Now().Unix() - token.start_time > Expires {
 		var result TokenRes
-		//var now = time.Now().Unix()
 		req := httplib.Get(GetTokenURL+"?corpid="+CorpID+"&corpsecret="+Secret)
 		req.SetTLSClientConfig(&tls.Config{InsecureSkipVerify: true})
 		if err := req.ToJSON(&result); err != nil{
@@ -87,7 +117,7 @@ func SendMsg(msg string ){
 		}{ Content: msg },
 		Toparty:"",
 		Totag:"",
-		Touser:"@all",
+		Touser:"YuHaoFeng",
 	}
 	msgjson,err  := json.Marshal(Msg)
 	if err != nil{
